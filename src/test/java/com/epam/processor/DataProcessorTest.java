@@ -5,10 +5,13 @@ import com.epam.data.RoadAccident;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
 /**
@@ -29,9 +32,19 @@ public class DataProcessorTest {
     }
 
     @Test
-    public void should_find_by_index(){
-        RoadAccident accident = dataProcessor.getAccidentByIndex("200901BS70021");
+    public void should_find_by_index7(){
+        String index = "200901BS70021";
+        RoadAccident accident = dataProcessor.getAccidentByIndex7(index);
         assertNotNull(accident);
+        assertThat(accident.getAccidentId(), equalTo(index));
+    }
+
+    @Test
+    public void should_find_by_index(){
+        String index = "200901BS70021";
+        RoadAccident accident = dataProcessor.getAccidentByIndex(index);
+        assertNotNull(accident);
+        assertThat(accident.getAccidentId(), equalTo(index));
     }
 
     @Test
@@ -41,10 +54,54 @@ public class DataProcessorTest {
     }
 
     @Test
+    public void should_count_by_road_conditions7(){
+        Map<String, Long> countByRoadConditions = dataProcessor.getCountByRoadSurfaceCondition7();
+        assertThat(countByRoadConditions.get("Dry"), is(110277));
+    }
+
+    @Test
+    public void should_count_by_road_conditions(){
+        Map<String, Long> countByRoadConditions = dataProcessor.getCountByRoadSurfaceCondition();
+        assertThat(countByRoadConditions.get("Dry"), is(110277));
+    }
+
+    @Test
+    public void should_return_three_most_often_weathers7(){
+        List<String> threeTopWeathers = dataProcessor.getTopThreeWeatherCondition7();
+        assertThat(threeTopWeathers.size(), is(3));
+        assertThat(threeTopWeathers, hasItems("Fine no high winds", "Raining no high winds", "Other"));
+    }
+
+    @Test
     public void should_return_three_most_often_weathers(){
         List<String> threeTopWeathers = dataProcessor.getTopThreeWeatherCondition();
         assertThat(threeTopWeathers.size(), is(3));
         assertThat(threeTopWeathers, hasItems("Fine no high winds", "Raining no high winds", "Other"));
     }
+
+    @Test
+    public void should_filter_by_location7(){
+        Collection<RoadAccident> filtered_by_location = dataProcessor.getAccidentsByLocation7(-0.2f,-0.1f,51f,52f);
+        assertThat(filtered_by_location.size(), is(8199));
+    }
+
+    @Test
+    public void should_filter_by_location(){
+        Collection<RoadAccident> filtered_by_location = dataProcessor.getAccidentsByLocation(-0.2f,-0.1f,51f,52f);
+        assertThat(filtered_by_location.size(), is(8199));
+    }
+
+    @Test
+    public void should_group_by_authority7(){
+        Map<String, List<String>> groupedbyAuthority = dataProcessor.getAccidentIdsGroupedByAuthority7();
+        assertThat(groupedbyAuthority.get("North Warwickshire").size(), is(274));
+    }
+
+    @Test
+    public void should_group_by_authority(){
+        Map<String, List<String>> groupedbyAuthority = dataProcessor.getAccidentIdsGroupedByAuthority();
+        assertThat(groupedbyAuthority.get("North Warwickshire").size(), is(274));
+    }
+
 
 }
