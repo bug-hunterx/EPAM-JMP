@@ -2,6 +2,7 @@ package com.epam.processor;
 
 import com.epam.data.AccidentsDataLoader;
 import com.epam.data.RoadAccident;
+import com.google.common.collect.Multimap;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -93,7 +94,7 @@ public class DataProcessorTest {
 
     @Test
     public void should_group_by_authority7(){
-        Map<String, List<String>> groupedbyAuthority = dataProcessor.getAccidentIdsGroupedByAuthority7();
+        Multimap<String, String> groupedbyAuthority = dataProcessor.getAccidentIdsGroupedByAuthority7();
         assertThat(groupedbyAuthority.get("North Warwickshire").size(), is(274));
     }
 

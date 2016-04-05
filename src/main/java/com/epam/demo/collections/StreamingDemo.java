@@ -16,4 +16,6 @@ public class StreamingDemo {
                 .filter(value -> value%2 == 0)
                 .forEach(System.out::println);
     }
+
+
 }
