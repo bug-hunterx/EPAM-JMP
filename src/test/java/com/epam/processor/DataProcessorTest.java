@@ -82,26 +82,26 @@ public class DataProcessorTest {
 
     @Test
     public void should_filter_by_location7(){
-        Collection<RoadAccident> filtered_by_location = dataProcessor.getAccidentsByLocation7(-0.2f,-0.1f,51f,52f);
-        assertThat(filtered_by_location.size(), is(8199));
+        Collection<RoadAccident> filteredBylocation = dataProcessor.getAccidentsByLocation7(-0.2f,-0.1f,51f,52f);
+        assertThat(filteredBylocation.size(), is(8199));
     }
 
     @Test
     public void should_filter_by_location(){
-        Collection<RoadAccident> filtered_by_location = dataProcessor.getAccidentsByLocation(-0.2f,-0.1f,51f,52f);
-        assertThat(filtered_by_location.size(), is(8199));
+        Collection<RoadAccident> filteredBylocation = dataProcessor.getAccidentsByLocation(-0.2f,-0.1f,51f,52f);
+        assertThat(filteredBylocation.size(), is(8199));
     }
 
     @Test
     public void should_group_by_authority7(){
-        Multimap<String, String> groupedbyAuthority = dataProcessor.getAccidentIdsGroupedByAuthority7();
-        assertThat(groupedbyAuthority.get("North Warwickshire").size(), is(274));
+        Multimap<String, String> groupedByAuthority = dataProcessor.getAccidentIdsGroupedByAuthority7();
+        assertThat(groupedByAuthority.get("North Warwickshire").size(), is(274));
     }
 
     @Test
     public void should_group_by_authority(){
-        Map<String, List<String>> groupedbyAuthority = dataProcessor.getAccidentIdsGroupedByAuthority();
-        assertThat(groupedbyAuthority.get("North Warwickshire").size(), is(274));
+        Map<String, List<String>> groupedByAuthority = dataProcessor.getAccidentIdsGroupedByAuthority();
+        assertThat(groupedByAuthority.get("North Warwickshire").size(), is(274));
     }
 
 

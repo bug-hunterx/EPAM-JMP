@@ -14,10 +14,6 @@ public class DataProcessor {
 
     private final List<RoadAccident> roadAccidentList;
 
-    /**
-     * feel free to add more pre-processing in the constructor if you feel like it
-     * @param roadAccidentList
-     */
     public DataProcessor(List<RoadAccident> roadAccidentList){
         this.roadAccidentList = roadAccidentList;
     }

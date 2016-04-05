@@ -1,8 +1,6 @@
 package com.epam.demo.collections;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ListMultimap;
+import com.google.common.collect.*;
 
 import java.util.List;
 
@@ -12,8 +10,9 @@ import java.util.List;
 public class GuavaCollections {
 
     public static void main(String[] args) {
-        multiMapDemo();
-        immutableDemo();
+//        multiMapDemo();
+        biMapDemo();
+//        immutableDemo();
     }
 
     public static void multiMapDemo(){
@@ -26,6 +25,19 @@ public class GuavaCollections {
         System.out.println(multimap);
         System.out.println("Mentees: " + multimap.values());
         System.out.println("Mentors: " + multimap.keys());
+    }
+
+    public static void biMapDemo(){
+        BiMap<String, String> menteesByMentors= HashBiMap.create();
+
+        menteesByMentors.put("Bogdan", "Feng Chen");
+        menteesByMentors.put("Gary", "Teacher Cheng");
+
+        BiMap<String, String> mentorsbyMentees = menteesByMentors.inverse();
+
+        System.out.println(menteesByMentors);
+        System.out.println(mentorsbyMentees);
+
     }
 
     public static void immutableDemo(){
