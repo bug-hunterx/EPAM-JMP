@@ -3,9 +3,7 @@ package com.epam.processor;
 import com.epam.data.RoadAccident;
 import com.google.common.collect.Multimap;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This is to be completed by mentees
@@ -27,6 +25,12 @@ public class DataProcessor {
      * @return
      */
     public RoadAccident getAccidentByIndex7(String index){
+        Iterator<RoadAccident> iter = roadAccidentList.iterator();
+        while(iter.hasNext()) {
+            RoadAccident rec = iter.next();
+            if (rec.getAccidentId().equals(index))
+                return rec;
+        }
         return null;
     }
 
@@ -40,7 +44,17 @@ public class DataProcessor {
      * @return
      */
     public Collection<RoadAccident> getAccidentsByLocation7(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
-        return null;
+        List<RoadAccident> result = new ArrayList<>();
+        Iterator<RoadAccident> iter = roadAccidentList.iterator();
+        while(iter.hasNext()) {
+            RoadAccident rec = iter.next();
+            float longitude = rec.getLongitude();
+            float latitude = rec.getLatitude();
+            if (longitude>=minLongitude && longitude<=maxLongitude && latitude>=minLatitude && latitude<=maxLatitude )
+                result.add(rec);
+        }
+        System.out.println(result.size());
+        return result;
     }
 
     /**
