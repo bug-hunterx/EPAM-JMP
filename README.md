@@ -20,7 +20,7 @@
 
 When you finished required code locally, push it to your repository on github and create a pull request to this repo.
 
-In pull request mark you mentor (@mentorName) so it can review it. 
+In pull request mark your mentor (@mentorName) so it can review it. 
 
 
 ## Hometask 1
