@@ -11,8 +11,8 @@ public class GuavaCollections {
 
     public static void main(String[] args) {
 //        multiMapDemo();
-        biMapDemo();
-//        immutableDemo();
+//        biMapDemo();
+        immutableDemo();
     }
 
     public static void multiMapDemo(){
@@ -31,8 +31,8 @@ public class GuavaCollections {
         BiMap<String, String> menteesByMentors= HashBiMap.create();
 
         menteesByMentors.put("Bogdan", "Feng Chen");
+        menteesByMentors.put("Key", "Feng Chen");
         menteesByMentors.put("Gary", "Teacher Cheng");
-
         BiMap<String, String> mentorsbyMentees = menteesByMentors.inverse();
 
         System.out.println(menteesByMentors);
