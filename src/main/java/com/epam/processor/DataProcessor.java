@@ -1,7 +1,8 @@
 package com.epam.processor;
 
 import com.epam.data.RoadAccident;
-import com.google.common.collect.Multimap;
+import com.google.common.base.Function;
+import com.google.common.collect.*;
 
 import java.util.*;
 
@@ -45,15 +46,13 @@ public class DataProcessor {
      */
     public Collection<RoadAccident> getAccidentsByLocation7(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
         List<RoadAccident> result = new ArrayList<>();
-        Iterator<RoadAccident> iter = roadAccidentList.iterator();
-        while(iter.hasNext()) {
-            RoadAccident rec = iter.next();
+        for (RoadAccident rec : roadAccidentList ) {
             float longitude = rec.getLongitude();
             float latitude = rec.getLatitude();
             if (longitude>=minLongitude && longitude<=maxLongitude && latitude>=minLatitude && latitude<=maxLatitude )
                 result.add(rec);
         }
-        System.out.println(result.size());
+//        System.out.println("Total records: " + result.size());
         return result;
     }
 
@@ -65,7 +64,16 @@ public class DataProcessor {
      * @return
      */
     public Map<String, Long> getCountByRoadSurfaceCondition7(){
-        return null;
+        Map<String, Long> result = new HashMap<>();
+        Multiset<String> roadSurfaceCondition = HashMultiset.create();
+        for (RoadAccident rec : roadAccidentList ) {
+            roadSurfaceCondition.add(rec.getRoadSurfaceConditions());
+        }
+        for (String key : roadSurfaceCondition.elementSet() ) {
+//            System.out.println(key+" count："+roadSurfaceCondition.count(key));
+            result.put(key, Long.valueOf(roadSurfaceCondition.count(key)));
+        }
+        return result;
     }
 
     /**
@@ -73,8 +81,39 @@ public class DataProcessor {
      * as example if there were 10 accidence in rain, 5 in snow, 6 in sunny and 1 in foggy, then your result list should contain {rain, sunny, snow} - top three in decreasing order
      * @return
      */
+    public List<String> getTopThreeWeatherCondition6(){
+
+        Multiset<String> weatherConditions = HashMultiset.create();
+        for (RoadAccident rec : roadAccidentList ) {
+            weatherConditions.add(rec.getWeatherConditions());
+        }
+        ImmutableSortedMap.Builder<String, String> builder = new ImmutableSortedMap
+                .Builder<String, String>(Ordering.natural().reverse());
+        for (String key : weatherConditions.elementSet() ) {
+            String countStr = String.format("%08d %s", weatherConditions.count(key), key);
+            System.out.println(countStr);
+            builder.put(countStr, key);
+        }
+        ImmutableSortedMap<String, String> sortedConditions = builder.build();
+        List<String> result = sortedConditions.values().asList();
+//        System.out.println(result);
+        return result.subList(0,3);
+    }
+
     public List<String> getTopThreeWeatherCondition7(){
-        return null;
+        Multiset<String> weatherConditions = HashMultiset.create();
+        for (RoadAccident rec : roadAccidentList ) {
+            weatherConditions.add(rec.getWeatherConditions());
+        }
+        // If no duplicate count value for WeatherCondition, we can use BiMap
+        Multimap<Integer, String> sortedConditions = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
+        for (String key : weatherConditions.elementSet() ) {
+            sortedConditions.put(weatherConditions.count(key), key);
+        }
+//        System.out.println(sortedConditions);
+        List<String> result = ImmutableList.copyOf(sortedConditions.values());
+        System.out.println(result);
+        return result.subList(0,3);
     }
 
     /**
@@ -85,7 +124,17 @@ public class DataProcessor {
      * @return
      */
     public Multimap<String, String> getAccidentIdsGroupedByAuthority7(){
-        return null;
+        ImmutableMultimap.Builder<String, String> builder = new ImmutableMultimap.Builder<String, String>();
+        for (RoadAccident rec : roadAccidentList ) {
+            builder.put(rec.getDistrictAuthority(), rec.getAccidentId());
+        }
+        ImmutableMultimap<String, String> result = builder.build();
+/*
+        for (String key : result.keySet()) {
+            System.out.println(key + " : " + result.get(key).size());
+        }
+*/
+        return result;
     }
 
 
