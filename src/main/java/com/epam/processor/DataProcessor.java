@@ -182,11 +182,22 @@ public class DataProcessor {
                         Collectors.counting()));
 //        System.out.println(weatherCondition);
 
+        Ordering<Map.Entry<String,Long>> ordering = new Ordering<Map.Entry<String,Long>>() {
+            @Override
+            public int compare(Map.Entry<String,Long> left, Map.Entry<String,Long> right) {
+                return (int)(left.getValue()-right.getValue());
+            }
+        };
+        List<Map.Entry<String,Long>> topKList = ordering.greatestOf(weatherCondition.entrySet(),3);
+        System.out.println(topKList);
+        return topKList.stream().map(e -> e.getKey()).collect(Collectors.toList());
+/*
         // Assume no duplicate value
         TreeMap<Long, String> sCounter = new TreeMap<>(Ordering.natural().reverse());
         sCounter.putAll(HashBiMap.create(weatherCondition).inverse());
 //        System.out.println(sCounter);
         return  sCounter.values().stream().limit(3).collect(Collectors.toList());
+*/
     }
 
     /**
