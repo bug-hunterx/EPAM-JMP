@@ -1,10 +1,12 @@
 package com.epam.processor;
 
 import com.epam.data.RoadAccident;
-import com.google.common.base.Function;
+import com.google.common.base.*;
 import com.google.common.collect.*;
 
 import java.util.*;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * This is to be completed by mentees
@@ -143,7 +145,15 @@ public class DataProcessor {
 
 
     public RoadAccident getAccidentByIndex(String index){
-        return null;
+        Optional<RoadAccident> result = roadAccidentList.stream()
+                .filter(r -> r.getAccidentId().equals(index))
+                .findFirst();
+
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            return null;
+        }
     }
 
 
@@ -156,7 +166,10 @@ public class DataProcessor {
      * @return
      */
     public Collection<RoadAccident> getAccidentsByLocation(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
-        return null;
+        return roadAccidentList.stream()
+                .filter(r -> r.getLongitude()>=minLongitude && r.getLongitude()<=maxLongitude
+                        && r.getLatitude()>=minLatitude && r.getLatitude()<=maxLatitude )
+                .collect(Collectors.toList());
     }
 
     /**
@@ -164,7 +177,16 @@ public class DataProcessor {
      * @return
      */
     public List<String> getTopThreeWeatherCondition(){
-        return null;
+        Map<String, Long> weatherCondition = roadAccidentList.stream()
+                .collect(Collectors.groupingBy(RoadAccident::getWeatherConditions,
+                        Collectors.counting()));
+//        System.out.println(weatherCondition);
+
+        // Assume no duplicate value
+        TreeMap<Long, String> sCounter = new TreeMap<>(Ordering.natural().reverse());
+        sCounter.putAll(HashBiMap.create(weatherCondition).inverse());
+//        System.out.println(sCounter);
+        return  sCounter.values().stream().limit(3).collect(Collectors.toList());
     }
 
     /**
@@ -172,7 +194,11 @@ public class DataProcessor {
      * @return
      */
     public Map<String, Long> getCountByRoadSurfaceCondition(){
-        return null;
+        Map<String, Long> roadSurfaceCondition = roadAccidentList.stream()
+                .collect(Collectors.groupingBy(RoadAccident::getRoadSurfaceConditions,
+                        Collectors.counting()));
+
+        return roadSurfaceCondition;
     }
 
     /**
@@ -180,7 +206,11 @@ public class DataProcessor {
      * @return
      */
     public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){
-        return null;
+        Map<String, List<String>> authority = roadAccidentList.stream()
+                .collect(Collectors.groupingBy(RoadAccident::getDistrictAuthority,
+                        Collectors.mapping(RoadAccident::getAccidentId, Collectors.toList())));
+
+        return authority;
     }
 
 }
