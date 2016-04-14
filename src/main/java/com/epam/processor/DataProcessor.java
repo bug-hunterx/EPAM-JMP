@@ -7,8 +7,11 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.groupingBy;
 
 /**
  * This is to be completed by mentees
@@ -165,7 +168,10 @@ public class DataProcessor {
      * @return
      */
     public Map<String, Long> getCountByRoadSurfaceCondition(){
-        return null;
+        Map<String,Long> countByRoadConditions= Maps.newHashMap();
+        countByRoadConditions = roadAccidentList.stream()
+                .collect(groupingBy(RoadAccident::getRoadSurfaceConditions, Collectors.counting()));
+        return countByRoadConditions;
     }
 
     /**
@@ -173,6 +179,11 @@ public class DataProcessor {
      * @return
      */
     public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){
+        /*Map<Integer, List<String>> peopleByAge = people
+                .collect(groupingBy(p -> p.age, mapping((Person p) -> p.name, toList())));*/
+      /*  Map<String, List<String>> accidentIdsGroupedByAuthority = Stream.of(roadAccidentList)
+                //.collect(Collectors.groupingBy(Function.identity(), Collectors. ));
+                .collect(groupingBy(r -> r.districtAuthority, mapping((RoadAccident r) -> r.accidentId, toList())));*/
         return null;
     }
 
