@@ -7,9 +7,12 @@ import com.google.common.collect.Multimap;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 /**
@@ -88,14 +91,33 @@ public class DataProcessor {
      */
     public List<String> getTopThreeWeatherCondition7(){
     	List<String> top3WeatherCondition = new ArrayList<>();
+    	Map<String, Long> roadAccidentMaps = new HashMap<String, Long>();
+    	
     	for(RoadAccident roadAccident : roadAccidentList) {
-    		if (!top3WeatherCondition.contains(roadAccident.getWeatherConditions())) {
-    			top3WeatherCondition.add(roadAccident.getWeatherConditions());
-    			if (top3WeatherCondition.size() == 3 ) {
-    				break;
-    			}
+    		if (!roadAccidentMaps.containsKey(roadAccident.getWeatherConditions())) {
+    			roadAccidentMaps.put(roadAccident.getWeatherConditions(), 1L);
+    		}
+    		else {
+    			roadAccidentMaps.put(roadAccident.getWeatherConditions(), roadAccidentMaps.get(roadAccident.getWeatherConditions()) + 1);
     		}
     	}
+    	
+        List<Map.Entry<String, Long >> roadAccidents = new ArrayList<Map.Entry<String, Long>>(roadAccidentMaps.entrySet());    	
+    	
+        Collections.sort(roadAccidents, new Comparator<Map.Entry<String, Long>>() {
+            public int compare(Entry<String, Long> o1, Entry<String, Long> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+    	
+        int i = 1;
+        for (Map.Entry<String, Long> mapping : roadAccidents) {
+        	if (i >3 ) {
+        		break;
+        	}
+        	top3WeatherCondition.add(mapping.getKey());
+        	i++;
+        }
     	
     	return top3WeatherCondition;
     }
@@ -147,8 +169,11 @@ public class DataProcessor {
      * find the weather conditions which caused max number of incidents
      * @return
      */
-    public List<String> getTopThreeWeatherCondition(){
-    	List<String> top3WeatherCondition = roadAccidentList.stream().map(x -> x.getWeatherConditions()).distinct().limit(3).collect(Collectors.toList());
+    public List<String> getTopThreeWeatherCondition(){ 	
+    	List<String> top3WeatherCondition = roadAccidentList.stream().collect(Collectors.groupingBy(rA -> rA.getWeatherConditions(), Collectors.counting()))
+                .entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(3)
+                .map( x -> x.getKey()).collect(Collectors.toList());
+
     	return top3WeatherCondition;
     }
 
