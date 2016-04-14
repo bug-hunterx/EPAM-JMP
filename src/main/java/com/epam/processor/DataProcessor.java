@@ -19,7 +19,12 @@ public class DataProcessor {
         this.roadAccidentList = roadAccidentList;
     }
 
-
+    public static boolean inRect(RoadAccident roadAccident, float minLongitude, float maxLongitude, float minLatitude, float maxLatitude) {
+        float longitude = roadAccident.getLongitude();
+        float latitude = roadAccident.getLatitude();
+        return ( (longitude>=minLongitude && longitude<=maxLongitude)
+                && (latitude>=minLatitude && latitude<=maxLatitude) );
+    }
 //    First try to solve task using java 7 style for processing collections
 
     /**
@@ -49,12 +54,10 @@ public class DataProcessor {
     public Collection<RoadAccident> getAccidentsByLocation7(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
         List<RoadAccident> result = new ArrayList<>();
         for (RoadAccident rec : roadAccidentList ) {
-            float longitude = rec.getLongitude();
-            float latitude = rec.getLatitude();
-            if (longitude>=minLongitude && longitude<=maxLongitude && latitude>=minLatitude && latitude<=maxLatitude )
+            if ( inRect(rec, minLongitude, maxLongitude, minLatitude, maxLatitude) ) {
                 result.add(rec);
+            }
         }
-//        System.out.println("Total records: " + result.size());
         return result;
     }
 
@@ -99,6 +102,15 @@ public class DataProcessor {
         ImmutableSortedMap<String, String> sortedConditions = builder.build();
         List<String> result = sortedConditions.values().asList();
 //        System.out.println(result);
+/*
+        // If no duplicate count value for WeatherCondition, we can use BiMap
+        // Another Solution
+        Multimap<Integer, String> sortedConditions = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
+        for (String key : weatherConditions.elementSet() ) {
+            sortedConditions.put(weatherConditions.count(key), key);
+        }
+        List<String> result = ImmutableList.copyOf(sortedConditions.values());
+*/
         return result.subList(0,3);
     }
 
@@ -107,15 +119,10 @@ public class DataProcessor {
         for (RoadAccident rec : roadAccidentList ) {
             weatherConditions.add(rec.getWeatherConditions());
         }
-        // If no duplicate count value for WeatherCondition, we can use BiMap
-        Multimap<Integer, String> sortedConditions = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
-        for (String key : weatherConditions.elementSet() ) {
-            sortedConditions.put(weatherConditions.count(key), key);
-        }
-//        System.out.println(sortedConditions);
-        List<String> result = ImmutableList.copyOf(sortedConditions.values());
-        System.out.println(result);
-        return result.subList(0,3);
+        List<Multiset.Entry<String>> topKList = Ordering
+                .from(Comparator.<Multiset.Entry<String>>comparingInt(e -> e.getCount()))
+                .greatestOf(weatherConditions.entrySet(),3);
+        return Lists.transform(topKList, e -> e.getElement());
     }
 
     /**
@@ -130,13 +137,7 @@ public class DataProcessor {
         for (RoadAccident rec : roadAccidentList ) {
             builder.put(rec.getDistrictAuthority(), rec.getAccidentId());
         }
-        ImmutableMultimap<String, String> result = builder.build();
-/*
-        for (String key : result.keySet()) {
-            System.out.println(key + " : " + result.get(key).size());
-        }
-*/
-        return result;
+        return builder.build();
     }
 
 
@@ -145,15 +146,10 @@ public class DataProcessor {
 
 
     public RoadAccident getAccidentByIndex(String index){
-        Optional<RoadAccident> result = roadAccidentList.stream()
+        return roadAccidentList.stream()
                 .filter(r -> r.getAccidentId().equals(index))
-                .findFirst();
+                .findFirst().orElse(null);
 
-        if (result.isPresent()) {
-            return result.get();
-        } else {
-            return null;
-        }
     }
 
 
@@ -167,8 +163,7 @@ public class DataProcessor {
      */
     public Collection<RoadAccident> getAccidentsByLocation(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
         return roadAccidentList.stream()
-                .filter(r -> r.getLongitude()>=minLongitude && r.getLongitude()<=maxLongitude
-                        && r.getLatitude()>=minLatitude && r.getLatitude()<=maxLatitude )
+                .filter(r -> inRect(r, minLongitude, maxLongitude, minLatitude, maxLatitude) )
                 .collect(Collectors.toList());
     }
 
@@ -180,24 +175,11 @@ public class DataProcessor {
         Map<String, Long> weatherCondition = roadAccidentList.stream()
                 .collect(Collectors.groupingBy(RoadAccident::getWeatherConditions,
                         Collectors.counting()));
-//        System.out.println(weatherCondition);
-
-        Ordering<Map.Entry<String,Long>> ordering = new Ordering<Map.Entry<String,Long>>() {
-            @Override
-            public int compare(Map.Entry<String,Long> left, Map.Entry<String,Long> right) {
-                return (int)(left.getValue()-right.getValue());
-            }
-        };
-        List<Map.Entry<String,Long>> topKList = ordering.greatestOf(weatherCondition.entrySet(),3);
-        System.out.println(topKList);
-        return topKList.stream().map(e -> e.getKey()).collect(Collectors.toList());
-/*
-        // Assume no duplicate value
-        TreeMap<Long, String> sCounter = new TreeMap<>(Ordering.natural().reverse());
-        sCounter.putAll(HashBiMap.create(weatherCondition).inverse());
-//        System.out.println(sCounter);
-        return  sCounter.values().stream().limit(3).collect(Collectors.toList());
-*/
+        return weatherCondition.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(3)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     /**
