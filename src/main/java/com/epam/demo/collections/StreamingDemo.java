@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 public class StreamingDemo {
 
     public static void main(String[] args) {
-//        firstStreamingDemo();
-        thinkAboutOrderInStreams_Good();
+       firstStreamingDemo();
+  //      thinkAboutOrderInStreams_Good();
     }
 
     private static void firstStreamingDemo() {
