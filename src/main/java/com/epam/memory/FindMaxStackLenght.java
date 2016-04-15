@@ -15,7 +15,7 @@ public class FindMaxStackLenght {
     private void recursiveCall(){
         callDepth += 1;
         if(callDepth%1000 == 0){
-            System.out.println("Call dapth is " + callDepth);
+            System.out.println("Call depth is " + callDepth);
         }
         recursiveCall();
     }

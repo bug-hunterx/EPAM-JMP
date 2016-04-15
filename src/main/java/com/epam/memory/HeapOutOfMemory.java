@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class HeapOutOfMemory {
 
     public static void main(String[] args) throws InterruptedException {
-        LinkedList<Long> list = new LinkedList<>();
+        LinkedList<Long> list = new LinkedList<Long>();
         Thread.sleep(10000);
 
         for(long l=0;l<Long.MAX_VALUE;l++){
@@ -17,7 +17,5 @@ public class HeapOutOfMemory {
                 if(i==5000) break;
             }
         }
-
-
     }
 }
