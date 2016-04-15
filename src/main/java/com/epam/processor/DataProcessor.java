@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+
 /**
  * This is to be completed by mentees
  */
@@ -194,6 +195,7 @@ public class DataProcessor {
     public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){
     	Map<String, List<String>> roadAccidentMaps = roadAccidentList.stream().collect(Collectors.groupingBy(RoadAccident::getDistrictAuthority, Collectors.mapping(RoadAccident::getAccidentId, Collectors.toList())));
         return roadAccidentMaps;
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.epam;
+package com.epam.multithreading;
 
 import java.io.IOException;
 
@@ -7,9 +7,8 @@ import java.io.IOException;
  */
 public class Main {
 
-    private static final String ACCIDENTS_CSV = "src/main/resources/DfTRoadSafety_Accidents_2009.csv";
-
-    public volatile static boolean flag = true;
+//try to run with volatile and without
+    public static boolean flag = true;
 
 
     public static void main(String[] args) throws IOException {
