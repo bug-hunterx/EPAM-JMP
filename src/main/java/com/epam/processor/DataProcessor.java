@@ -1,11 +1,17 @@
 package com.epam.processor;
 
-import com.epam.data.RoadAccident;
-import com.google.common.collect.Multimap;
 
+import com.epam.data.RoadAccident;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.*;
 
 /**
  * This is to be completed by mentees
@@ -26,10 +32,16 @@ public class DataProcessor {
      * @param index
      * @return
      */
-    public RoadAccident getAccidentByIndex7(String index){
-        return null;
-    }
+	public RoadAccident getAccidentByIndex7(String index) {
 
+		for (RoadAccident accident : roadAccidentList) {
+			if ((accident.getAccidentId()).equals(index)) {
+
+				return accident;
+			}
+		}
+		return null;
+	}
 
     /**
      * filter list by longtitude and latitude values, including boundaries
@@ -39,9 +51,23 @@ public class DataProcessor {
      * @param maxLatitude
      * @return
      */
-    public Collection<RoadAccident> getAccidentsByLocation7(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
-        return null;
-    }
+	public Collection<RoadAccident> getAccidentsByLocation7(float minLongitude,
+			float maxLongitude, float minLatitude, float maxLatitude) {
+
+		List<RoadAccident> accidentByLocation =  new ArrayList<RoadAccident>();
+		for(RoadAccident accident : roadAccidentList) {
+
+			if (accident.getLongitude() > minLongitude
+					&& accident.getLongitude() < maxLongitude
+					&& accident.getLatitude() > minLatitude
+					&& accident.getLatitude() < maxLatitude) {
+				accidentByLocation.add(accident);
+
+			}
+		}
+
+		return accidentByLocation;
+	}
 
     /**
      * count incidents by road surface conditions
@@ -51,7 +77,18 @@ public class DataProcessor {
      * @return
      */
     public Map<String, Long> getCountByRoadSurfaceCondition7(){
-        return null;
+        
+    	Map<String, Long>  result = new HashMap<String, Long>();
+    	Multimap<String, RoadAccident> intermediateMap = (Multimap) ArrayListMultimap.create();
+     	for(RoadAccident accident : roadAccidentList) {
+     		
+     		intermediateMap.put(accident.getRoadSurfaceConditions(), accident);
+     	}
+     	for(String key :intermediateMap.keySet() ) {
+     		
+     		result.put(key, new Long(intermediateMap.get(key).size()));
+     	}
+     	return result;
     }
 
     /**
@@ -71,18 +108,25 @@ public class DataProcessor {
      * @return
      */
     public Multimap<String, String> getAccidentIdsGroupedByAuthority7(){
-        return null;
+
+    	Multimap<String, String> accidentIdGrpByAuthority = (Multimap) ArrayListMultimap.create();
+    	for(RoadAccident accident : roadAccidentList) {
+    		
+    		accidentIdGrpByAuthority.put(accident.getDistrictAuthority(), accident.getAccidentId());
+    		
+    	}
+    return accidentIdGrpByAuthority;
     }
 
 
     // Now let's do same tasks but now with streaming api
 
 
-
-    public RoadAccident getAccidentByIndex(String index){
-        return null;
-    }
-
+	public RoadAccident getAccidentByIndex(String index) {
+		return roadAccidentList.stream()
+				.filter(accident -> accident.getAccidentId().equals(index))
+				.findFirst().orElse(null);
+	}
 
     /**
      * filter list by longtitude and latitude fields
@@ -92,32 +136,64 @@ public class DataProcessor {
      * @param maxLatitude
      * @return
      */
-    public Collection<RoadAccident> getAccidentsByLocation(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
-        return null;
-    }
+	public Collection<RoadAccident> getAccidentsByLocation(float minLongitude,
+			float maxLongitude, float minLatitude, float maxLatitude) {
+		
+		return roadAccidentList
+				.stream()
+				.filter(roadAccident -> filterLocationbyCordinates(
+						roadAccident.getLongitude(),
+						roadAccident.getLatitude(), minLongitude, maxLongitude,
+						minLatitude, maxLatitude)).collect(Collectors.toList());
 
-    /**
+	}
+
+    private boolean filterLocationbyCordinates(float longitude, float latitude,
+			float minLongitude, float maxLongitude, float minLatitude,
+			float maxLatitude) {
+
+    	return  (longitude > minLongitude && longitude < maxLongitude 
+    		 &&	latitude > minLatitude && latitude < maxLatitude);
+	}
+
+
+	/**
      * find the weather conditions which caused max number of incidents
      * @return
      */
-    public List<String> getTopThreeWeatherCondition(){
-        return null;
-    }
+	public List<String> getTopThreeWeatherCondition() {
+		Map<String, Long> noOfIncidents = roadAccidentList.stream().collect(
+				groupingBy(RoadAccident::getWeatherConditions, counting()));
+
+		List<String> accidentListByWeatherCond = noOfIncidents
+				.entrySet()
+				.stream()
+				.sorted(Comparator.comparing(Map.Entry::getValue,
+						Comparator.reverseOrder())).limit(3)
+				.map(Map.Entry::getKey).collect(Collectors.toList());
+
+		return accidentListByWeatherCond;
+
+	}
 
     /**
      * count incidents by road surface conditions
      * @return
      */
-    public Map<String, Long> getCountByRoadSurfaceCondition(){
-        return null;
-    }
+	public Map<String, Long> getCountByRoadSurfaceCondition() {
+		return roadAccidentList.stream().collect(
+				groupingBy(RoadAccident::getRoadSurfaceConditions, counting()));
+	}
 
     /**
      * To match streaming operations result, return type is a java collection instead of multimap
      * @return
      */
-    public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){
-        return null;
-    }
+	public Map<String, List<String>> getAccidentIdsGroupedByAuthority() {
+
+		return roadAccidentList.stream().collect(
+				groupingBy(RoadAccident::getDistrictAuthority,
+						mapping(RoadAccident::getAccidentId, toList())));
+	}
 
 }
