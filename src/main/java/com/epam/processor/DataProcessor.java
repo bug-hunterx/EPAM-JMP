@@ -1,15 +1,17 @@
 package com.epam.processor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.epam.data.RoadAccident;
-import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 /**
@@ -23,72 +25,6 @@ public class DataProcessor {
         this.roadAccidentList = roadAccidentList;
     }
 
-    public static void main(String[] args) {
-    	
-    	Multimap<String, String> multiMap = HashMultimap.create();
-    	
-    	multiMap.put("1","1");
-    	multiMap.put("1","2");
-    	multiMap.put("1","3");
-    	multiMap.put("1","4");
-    	multiMap.put("1","5");
-    	multiMap.put("2","1");
-    	multiMap.put("2","2");
-    	multiMap.put("2","3");
-    	multiMap.put("2","4");
-    	multiMap.put("2","5");
-    	  
-    	System.out.println( multiMap.keySet().size());
-    	System.out.println( multiMap.get("1").size());
-//    	System.out.println(multiMap);
-    	
-//		class A{
-//			private String name;
-//			public A(String name){
-//				this.name = name;
-//			}
-//			public String getName() {
-//				return name;
-//			}
-//
-//			public void setName(String name) {
-//				this.name = name;
-//			}
-//		}
-//    	
-//    	List<A> list = new ArrayList<>();
-//    	list.add(new A("Sam"));
-//    	list.add(new A("Sam"));
-//    	list.add(new A("Sam"));
-//    	list.add(new A("Sam"));
-//    	list.add(new A("Sam"));
-//    	list.add(new A("Tom"));
-//    	list.add(new A("Tom"));
-//    	list.add(new A("Tom"));
-//    	list.add(new A("Jim"));
-//    	list.add(new A("Jim"));
-//    	list.add(new A("Jimy"));
-//    	list.add(new A("Jimy"));
-//    	list.add(new A("Jimy"));
-//    	list.add(new A("Jimy"));
-//    	
-//    	Map<String, Long> map = list.stream()
-//				.map(A::getName)
-//				.collect(Collectors.groupingBy(
-//						item -> item,
-//						Collectors.counting()
-//				));
-//
-//    	List<String> list2 = map.entrySet().stream()
-//    							.sorted((val1,val2) -> val2.getValue().compareTo(val1.getValue()))
-//    							.map(Map.Entry::getKey)
-//    							.limit(3)
-//    							.collect(Collectors.toList());
-//    	
-//    	list2.forEach(e -> System.out.println(e));
-	}
-    
-    
 //    First try to solve task using java 7 style for processing collections
 
     /**
@@ -140,7 +76,7 @@ public class DataProcessor {
         Map<String, Long> map = new HashMap<>();
         
         for(RoadAccident ra : roadAccidentList){
-        	long count = 0;
+        	long count = 0l;
         	if(map.get(ra.getRoadSurfaceConditions()) != null){
               	count = map.get(ra.getRoadSurfaceConditions());             	
         	}
@@ -156,38 +92,35 @@ public class DataProcessor {
      * as example if there were 10 accidence in rain, 5 in snow, 6 in sunny and 1 in foggy, then your result list should contain {rain, sunny, snow} - top three in decreasing order
      * @return
      */
-    public List<String> getTopThreeWeatherCondition7(){  	
-    	List<String> list = new LinkedList<>();
-    	List<Long> countList = new LinkedList<>();
-    	Multimap<String, Long> multiMap = HashMultimap.create(); 	    	
-    	Long count = 0l;
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<String> getTopThreeWeatherCondition7(){  	
+    	String[] weatherCondition = new String[3];
+    	Map<String,Long> map = new HashMap<String,Long>(); 
     	
     	for(RoadAccident ra : roadAccidentList){
-    		multiMap.put(ra.getWeatherConditions(), count++);
+        	long count = 0l;
+        	if(map.get(ra.getWeatherConditions()) != null){
+              	count = map.get(ra.getWeatherConditions());             	
+        	}
+   
+        	map.put(ra.getWeatherConditions(),++count);
     	}
+   	   	
+		List list = new ArrayList(map.entrySet());  
+        Collections.sort(list, new Comparator(){  
+            public int compare(Object o1, Object o2) {  
+                Map.Entry obj1 = (Map.Entry) o1;  
+                Map.Entry obj2 = (Map.Entry) o2;  
+                return ((Long) obj2.getValue()).compareTo((Long)obj1.getValue());  
+                }  
+        }); 
     	
-    	for(int i = 0;i < 2;i++){
-    		countList.add(0l);
-    	}
-    	    	
-    	for(String key : multiMap.keySet()){
-    		long size = multiMap.get(key).size();
-    		if(size > countList.get(0)){
-    			list.add(0, key);
-    			countList.add(0, size);
-    		}else if(size > countList.get(1)){
-    			list.add(1, key);
-    			countList.add(1, size);
-    		}else if(size > countList.get(2)){
-    			list.add(2, key);
-    			countList.add(2, size);
-    		} 		
-    		if(list.size() == 4){
-    			list.remove(3);
-    		}
-    	}
-    	    	
-    	return list;
+        for(int i = 0; i < 3;i++){
+        	Map.Entry entry = (Map.Entry)list.get(i);
+        	weatherCondition[i] = (String)entry.getKey();
+        }
+        
+    	return  Arrays.asList(weatherCondition);
     }
 
     /**
@@ -198,10 +131,9 @@ public class DataProcessor {
      * @return
      */
     public Multimap<String, String> getAccidentIdsGroupedByAuthority7(){
-    	Multimap<String, String> multiMap = HashMultimap.create();
-    	long count = 0l;
+    	Multimap<String, String> multiMap = ArrayListMultimap.create();
     	for(RoadAccident ra : roadAccidentList){
-    		multiMap.put(ra.getDistrictAuthority(), ra.getAccidentId() + count++);
+    		multiMap.put(ra.getDistrictAuthority(), ra.getAccidentId());
     	}
     	
         return multiMap;
