@@ -1,7 +1,6 @@
 package com.epam.processor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -139,19 +138,16 @@ public class DataProcessor {
      */
     public Map<String, Long> getCountByRoadSurfaceCondition7(){
         Map<String, Long> map = new HashMap<>();
-        long dry = 0, wet = 0;
         
         for(RoadAccident ra : roadAccidentList){
-        	if(ra.getRoadSurfaceConditions().equals("2") || ra.getRoadSurfaceConditions().equalsIgnoreCase("wet")){
-        		wet++;
-        	}else if(ra.getRoadSurfaceConditions().equals("5") || ra.getRoadSurfaceConditions().equalsIgnoreCase("dry")){
-        		dry++;
+        	long count = 0;
+        	if(map.get(ra.getRoadSurfaceConditions()) != null){
+              	count = map.get(ra.getRoadSurfaceConditions());             	
         	}
+   
+        	map.put(ra.getRoadSurfaceConditions(),++count);
         }
-        
-        map.put("Dry", dry);
-        map.put("Wet", wet);
-        
+               
         return map;
     }
 
@@ -243,7 +239,6 @@ public class DataProcessor {
      * @return
      */
     public List<String> getTopThreeWeatherCondition(){   	
-    	List<String> list = new ArrayList<>();
     	Map<String, Long> map = roadAccidentList.stream()
     								.map(RoadAccident::getWeatherConditions)
     								.collect(Collectors.groupingBy(
@@ -263,14 +258,12 @@ public class DataProcessor {
      * @return
      */
     public Map<String, Long> getCountByRoadSurfaceCondition(){ 
-    	Map<String, Long> map = new HashMap<>();
-    	
-    	long dry = roadAccidentList.stream().filter(ra -> ra.getRoadSurfaceConditions().equals("5") || ra.getRoadSurfaceConditions().equalsIgnoreCase("dry")).count();
-    	long wet = roadAccidentList.stream().filter(ra -> ra.getRoadSurfaceConditions().equals("2") || ra.getRoadSurfaceConditions().equalsIgnoreCase("wet")).count();
-    	
-    	map.put("Dry", dry);
-        map.put("Wet", wet);
-    	return map;  	
+    	return roadAccidentList.stream()
+    			.map(RoadAccident::getRoadSurfaceConditions)
+    			.collect(Collectors.groupingBy(
+							item -> item,
+							Collectors.counting()
+    			));	
     }
 
     /**
