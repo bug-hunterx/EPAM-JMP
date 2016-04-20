@@ -28,3 +28,52 @@ In pull request mark your mentor (@mentorName) so it can review it.
 To complite task one you need to fix DataProcessorTest unit tests. 
 All methods in DataProcessor with "7" in a name should be implemented using Java 7, when other should be done with Java 8 streaming api. 
 
+
+## Homework 2
+
+The goal of second homework is to familirise you with tools and technics used to investigate memory-related issues. 
+
+### Task 1 - VisualVM
+
+First start with VisualVM that provided in JDK. It's located in %JAVA_HOME%\bin folder. 
+
+Your task in this exercise is to run some java application (I recomend to use InternedStringsDemo for this), connect to it with visualVM and see how PermGen or Heap is populating. Take some screenshots for your mentor. 
+
+If it's possible I would recommend to try run code with different java version to see how memory articture changes. 
+
+###Task 2 - GC log
+
+Next one be -verbose:gc flag, which used to get gc log in console. 
+
+I recomend to use some real java application, as example IntelliJ itself. You need to add VM options into idea.exe.vmoptions file to enable gc log. And then run IntellJ from command line by running idea.bat file. 
+
+Don't forget about -Xloggc flag that allows you to redirect GC log into a file. 
+I'm pretty sure there's a way to do similar things with eclipse as well. In case if you can't find a way - ask your mentor or me for help. 
+
+Look at memory distribution in visualVM and check GC log. Answer these questions and provide corresponding rows from GC log: 
+
+1. How offen garbage collection happens? 
+2. How long full GC usually takes? 
+
+This link will help you understand every details printed in gc log: http://karunsubramanian.com/websphere/troubleshooting-gc-step-by-step-instructions-to-analyze-verbose-gc-logs/
+
+###Task 3 - Heap dump
+For this exercise you need to download eclipse MAT tool from here 
+
+1. Run GCDemo with with some limit for heap size (Xmx flag). Also use flag to tell JVM to dump heap if OOM occure (you remember what are that flags, right? :smirk: ) 
+2. Add couple objects in app and get a heap eclipse MAT (File - Acquire Heap Dump)
+3. Keep adding object untill you get OOM exeption and second dump will be created
+4. Use eclipse MAT o compare these two dumps. You can find how to do it here https://www.ibm.com/developerworks/community/blogs/kevgrig/entry/how_to_use_the_memory_analyzer_tool_mat_to_compare_heapdumps_and_system_dumps20?lang=ru
+5. Make a screenshot of such comparisong sorted by Shallow Size
+
+###Task 4 - AppDynamic (bonus points) 
+Install AppDynamic and use it to monitor any applications' memory. Provide screenshorts and short report of what did you achive with it. 
+
+
+
+
+
+
+
+
+
