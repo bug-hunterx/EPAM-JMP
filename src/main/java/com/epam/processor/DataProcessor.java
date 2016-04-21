@@ -160,9 +160,12 @@ public class DataProcessor {
      * @return
      */
     public Collection<RoadAccident> getAccidentsByLocation(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
-    	Collection<RoadAccident> roadAccidents = roadAccidentList.stream().filter(x -> x.getLongitude() >= minLongitude && x.getLongitude() <= maxLongitude && 
-    			x.getLatitude() >= minLatitude && x.getLatitude() <= maxLatitude).collect(Collectors.toList());
-    	
+    	Collection<RoadAccident> roadAccidents = roadAccidentList.parallelStream().filter(n->{
+            float longitude = n.getLongitude();
+            float latitude = n.getLatitude();
+            return longitude >= minLongitude && longitude <= maxLongitude && latitude >= minLatitude && latitude <= maxLatitude;
+        }).collect(Collectors.toList());
+	
     	return roadAccidents;
     }
 
