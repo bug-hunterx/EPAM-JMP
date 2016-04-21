@@ -73,8 +73,7 @@ public class DataProcessorTest {
     @Test
     public void should_return_three_most_often_weathers7(){
         List<String> threeTopWeathers = dataProcessor.getTopThreeWeatherCondition7();
-        assertThat(threeTopWeathers.size(), is(3));
-        //assertThat(threeTopWeathers, hasItems("Fine no high winds", "Raining no high winds", "Other"));
+        assertThat(threeTopWeathers, hasItems("Fine no high winds", "Raining no high winds", "Other"));
     }
 
     @Test

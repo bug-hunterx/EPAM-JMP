@@ -57,7 +57,7 @@ public class DataProcessor {
         for(RoadAccident roadAccident:roadAccidentList){
             float longitude = roadAccident.getLongitude();
             float latitude = roadAccident.getLatitude();
-            if(longitude>=minLongitude && longitude<=maxLongitude && latitude>=minLatitude && latitude<=maxLatitude) {
+            if(isInScope(longitude,minLongitude,maxLongitude) && isInScope(latitude,minLatitude,maxLatitude)) {
                 filteredBylocation.add(roadAccident);
             }
         }
@@ -92,14 +92,22 @@ public class DataProcessor {
      */
     public List<String> getTopThreeWeatherCondition7(){
 
-        Map countByRoadConditions = getCountByRoadSurfaceCondition7();
+        Map<String,Long> countByWeatherConditions = Maps.newHashMap();
+        for(RoadAccident roadAccident:roadAccidentList){
+            String weatherCondition = roadAccident.getWeatherConditions();
+            if(countByWeatherConditions.containsKey(weatherCondition)) {
+                countByWeatherConditions.put(weatherCondition,countByWeatherConditions.get(weatherCondition) + 1L);
+            }else{
+                countByWeatherConditions.put(weatherCondition,1L);
+            }
+        }
         List<String> weatherConditions= new ArrayList<String>();
-        weatherConditions.addAll(countByRoadConditions.keySet());
+        weatherConditions.addAll(countByWeatherConditions.keySet());
         Collections.sort(weatherConditions, new Comparator<String>() {
-                public int compare(String w1, String w2) {
-                    Long l1 = (Long) countByRoadConditions.get(w1);
-                    Long l2 = (Long) countByRoadConditions.get(w2);
-                    return (int)(l2 - l1);
+                public int compare(String weatherLeft , String weatherRight) {
+                    Long weatherL = (Long) countByWeatherConditions.get(weatherLeft);
+                    Long weatherR = (Long) countByWeatherConditions.get(weatherRight);
+                    return (int)(weatherR - weatherL);
                 }
         });
         return weatherConditions.subList(0,3);
@@ -131,7 +139,7 @@ public class DataProcessor {
         RoadAccident roadAccident = roadAccidentList.stream()
                 .filter( rdAcc->{
                     return rdAcc.getAccidentId().equals(index) ;
-                }).findFirst().get();
+                }).findFirst().orElse(null);
                // .forEach(s ->System.out.println("forEach: " +s.getAccidentId()+s.getAccidentSeverity()));;
         return roadAccident;
     }
@@ -150,7 +158,7 @@ public class DataProcessor {
                 .filter( rdAcc ->{
                     float longitude = rdAcc.getLongitude();
                     float latitude = rdAcc.getLatitude();
-                    return  longitude>=minLongitude && longitude<=maxLongitude && latitude>=minLatitude && latitude<=maxLatitude;
+                    return isInScope(longitude,minLongitude,maxLongitude) && isInScope(latitude,minLatitude,maxLatitude);//longitude>=minLongitude && longitude<=maxLongitude && latitude>=minLatitude && latitude<=maxLatitude;
                 }).collect(Collectors.toList());
         return filteredBylocation;
     }
@@ -160,7 +168,12 @@ public class DataProcessor {
      * @return
      */
     public List<String> getTopThreeWeatherCondition(){
-        return null;
+        Map<String,Long> weatherCount = roadAccidentList.stream().collect(groupingBy(RoadAccident::getWeatherConditions,Collectors.counting()));
+        List<String> top3WeatherCondition = weatherCount.entrySet()
+                .stream()
+                .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
+                .map(Map.Entry::getKey).limit(3).collect(Collectors.toList());
+        return top3WeatherCondition;
     }
 
     /**
@@ -179,12 +192,14 @@ public class DataProcessor {
      * @return
      */
     public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){
-        /*Map<Integer, List<String>> peopleByAge = people
-                .collect(groupingBy(p -> p.age, mapping((Person p) -> p.name, toList())));*/
-      /*  Map<String, List<String>> accidentIdsGroupedByAuthority = Stream.of(roadAccidentList)
-                //.collect(Collectors.groupingBy(Function.identity(), Collectors. ));
-                .collect(groupingBy(r -> r.districtAuthority, mapping((RoadAccident r) -> r.accidentId, toList())));*/
-        return null;
+        Map<String, List<String>> accidentIdsGroupedByAuthority = roadAccidentList
+                .stream().collect(Collectors.groupingBy(RoadAccident::getDistrictAuthority,Collectors.mapping(RoadAccident::getAccidentId,Collectors.toList())));
+        return accidentIdsGroupedByAuthority;
     }
+
+    private boolean isInScope(float actualValue, float minValue, float maxValue){
+        return minValue <= actualValue && actualValue <= maxValue;
+    }
+
 
 }
