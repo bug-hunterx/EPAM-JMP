@@ -1,6 +1,7 @@
 package com.epam;
 
 import com.epam.data.AccidentsDataLoader;
+import com.epam.data.AccidentsDataWriter;
 import com.epam.data.RoadAccident;
 import com.epam.processor.DataProcessor;
 
@@ -22,9 +23,15 @@ public class Main {
         DataProcessor processor = new DataProcessor();
         processor.enrichWithTimeOfDay(accidents);
         processor.enrichWithForceContact(accidents);
-        System.out.println(accidents.get(0));
 
 
+        AccidentsDataWriter dayWriter = new AccidentsDataWriter("day.csv");
+        AccidentsDataWriter nightWriter = new AccidentsDataWriter("night.csv");
+
+        dayWriter.print(accidents);
+
+        dayWriter.close();
+        nightWriter.close();
     }
 
 }
