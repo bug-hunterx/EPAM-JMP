@@ -95,8 +95,8 @@ public class AccidentBatchLoaderTest {
 
 
         //start consumer threads
-        executor.execute(new DataConsumer(dataQueue1, "dataQueue1"));
-        executor.execute(new DataConsumer(dataQueue2, "dataQueue2"));
+        executor.execute(new DataConsumerNonEnding(dataQueue1, "dataQueue1"));
+        executor.execute(new DataConsumerNonEnding(dataQueue2, "dataQueue2"));
         System.out.println("Started Consumers");
 
         //Create 2 reader task and start
@@ -151,6 +151,35 @@ public class AccidentBatchLoaderTest {
                 dataCounter += consumedData.size();
 
                 while(consumedData != null && !consumedData.isEmpty()){
+                    System.out.println(" Consumed " + dataCounter + " records from " + fileName);
+                    consumedData = dataQueue.take();
+                    dataCounter += consumedData.size();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static class DataConsumerNonEnding implements Runnable{
+
+        private BlockingQueue<List<RoadAccident>> dataQueue;
+        private String fileName;
+
+        public  DataConsumerNonEnding(BlockingQueue<List<RoadAccident>> dataQueue, String fileName ){
+            this.dataQueue = dataQueue;
+            this.fileName = fileName;
+        }
+
+        @Override
+        public void run() {
+            int dataCounter = 0;
+            List<RoadAccident> consumedData = null;
+            try {
+                consumedData = dataQueue.take();
+                dataCounter += consumedData.size();
+
+                while(true){
                     System.out.println(" Consumed " + dataCounter + " records from " + fileName);
                     consumedData = dataQueue.take();
                     dataCounter += consumedData.size();
