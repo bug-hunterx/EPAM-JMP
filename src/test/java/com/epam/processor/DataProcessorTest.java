@@ -94,8 +94,8 @@ public class DataProcessorTest {
 
     @Test
     public void should_group_by_authority7(){
-        //Multimap<String, String> groupedByAuthority = dataProcessor.getAccidentIdsGroupedByAuthority7();
-        //assertThat(groupedByAuthority.get("North Warwickshire").size(), is(274));
+        Multimap<String, String> groupedByAuthority = dataProcessor.getAccidentIdsGroupedByAuthority7();
+        assertThat(groupedByAuthority.get("North Warwickshire").size(), is(274));
     }
 
     @Test
