@@ -1,6 +1,7 @@
 package com.epam.data;
 
 
+import com.sun.istack.internal.Nullable;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -25,6 +26,9 @@ public class AccidentsDataLoader {
     private static final String POLICE_FORCE_CSV = "src/main/resources/police_force.csv";
     private static final String ROAD_SURFACE_CSV = "src/main/resources/road_surface.csv";
     private static final String WEATHER_CONDITIONS_CSV = "src/main/resources/weather_conditions.csv";
+
+    private Iterable<CSVRecord> records;
+
     private Map<Integer, String> districtAuthorities;
     private Map<Integer, String> accidentSeverity;
     private Map<Integer, String> lightConditions;
@@ -32,17 +36,24 @@ public class AccidentsDataLoader {
     private Map<Integer, String> roadSurface;
     private Map<Integer, String> weatherConditions;
 
+    public AccidentsDataLoader(String filepath) throws IOException {
+        Reader reader = new FileReader(filepath);
+        records = new CSVParser(reader, CSVFormat.EXCEL.withHeader());
+
+        loadAdditionalTables();
+    }
+
     private void loadAdditionalTables() {
-        districtAuthorities = loadIntToStrignMap(DISTRICT_AUTHORITY_CSV);
-        accidentSeverity = loadIntToStrignMap(ACCIDENT_SEVERITY_CSV);
-        lightConditions = loadIntToStrignMap(LIGHT_CONDITIONS_CSV);
-        policeForce = loadIntToStrignMap(POLICE_FORCE_CSV);
-        roadSurface = loadIntToStrignMap(ROAD_SURFACE_CSV);
-        weatherConditions = loadIntToStrignMap(WEATHER_CONDITIONS_CSV);
+        districtAuthorities = loadIntToStringMap(DISTRICT_AUTHORITY_CSV);
+        accidentSeverity = loadIntToStringMap(ACCIDENT_SEVERITY_CSV);
+        lightConditions = loadIntToStringMap(LIGHT_CONDITIONS_CSV);
+        policeForce = loadIntToStringMap(POLICE_FORCE_CSV);
+        roadSurface = loadIntToStringMap(ROAD_SURFACE_CSV);
+        weatherConditions = loadIntToStringMap(WEATHER_CONDITIONS_CSV);
     }
 
 
-    private Map<Integer, String> loadIntToStrignMap(String filepath) {
+    private Map<Integer, String> loadIntToStringMap(String filepath) {
         Map<Integer, String> resultMap = new HashMap<>();
 
         try {
@@ -59,24 +70,32 @@ public class AccidentsDataLoader {
         return resultMap;
     }
 
-    public List<RoadAccident> loadRoadAccidents(String filepath) {
-        loadAdditionalTables();
+    public boolean hasMore() {
+        return records.iterator().hasNext();
+    }
 
+    public List<RoadAccident> loadRoadAccidents(@Nullable Integer rowsNum) {
         List<RoadAccident> roadAccidentList = new ArrayList<>();
-        try {
-            Reader reader = new FileReader(filepath);
-            Iterable<CSVRecord> records = new CSVParser(reader, CSVFormat.EXCEL.withHeader());
+            int batchCounter = 0;
+
             for (CSVRecord record : records) {
                 RoadAccident roadAccident = parseOneRecord(record);
                 if (roadAccident != null) {
                     roadAccidentList.add(roadAccident);
                 }
+
+                batchCounter++;
+                if (rowsNum != null && batchCounter >= rowsNum) {
+                    break;
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         System.out.printf("Loaded %d accidents information \n", roadAccidentList.size());
         return roadAccidentList;
+    }
+
+    public List<RoadAccident> loadRoadAccidents() {
+        return loadRoadAccidents(null);
     }
 
     private RoadAccident parseOneRecord(CSVRecord record) {

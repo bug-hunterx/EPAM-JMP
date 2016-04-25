@@ -1,10 +1,14 @@
 package com.epam.processor;
 
+import com.epam.data.TimeOfDay;
 import com.epam.data.RoadAccident;
+import com.epam.service.MockPoliceForceService;
+import com.epam.service.PoliceForceService;
 import com.google.common.base.Function;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+import java.time.LocalTime;
 import java.util.*;
 
 import static java.util.stream.Collectors.*;
@@ -13,11 +17,10 @@ import static java.util.stream.Collectors.*;
  * This is to be completed by mentees
  */
 public class DataProcessor {
+    private PoliceForceService policeService;
 
-    private final List<RoadAccident> roadAccidentList;
-
-    public DataProcessor(List<RoadAccident> roadAccidentList){
-        this.roadAccidentList = roadAccidentList;
+    public DataProcessor(){
+        this.policeService = new MockPoliceForceService(500);
     }
 
 
@@ -28,7 +31,7 @@ public class DataProcessor {
      * @param index
      * @return
      */
-    public RoadAccident getAccidentByIndex7(String index){
+    public RoadAccident getAccidentByIndex7(List<RoadAccident> roadAccidentList, String index){
         for(RoadAccident accident : roadAccidentList) {
             if(accident.getAccidentId().equals(index)) {
                 return accident;
@@ -47,7 +50,7 @@ public class DataProcessor {
      * @param maxLatitude
      * @return
      */
-    public Collection<RoadAccident> getAccidentsByLocation7(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
+    public Collection<RoadAccident> getAccidentsByLocation7(List<RoadAccident> roadAccidentList, float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
         List<RoadAccident> filteredAccidents = new ArrayList<>();
 
         for(RoadAccident accident : roadAccidentList) {
@@ -69,11 +72,11 @@ public class DataProcessor {
      * dry -> 5
      * @return
      */
-    public Map<String, Long> getCountByRoadSurfaceCondition7(){
-        return getCountBy(RoadAccident::getRoadSurfaceConditions);
+    public Map<String, Long> getCountByRoadSurfaceCondition7(List<RoadAccident> roadAccidentList){
+        return getCountBy(roadAccidentList, RoadAccident::getRoadSurfaceConditions);
     }
 
-    private Map<String, Long> getCountBy(Function<RoadAccident, String> classificationFunction) {
+    private Map<String, Long> getCountBy(List<RoadAccident> roadAccidentList, Function<RoadAccident, String> classificationFunction) {
         Map<String, Long> stats = new HashMap<>();
 
         for(RoadAccident accident : roadAccidentList) {
@@ -91,9 +94,9 @@ public class DataProcessor {
      * as example if there were 10 accidence in rain, 5 in snow, 6 in sunny and 1 in foggy, then your result list should contain {rain, sunny, snow} - top three in decreasing order
      * @return
      */
-    public List<String> getTopThreeWeatherCondition7(){
+    public List<String> getTopThreeWeatherCondition7(List<RoadAccident> roadAccidentList){
         // Get stats
-        List<Map.Entry<String, Long>> weatherStats = new ArrayList<>(getCountBy(RoadAccident::getWeatherConditions).entrySet());
+        List<Map.Entry<String, Long>> weatherStats = new ArrayList<>(getCountBy(roadAccidentList, RoadAccident::getWeatherConditions).entrySet());
 
         //Sort and choose top 3
         weatherStats.sort(new Comparator<Map.Entry<String, Long>>() {
@@ -120,7 +123,7 @@ public class DataProcessor {
      * authority2 -> id4, id5
      * @return
      */
-    public Multimap<String, String> getAccidentIdsGroupedByAuthority7(){
+    public Multimap<String, String> getAccidentIdsGroupedByAuthority7(List<RoadAccident> roadAccidentList){
         Multimap<String, String> idsByAuthority = ArrayListMultimap.create();
 
         for(RoadAccident accident : roadAccidentList) {
@@ -135,7 +138,7 @@ public class DataProcessor {
 
 
 
-    public RoadAccident getAccidentByIndex(String index){
+    public RoadAccident getAccidentByIndex(List<RoadAccident> roadAccidentList, String index){
         return roadAccidentList.stream()
                 .filter(roadAccident -> roadAccident.getAccidentId().equals(index))
                 .findFirst().orElse(null);
@@ -150,7 +153,7 @@ public class DataProcessor {
      * @param maxLatitude
      * @return
      */
-    public Collection<RoadAccident> getAccidentsByLocation(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
+    public Collection<RoadAccident> getAccidentsByLocation(List<RoadAccident> roadAccidentList, float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
         return roadAccidentList.stream()
                 .filter(roadAccident -> isGeoPositionInsideBoundaries(
                         roadAccident.getLatitude(),
@@ -167,7 +170,7 @@ public class DataProcessor {
      * find the weather conditions which caused max number of incidents
      * @return
      */
-    public List<String> getTopThreeWeatherCondition(){
+    public List<String> getTopThreeWeatherCondition(List<RoadAccident> roadAccidentList){
         Map<String, Long> weatherStatistics = roadAccidentList.stream()
                 .collect(groupingBy(RoadAccident::getWeatherConditions, counting()));
 
@@ -182,7 +185,7 @@ public class DataProcessor {
      * count incidents by road surface conditions
      * @return
      */
-    public Map<String, Long> getCountByRoadSurfaceCondition(){
+    public Map<String, Long> getCountByRoadSurfaceCondition(List<RoadAccident> roadAccidentList){
         return roadAccidentList.stream()
                 .collect(groupingBy(RoadAccident::getRoadSurfaceConditions, counting()));
     }
@@ -191,13 +194,33 @@ public class DataProcessor {
      * To match streaming operations result, return type is a java collection instead of multimap
      * @return
      */
-    public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){
+    public Map<String, List<String>> getAccidentIdsGroupedByAuthority(List<RoadAccident> roadAccidentList){
         return roadAccidentList.stream()
                 .collect(groupingBy(
                         RoadAccident::getDistrictAuthority,
                         HashMap::new,
                         mapping(RoadAccident::getAccidentId, toList())
                 ));
+    }
+
+    public static void enrichWithTimeOfDay(List<RoadAccident> accidents) {
+        accidents.stream()
+                .forEach(roadAccident -> roadAccident.setTimeOfDay(timeOfDayFromTime(roadAccident.getTime())));
+    }
+
+    private static TimeOfDay timeOfDayFromTime(LocalTime time) {
+        for (TimeOfDay part : TimeOfDay.values()) {
+            if (!time.isAfter(part.getEnd()) && !time.isBefore(part.getStart())) {
+                return part;
+            }
+        }
+
+        throw new RuntimeException("Could not define day part for time provided: " + time.toString());
+    }
+
+    public void enrichWithForceContact(List<RoadAccident> accidents) {
+        accidents.stream()
+                .forEach(roadAccident -> roadAccident.setForceContact(policeService.getContactNo(roadAccident.getPoliceForce())));
     }
 
 }

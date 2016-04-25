@@ -12,11 +12,13 @@ public class RoadAccident {
     private float longitude;
     private float latitude;
     private String policeForce;
+    private String forceContact;
     private String accidentSeverity;
     private int numberOfVehicles;
     private int numberOfCasualties;
     private LocalDate date;
     private LocalTime time;
+    private TimeOfDay timeOfDay;
     private String districtAuthority;
     private String lightConditions;
     private String weatherConditions;
@@ -145,5 +147,42 @@ public class RoadAccident {
 
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
+    }
+
+    public TimeOfDay getTimeOfDay() {
+        return timeOfDay;
+    }
+
+    public void setTimeOfDay(TimeOfDay timeOfDay) {
+        this.timeOfDay = timeOfDay;
+    }
+
+    public String getForceContact() {
+        return forceContact;
+    }
+
+    public void setForceContact(String forceContact) {
+        this.forceContact = forceContact;
+    }
+
+    @Override
+    public String toString() {
+        return "RoadAccident{" +
+                "accidentId='" + accidentId + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", policeForce='" + policeForce + '\'' +
+                ", forceContact='" + forceContact + '\'' +
+                ", accidentSeverity='" + accidentSeverity + '\'' +
+                ", numberOfVehicles=" + numberOfVehicles +
+                ", numberOfCasualties=" + numberOfCasualties +
+                ", date=" + date +
+                ", time=" + time +
+                ", timeOfDay=" + timeOfDay +
+                ", districtAuthority='" + districtAuthority + '\'' +
+                ", lightConditions='" + lightConditions + '\'' +
+                ", weatherConditions='" + weatherConditions + '\'' +
+                ", roadSurfaceConditions='" + roadSurfaceConditions + '\'' +
+                '}';
     }
 }
