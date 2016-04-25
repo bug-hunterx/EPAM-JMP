@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         AccidentsDataLoader accidentsDataLoader = new AccidentsDataLoader();
         List<RoadAccident> accidents = accidentsDataLoader.loadRoadAccidents(ACCIDENTS_CSV);
-
+        System.out.println("Hi");
     }
 
 }
