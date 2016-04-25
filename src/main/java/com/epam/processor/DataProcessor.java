@@ -8,6 +8,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -19,8 +20,11 @@ import static java.util.stream.Collectors.*;
 public class DataProcessor {
     private PoliceForceService policeService;
 
-    public DataProcessor(){
-        this.policeService = new MockPoliceForceService(500);
+    public DataProcessor() throws IOException {
+        Properties props = new Properties();
+        props.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+
+        this.policeService = new MockPoliceForceService(Integer.valueOf(props.getProperty("max-service-response-time")));
     }
 
 

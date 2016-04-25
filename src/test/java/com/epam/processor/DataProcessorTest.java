@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
  */
 public class DataProcessorTest {
 
-    private static final String ACCIDENTS_CSV = "src/main/resources/DfTRoadSafety_Accidents_2009.csv";
+    private static final String ACCIDENTS_CSV = "src/main/resources/input/DfTRoadSafety_Accidents_2009.csv";
 
     private static List<RoadAccident> accidents;
 
