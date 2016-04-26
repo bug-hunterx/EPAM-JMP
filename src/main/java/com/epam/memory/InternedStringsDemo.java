@@ -14,9 +14,11 @@ public class InternedStringsDemo {
         List<String> interned = new LinkedList<String>();
 
         while (true) {
-            int lenght = random.nextInt(200);
-            String chars = "qwertyuiopasdfghjklzxcvbnm";
-            StringBuilder builder = new StringBuilder();
+            //int lenght = random.nextInt(200);
+        	int lenght = random.nextInt(20);
+        	//String chars = "qwertyuiopasdfghjklzxcvbnm";
+        	String chars = "qwert";
+        	StringBuilder builder = new StringBuilder();
 
             builder.append(chars.charAt(random.nextInt(chars.length())));
             interned.add(builder.toString().intern());
