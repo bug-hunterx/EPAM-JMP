@@ -21,6 +21,8 @@ public class RoadAccident {
     private String lightConditions;
     private String weatherConditions;
     private String roadSurfaceConditions;
+    private String forceContact;
+    private String timeosDay;
 
     RoadAccident(RoadAccidentBuilder builder){
         this.accidentId = builder.accidentId;
@@ -146,4 +148,24 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+
+
+	public String getForceContact() {
+		return forceContact;
+	}
+
+
+	public void setForceContact(String forceContact) {
+		this.forceContact = forceContact;
+	}
+
+
+	public String getTimeosDay() {
+		return timeosDay;
+	}
+
+
+	public void setTimeosDay(String timeosDay) {
+		this.timeosDay = timeosDay;
+	}
 }
