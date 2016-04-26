@@ -23,6 +23,7 @@ public class AccidentsDataWriter {
         for(RoadAccident accident : accidents) {
             printer.printRecord(getRowContents(accident));
         }
+        printer.flush();
     }
 
     private List<String> getRowContents(RoadAccident accident) {
@@ -38,7 +39,6 @@ public class AccidentsDataWriter {
     }
 
     public void close() throws IOException {
-        printer.flush();
         printer.close();
     }
 }

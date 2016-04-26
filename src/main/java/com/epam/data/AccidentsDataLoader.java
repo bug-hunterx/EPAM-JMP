@@ -76,21 +76,20 @@ public class AccidentsDataLoader {
 
     public List<RoadAccident> loadRoadAccidents(@Nullable Integer rowsNum) {
         List<RoadAccident> roadAccidentList = new ArrayList<>();
-            int batchCounter = 0;
+        int batchCounter = 0;
 
-            for (CSVRecord record : records) {
-                RoadAccident roadAccident = parseOneRecord(record);
-                if (roadAccident != null) {
-                    roadAccidentList.add(roadAccident);
-                }
-
-                batchCounter++;
-                if (rowsNum != null && batchCounter >= rowsNum) {
-                    break;
-                }
+        for (CSVRecord record : records) {
+            RoadAccident roadAccident = parseOneRecord(record);
+            if (roadAccident != null) {
+                roadAccidentList.add(roadAccident);
             }
 
-        System.out.printf("Loaded %d accidents information \n", roadAccidentList.size());
+            batchCounter++;
+            if (rowsNum != null && batchCounter >= rowsNum) {
+                break;
+            }
+        }
+
         return roadAccidentList;
     }
 

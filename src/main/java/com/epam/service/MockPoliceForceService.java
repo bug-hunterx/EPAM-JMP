@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,7 +15,7 @@ public class MockPoliceForceService implements PoliceForceService {
     }
 
     @Override
-    public String getContactNo(String forceName) {
+    public String getContactNo(String forceName) throws Exception {
         try {
             Thread.sleep(ThreadLocalRandom.current().nextLong(maxExecutionTime));
         } catch (InterruptedException e) {

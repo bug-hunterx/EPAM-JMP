@@ -224,7 +224,13 @@ public class DataProcessor {
 
     public void enrichWithForceContact(List<RoadAccident> accidents) {
         accidents.stream()
-                .forEach(roadAccident -> roadAccident.setForceContact(policeService.getContactNo(roadAccident.getPoliceForce())));
+                .forEach(roadAccident -> {
+                    try {
+                        roadAccident.setForceContact(policeService.getContactNo(roadAccident.getPoliceForce()));
+                    } catch (Exception e) {
+                        System.out.println("Could not retrieve contact information" + e.toString());
+                    }
+                });
     }
 
 }
