@@ -29,11 +29,11 @@ public class DataProcessor {
      * @return
      */
     public RoadAccident getAccidentByIndex7(String index){
-        for(RoadAccident accident : roadAccidentList) {
-            if(accident.getAccidentId().equals(index)) {
-                return accident;
-            }
-        }
+//        for(RoadAccident accident : roadAccidentList) {
+//            if(accident.getAccidentId().equals(index)) {
+//                return accident;
+//            }
+//        }
 
         return null;
     }
