@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -23,6 +24,11 @@ import java.util.stream.Collectors;
 public class Main {
     private static Properties props = new Properties();
     private static final String ACCIDENTS_CSV_DIR = "src/main/resources/input";
+
+    private static AtomicInteger filesRead = new AtomicInteger(0);
+    private static AtomicInteger batchesRead = new AtomicInteger(0);
+    private static AtomicInteger batchesProcessed = new AtomicInteger(0);
+    private static AtomicInteger batchesWritten = new AtomicInteger(0);
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // Load properties
@@ -35,6 +41,7 @@ public class Main {
         int processingThreadsNum = parseIntProp("processing-thread-num");
 
         int writingQueueDepth = parseIntProp("writing-queue-depth");
+        int writingThreadsNum = parseIntProp("writing-thread-num");
 
         DataProcessor processor = new DataProcessor();
         List<File> files = Arrays.asList(new File(ACCIDENTS_CSV_DIR).listFiles());
@@ -45,7 +52,7 @@ public class Main {
         // Init thread pools
         ExecutorService readingExecutor = createExecutor("Reading", readingThreadsNum, readingQueueDepth);
         ExecutorService processingExecutor = createExecutor("Processing", processingThreadsNum, processingQueueDepth);
-        ExecutorService outputExecutor = createExecutor("Writing", 1, writingQueueDepth);
+        ExecutorService outputExecutor = createExecutor("Writing", writingThreadsNum, writingQueueDepth);
 
         // Start reading thread(s)
         files.stream()
@@ -55,18 +62,41 @@ public class Main {
                         accidentsDataLoader = new AccidentsDataLoader(file.getAbsolutePath());
 
                         while(accidentsDataLoader.hasMore()) { // Not sure if hasMore() is thread-safe
+                            List<RoadAccident> batch = accidentsDataLoader.loadRoadAccidents(batchSize);
+                            batchesRead.getAndIncrement();
+
                             processingExecutor.execute(
-                                    new ProcessingTask(
-                                            processor, outputExecutor,
-                                            accidentsDataLoader.loadRoadAccidents(batchSize),
-                                            dayWriter, nightWriter
-                                    )
+                                    new ProcessingTask(processor, outputExecutor, batch, dayWriter, nightWriter)
                             );
                         }
                     } catch (IOException e) {
                         System.out.println("Could not open file: " + e.toString());
+                    } finally {
+                        filesRead.getAndIncrement();
+                        synchronized (filesRead) {filesRead.notify();}
                     }
                 }));
+
+        synchronized (filesRead) {
+            while(filesRead.intValue() < files.size()) {
+                filesRead.wait();
+            }
+        }
+        readingExecutor.shutdown();
+
+        synchronized (batchesProcessed) {
+            while(batchesProcessed.intValue() < batchesRead.intValue()) {
+                batchesProcessed.wait();
+            }
+        }
+        processingExecutor.shutdown();
+
+        synchronized (batchesWritten) {
+            while(batchesWritten.intValue() < batchesRead.intValue()) {
+                batchesWritten.wait();
+            }
+        }
+        outputExecutor.shutdown();
     }
 
     private static int parseIntProp(String propName) {
@@ -104,6 +134,9 @@ public class Main {
             processor.enrichWithTimeOfDay(accidentsBatch);
             processor.enrichWithForceContact(accidentsBatch);
 
+            batchesProcessed.getAndIncrement();
+            synchronized (batchesProcessed) {batchesProcessed.notify();}
+
             List<RoadAccident> dayAccidents = accidentsBatch.stream()
                     .filter(roadAccident -> roadAccident.getTimeOfDay() == TimeOfDay.MORNING || roadAccident.getTimeOfDay() == TimeOfDay.AFTERNOON)
                     .collect(Collectors.toList());
@@ -135,6 +168,8 @@ public class Main {
         public void run() {
             try {
                 writer.print(accidentsBatch);
+                batchesWritten.getAndIncrement();
+                synchronized (batchesWritten) {batchesWritten.notify();}
             } catch (IOException e) {
                 System.out.println("Couldn't write a batch to file: " + e.toString());
             }

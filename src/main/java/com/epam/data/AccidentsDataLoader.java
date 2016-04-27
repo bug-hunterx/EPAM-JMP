@@ -79,7 +79,13 @@ public class AccidentsDataLoader {
         int batchCounter = 0;
 
         for (CSVRecord record : records) {
-            RoadAccident roadAccident = parseOneRecord(record);
+            RoadAccident roadAccident = null;
+            try {
+                roadAccident = parseOneRecord(record);
+            } catch (Exception e) {
+                System.out.println("Could not parse next record: " + record.toString());
+            }
+
             if (roadAccident != null) {
                 roadAccidentList.add(roadAccident);
             }
