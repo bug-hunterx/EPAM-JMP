@@ -12,6 +12,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <start-class>com.epam.Application</start-class>
     </properties>
 
     <groupId>com.epam</groupId>
