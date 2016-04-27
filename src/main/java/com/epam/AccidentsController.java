@@ -13,24 +13,13 @@ import java.util.List;
 @RequestMapping("/accidents")
 public class AccidentsController {
 
-    private static final String ACCIDENTS_CSV = "src/main/resources/DfTRoadSafety_Accidents_2009.csv";
-    private final List<RoadAccident> accidents;
-    private final DataProcessor dataProcessor;
-
-    public AccidentsController(){
-
-        AccidentsDataLoader accidentsDataLoader = new AccidentsDataLoader();
-        accidents = accidentsDataLoader.loadRoadAccidents(ACCIDENTS_CSV);
-        dataProcessor = new DataProcessor(accidents);
-    }
-
     @RequestMapping("")
-     public List<RoadAccident> getAllAccidents(){
-        return accidents;
+     public String getAllAccidents(){
+        return "Here you will get list of all accidents... When I will implements this api...";
     }
 
     @RequestMapping("/{id}")
-    public RoadAccident getAllAccidents(@PathVariable String id){
-        return dataProcessor.getAccidentByIndex(id);
+    public String getAllAccidents(@PathVariable String id){
+        return "You requested accident with id " + id + " - but this functionality is not implemented yet";
     }
 }
