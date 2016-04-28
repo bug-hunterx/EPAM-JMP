@@ -1,8 +1,12 @@
 package com.epam.data;
 
+import com.epam.dataservice.DayTime;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains information about one road accident
@@ -17,6 +21,7 @@ public class RoadAccident {
     private int numberOfCasualties;
     private LocalDate date;
     private LocalTime time;
+    private DayTime dayTime;
     private String districtAuthority;
     private String lightConditions;
     private String weatherConditions;
@@ -32,6 +37,7 @@ public class RoadAccident {
         this.numberOfCasualties = builder.numberOfCasualties;
         this.date = builder.date;
         this.time = builder.time;
+        this.dayTime = builder.dayTime;
         this.districtAuthority = builder.districtAuthority;
         this.lightConditions = builder.lightConditions;
         this.weatherConditions = builder.weatherConditions;
@@ -115,6 +121,10 @@ public class RoadAccident {
         this.time = time;
     }
 
+    public DayTime getDayTime() {return dayTime; };
+
+    public void setDayTime(DayTime dayTime ) {this.dayTime = dayTime; }
+
     public String getDistrictAuthority() {
         return districtAuthority;
     }
@@ -145,5 +155,17 @@ public class RoadAccident {
 
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
+    }
+
+    public List<String> toListString() {
+        List<String> result = new ArrayList<>();
+        result.add(getAccidentId());
+        result.add(getDate().toString());
+        result.add(getAccidentSeverity());
+        result.add(getDistrictAuthority());
+        result.add(getLightConditions());
+        result.add(getPoliceForce());
+
+        return result;
     }
 }
