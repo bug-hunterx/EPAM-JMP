@@ -104,5 +104,10 @@ public class DataProcessorTest {
         assertThat(groupedByAuthority.get("North Warwickshire").size(), is(274));
     }
 
+    @Test
+    public void should_fail_for_presentation(){
+        fail();
+    }
+
 
 }
