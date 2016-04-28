@@ -1,5 +1,7 @@
 package com.epam.data;
 
+import com.epam.dataservice.DayTime;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -16,6 +18,7 @@ public class RoadAccidentBuilder {
     int numberOfCasualties;
     LocalDate date;
     LocalTime time;
+    DayTime dayTime;
     String districtAuthority;
     String lightConditions;
     String weatherConditions;
@@ -63,6 +66,11 @@ public class RoadAccidentBuilder {
 
     public RoadAccidentBuilder withTime(LocalTime time) {
         this.time = time;
+        return this;
+    }
+
+    public RoadAccidentBuilder withDayTime (DayTime dayTime) {
+        this.dayTime = dayTime;
         return this;
     }
 
