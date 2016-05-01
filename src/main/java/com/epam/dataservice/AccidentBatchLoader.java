@@ -13,9 +13,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AccidentBatchLoader implements Callable<Integer> {
 
+    private static AtomicInteger serialNo = new AtomicInteger();
+    private String taskName = this.getClass().getSimpleName() + serialNo.incrementAndGet();
     private Integer batchSize;
     private BlockingQueue<List<RoadAccident>> dataQueue;
     private String dataFileName;
@@ -46,6 +49,7 @@ public class AccidentBatchLoader implements Callable<Integer> {
                 ++batchCount;
                 System.out.println(" Completed reading " + dataCount + " in " + batchCount + " batches for " + dataFileName);
             }
+            System.out.println(taskName + " Trying to put, Queue.remainingCapacity()="+dataQueue.remainingCapacity());
             dataQueue.put(roadAccidentBatch);
         }
         //dataQueue.put(roadAccidentBatch); //Epmty batch can be used as identifier for end of record production
@@ -61,7 +65,7 @@ public class AccidentBatchLoader implements Callable<Integer> {
         List<RoadAccident> roadAccidentBatch = new ArrayList<RoadAccident>();
         int recordCount = 0;
         RoadAccident roadAccidentItem = null;
-        while(recordCount <= batchSize && recordIterator.hasNext() ){
+        while(recordCount < batchSize && recordIterator.hasNext() ){
             roadAccidentItem = roadAccidentParser.parseRecord(recordIterator.next());
             if(roadAccidentItem != null){
                 roadAccidentBatch.add(roadAccidentItem);
