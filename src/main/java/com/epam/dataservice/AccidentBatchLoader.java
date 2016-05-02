@@ -1,6 +1,7 @@
 package com.epam.dataservice;
 
 
+import com.epam.data.EnrichRoadAccident;
 import com.epam.data.RoadAccident;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -49,7 +50,7 @@ public class AccidentBatchLoader implements Callable<Integer> {
             }else{
                 ++batchCount;
                 System.out.println(" Completed reading " + dataCount + " in " + batchCount + " batches for " + dataFileName);
-                System.out.println(taskName + " Trying to put, Queue.remainingCapacity()="+dataQueue.remainingCapacity());
+//                System.out.println(taskName + " Trying to put, Queue.remainingCapacity()="+dataQueue.remainingCapacity());
                 dataQueue.put(roadAccidentBatch);
             }
         }

@@ -146,4 +146,35 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+
+    // Patch for home work 3, should extend RoadAccident class
+    private String ForceContact = null;
+    private TimeOfDay timeOfDay;
+
+    public String getForceContact() {
+        return ForceContact;
+    }
+
+    public void setForceContact(String forceContact) {
+        ForceContact = forceContact;
+    }
+
+    public TimeOfDay getTimeOfDay() {
+        return timeOfDay;
+    }
+
+    public void setTimeOfDay(LocalTime time) {
+        this.timeOfDay = TimeOfDay.getTimeOfDay(time);
+    }
+
+    public String toCSV() {
+        return String.join(",",
+                accidentId,
+                policeForce,
+                ForceContact,
+                time.toString(),
+                timeOfDay.toString()
+                );
+    }
+
 }

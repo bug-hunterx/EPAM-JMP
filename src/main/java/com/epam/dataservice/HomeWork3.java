@@ -1,6 +1,7 @@
 package com.epam.dataservice;
 
 import com.epam.data.RoadAccident;
+import com.epam.data.RoadAccidentBuilder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +16,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HomeWork3 {
     private final int MAX_READ_THREADS = 2;
     private final int MAX_PROC_THREADS = 2;
-    private final int MAX_BATCH_SIZE = 40000;
+    private final int MAX_ENRICH_THREADS = 5;
+    private final int MAX_WRITE_THREADS = 2;
+    public static final int MAX_BATCH_SIZE = 40000;
+    public static final String outputFileNames[] = {"NighttimeAccidents.csv", "DaytimeAccidents.csv"};
 
     private LinkedList<String> fileList;
     private BlockingQueue<List<RoadAccident>> readQueue;
@@ -24,18 +28,35 @@ public class HomeWork3 {
 
     private ExecutorService procExecutor;
 
+    private ExecutorService enrichExecutor;
+
+    private List<BlockingQueue<RoadAccident>> writeQueues = new ArrayList<>(MAX_WRITE_THREADS);
+    private ExecutorService writeExecutor;
+
     public HomeWork3(LinkedList<String> fileList) {
         this.fileList = fileList;
         readQueue = new ArrayBlockingQueue<List<RoadAccident>>(MAX_PROC_THREADS);
+        for (int i = 0; i < MAX_WRITE_THREADS; i++) {
+            writeQueues.add( new ArrayBlockingQueue<RoadAccident>(2000) );
+        }
     }
 
     public void buildReadTask() {
         readExecutor = Executors.newFixedThreadPool(MAX_READ_THREADS);
         procExecutor = Executors.newFixedThreadPool(MAX_PROC_THREADS);
+//        enrichExecutor = Executors.newFixedThreadPool(MAX_ENRICH_THREADS);
+    }
+
+    public void buildWriteTask() {
+        writeExecutor = Executors.newFixedThreadPool(MAX_WRITE_THREADS);
+        for (int i = 0; i < MAX_WRITE_THREADS; i++) {
+            writeExecutor.submit(new AccidentBatchWriter(writeQueues.get(i),outputFileNames[i]));
+        }
     }
 
     public void buildTask() {
         buildReadTask();
+        buildWriteTask();
     }
 
     public void run() {
@@ -47,7 +68,7 @@ public class HomeWork3 {
 //            readExecutor.execute(readerTask);
         }
         for (int i = 0; i < MAX_PROC_THREADS; i++) {
-            procExecutor.submit(new AccidentBatchProcessor(readQueue));
+            procExecutor.submit(new AccidentBatchProcessor(readQueue, writeQueues));
 //            readExecutor.submit(new ReadTerminator(readQueue));
         }
         System.out.println("All task submitted");
@@ -55,10 +76,15 @@ public class HomeWork3 {
 
         try {
             readQueueFinish();
+            endDatLoading(procExecutor);
+            for (int i = 0; i < MAX_WRITE_THREADS; i++) {
+                System.out.println("Send quit message to writeQueue, count: " + Integer.toString(i+1));
+                writeQueues.get(i).put( new RoadAccidentBuilder(null).build() );
+            }
+            endDatLoading(writeExecutor);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        endDatLoading(procExecutor);
     }
 
     private void readQueueFinish() throws Exception {
