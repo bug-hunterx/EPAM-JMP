@@ -45,12 +45,13 @@ public class AccidentBatchLoader implements Callable<Integer> {
             dataCount = dataCount + roadAccidentBatch.size();
             if(roadAccidentBatch.isEmpty()){
                 isDataLoadFinished = true;
+                System.out.println(taskName + " Finished");
             }else{
                 ++batchCount;
                 System.out.println(" Completed reading " + dataCount + " in " + batchCount + " batches for " + dataFileName);
+                System.out.println(taskName + " Trying to put, Queue.remainingCapacity()="+dataQueue.remainingCapacity());
+                dataQueue.put(roadAccidentBatch);
             }
-            System.out.println(taskName + " Trying to put, Queue.remainingCapacity()="+dataQueue.remainingCapacity());
-            dataQueue.put(roadAccidentBatch);
         }
         //dataQueue.put(roadAccidentBatch); //Epmty batch can be used as identifier for end of record production
         return dataCount;

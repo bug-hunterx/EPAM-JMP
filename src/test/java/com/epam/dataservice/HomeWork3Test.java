@@ -19,7 +19,7 @@ public class HomeWork3Test {
 
     @BeforeClass
     public static void loadData(){
-        for (int i = 2009; i <= 2012 ; i++) {
+        for (int i = 2009; i <= 2011 ; i++) {
             inputFiles.add("src/main/resources/DfTRoadSafety_Accidents_" + Integer.toString(i) +".csv");
         }
         homeWork3 = new HomeWork3(inputFiles);

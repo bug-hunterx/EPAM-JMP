@@ -12,10 +12,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AccidentBatchProcessor  implements Runnable {
     private static AtomicInteger serialNo = new AtomicInteger();
+    private static AtomicBoolean done = new AtomicBoolean(false);
+
     private BlockingQueue<List<RoadAccident>> dataQueue;
     private String taskName;
     private Integer id;
-    private AtomicBoolean done = new AtomicBoolean(false);
+
 
     public  AccidentBatchProcessor(BlockingQueue<List<RoadAccident>> dataQueue){
         id = serialNo.incrementAndGet();
@@ -36,6 +38,7 @@ public class AccidentBatchProcessor  implements Runnable {
                         dataCounter += consumedData.size();
                         System.out.println(" Consumed " + dataCounter + " records from " + taskName);
                     } else {
+                        done.set(true);
                         System.out.println(taskName + " Get empty data");
                     }
                 } else {
@@ -43,8 +46,14 @@ public class AccidentBatchProcessor  implements Runnable {
                     System.out.println(taskName + " Quit");
                 }
             }
+            System.out.println(taskName + " Finished");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
+    public static void stop() {
+        done.set(true);
+    }
+
 }

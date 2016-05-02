@@ -3,6 +3,7 @@ package com.epam.dataservice;
 import com.epam.data.RoadAccident;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -47,10 +48,46 @@ public class HomeWork3 {
         }
         for (int i = 0; i < MAX_PROC_THREADS; i++) {
             procExecutor.submit(new AccidentBatchProcessor(readQueue));
+//            readExecutor.submit(new ReadTerminator(readQueue));
         }
         System.out.println("All task submitted");
 
+
+        try {
+            readQueueFinish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        endDatLoading(procExecutor);
+    }
+
+    private void readQueueFinish() throws Exception {
         Boolean taskStatus;
+        while(!readTaskList.isEmpty()) {
+            Iterator<Future<Integer>> iter = readTaskList.iterator();
+            while (iter.hasNext()) {
+                if ( iter.next().isDone() ) {
+                    iter.remove();
+                }
+            }
+            TimeUnit.SECONDS.sleep(1);
+        }
+
+        readExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                List<RoadAccident> emptyAccidentList = new ArrayList<RoadAccident>(1);
+                for (int i = 0; i < MAX_PROC_THREADS; i++) {
+                    System.out.println("Send quit message to readQueue, count: " + Integer.toString(i+1));
+                    try {
+                        readQueue.put(emptyAccidentList);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
         readExecutor.shutdown();
         try {
             taskStatus = readExecutor.awaitTermination(5, TimeUnit.MINUTES);
@@ -63,38 +100,35 @@ public class HomeWork3 {
             e.printStackTrace();
         }
 
-/*
-        for (int i = 0; i < MAX_PROC_THREADS; i++) {
-            try {
-                readQueue.put(null);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-*/
-        System.out.println("Waiting readQueua empty=" + readQueue.isEmpty() + " Remain: "+ readQueue.size());
-        while (!readQueue.isEmpty()) {
-            try {
-                System.out.println("readQueua empty=" + readQueue.isEmpty() + " Remain: "+ readQueue.size());
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("Stopping readQueua empty=" + readQueue.isEmpty() + " Remain: "+ readQueue.size());
-        endDatLoading(procExecutor);
     }
-
     public static void main(String[] args) throws Exception{
         //handle2FilesWithRunnable();
         //handle2FilesWithCallable();
         //handleMultipleFilesWithCallable();
     }
 
+    private static class ReadTerminator implements Runnable {
+        public static List<RoadAccident> emptyAccidentList = new ArrayList<RoadAccident>(1);
+        private BlockingQueue<List<RoadAccident>> dataQueue;
+
+        public ReadTerminator(BlockingQueue<List<RoadAccident>> dataQueue) {
+            this.dataQueue = dataQueue;
+        }
+
+        @Override
+        public void run() {
+            try {
+                System.out.println("Send quit message");
+                dataQueue.put(emptyAccidentList);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private static void endDatLoading(ExecutorService executor){
         executor.shutdown();
         try {
-            if (executor.awaitTermination(1, TimeUnit.MINUTES)) {
+            if (executor.awaitTermination(10, TimeUnit.SECONDS)) {
                 System.out.println("All task finished");
             }
         } catch (InterruptedException e) {
