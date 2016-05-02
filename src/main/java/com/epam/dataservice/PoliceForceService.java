@@ -18,8 +18,8 @@ public class PoliceForceService{
     private final String PHONE_PREFIX = "13163862";
     private Map<String,Integer> forceMap = new HashMap<>();
     private AtomicInteger executionCount = new AtomicInteger(0);
-    private final int HALT_AT_EXECUTION = 10;
-    private final long HALT_FOR = 1000 * 1;
+    private final int HALT_AT_EXECUTION = 20000;
+    private final long HALT_FOR = 100 * 2;
 
     public PoliceForceService(){
         init();
@@ -41,7 +41,7 @@ public class PoliceForceService{
     }
 
     public String getContactNo(String policeForceName){
-        if(executionCount.incrementAndGet() == HALT_AT_EXECUTION){
+        if(executionCount.incrementAndGet() % HALT_AT_EXECUTION == 0){
             try {
                 System.out.println("Oops:"+executionCount.get());
                 Thread.sleep(HALT_FOR);

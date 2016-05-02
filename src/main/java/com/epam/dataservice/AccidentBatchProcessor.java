@@ -11,18 +11,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AccidentBatchProcessor  implements Runnable {
     private static AtomicInteger serialNo = new AtomicInteger();
-//    private AtomicBoolean done = new AtomicBoolean(false);
 // For record Enrichment
     private static PoliceForceService policeForceService = new PoliceForceService();
-    private static ExecutorService enrichExecutor = Executors.newFixedThreadPool(5);
+    private static ExecutorService enrichExecutor = Executors.newFixedThreadPool(HomeWork3.MAX_ENRICH_THREADS);
     private CompletionService<RoadAccident> enrichCompletionService = new ExecutorCompletionService<RoadAccident>(enrichExecutor);
 
     private String taskName = getClass().getSimpleName() + serialNo.incrementAndGet();
     private BlockingQueue<List<RoadAccident>> readQueue;
     private List<BlockingQueue<RoadAccident>> writeQueues;
-
-
-
 
     public  AccidentBatchProcessor(BlockingQueue<List<RoadAccident>> readQueue, List<BlockingQueue<RoadAccident>> writeQueues){
         this.readQueue = readQueue;
@@ -36,7 +32,6 @@ public class AccidentBatchProcessor  implements Runnable {
         Boolean done = false;
         try {
             while (!done) {
-//                System.out.println(taskName + " trying to fetch data, Queue size=" + readQueue.size());
                 consumedData = readQueue.take();
                 if (consumedData != null ) {
                     if(!consumedData.isEmpty()) {
@@ -52,7 +47,7 @@ public class AccidentBatchProcessor  implements Runnable {
                     break;
                 }
             }
-            System.out.println(taskName + " Finished");
+//            System.out.println(taskName + " Finished");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -63,24 +58,17 @@ public class AccidentBatchProcessor  implements Runnable {
         for (RoadAccident record : consumedData) {
             enrichCompletionService.submit(new enrichRecord(record));
         }
-        int n = consumedData.size();
-        System.out.println(taskName + " Enriching data, size=" + consumedData.size());
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < consumedData.size(); i++) {
             try {
                 RoadAccident record = enrichCompletionService.take().get();
-//                System.out.println(taskName + " Get data=" + record.getAccidentId());
                 int index = record.getTimeOfDay().getCategory();
-//                System.out.println(taskName + " Put... data= to QQ" + index);
                 writeQueues.get(index).put(record);
-//                System.out.println(taskName + " Put data= to QQ" + index);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
         }
-//        System.out.println(taskName + " Enrich record finished");
-
     }
 
     private class enrichRecord implements Callable<RoadAccident> {

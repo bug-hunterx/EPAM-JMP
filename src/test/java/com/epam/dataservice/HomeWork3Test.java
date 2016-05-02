@@ -36,7 +36,6 @@ public class HomeWork3Test {
 
     @Test
     public void test1() {
-        homeWork3.buildTask();
         homeWork3.run();
     }
 

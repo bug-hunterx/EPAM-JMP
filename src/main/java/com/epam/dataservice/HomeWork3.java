@@ -15,8 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class HomeWork3 {
     private final int MAX_READ_THREADS = 2;
-    private final int MAX_PROC_THREADS = 2;
-    private final int MAX_ENRICH_THREADS = 5;
+    private final int MAX_PROC_THREADS = 4;
+    public static final int MAX_ENRICH_THREADS = 100;
     private final int MAX_WRITE_THREADS = 2;
     public static final int MAX_BATCH_SIZE = 40000;
     public static final String outputFileNames[] = {"NighttimeAccidents.csv", "DaytimeAccidents.csv"};
@@ -28,51 +28,41 @@ public class HomeWork3 {
 
     private ExecutorService procExecutor;
 
-    private ExecutorService enrichExecutor;
-
     private List<BlockingQueue<RoadAccident>> writeQueues = new ArrayList<>(MAX_WRITE_THREADS);
     private ExecutorService writeExecutor;
 
     public HomeWork3(LinkedList<String> fileList) {
         this.fileList = fileList;
+    }
+
+    public void startTask() {
         readQueue = new ArrayBlockingQueue<List<RoadAccident>>(MAX_PROC_THREADS);
         for (int i = 0; i < MAX_WRITE_THREADS; i++) {
-            writeQueues.add( new ArrayBlockingQueue<RoadAccident>(2000) );
+            writeQueues.add( new ArrayBlockingQueue<RoadAccident>(MAX_BATCH_SIZE/2) );
         }
-    }
 
-    public void buildReadTask() {
         readExecutor = Executors.newFixedThreadPool(MAX_READ_THREADS);
-        procExecutor = Executors.newFixedThreadPool(MAX_PROC_THREADS);
-//        enrichExecutor = Executors.newFixedThreadPool(MAX_ENRICH_THREADS);
-    }
+        for (String file : fileList ) {
+            FutureTask<Integer> readTask = new FutureTask<Integer>(
+                    new AccidentBatchLoader(MAX_BATCH_SIZE,readQueue,file));
+            readTaskList.add(readTask);
+            readExecutor.submit(readTask);
+        }
 
-    public void buildWriteTask() {
+        procExecutor = Executors.newFixedThreadPool(MAX_PROC_THREADS);
+        for (int i = 0; i < MAX_PROC_THREADS; i++) {
+            procExecutor.submit(new AccidentBatchProcessor(readQueue, writeQueues));
+        }
+
         writeExecutor = Executors.newFixedThreadPool(MAX_WRITE_THREADS);
         for (int i = 0; i < MAX_WRITE_THREADS; i++) {
             writeExecutor.submit(new AccidentBatchWriter(writeQueues.get(i),outputFileNames[i]));
         }
-    }
-
-    public void buildTask() {
-        buildReadTask();
-        buildWriteTask();
+        System.out.println("All task submitted");
     }
 
     public void run() {
-        for (String file : fileList ) {
-            FutureTask<Integer> readTask = new FutureTask<Integer>(
-                    new AccidentBatchLoader(40000,readQueue,file));
-            readTaskList.add(readTask);
-            readExecutor.submit(readTask);
-//            readExecutor.execute(readerTask);
-        }
-        for (int i = 0; i < MAX_PROC_THREADS; i++) {
-            procExecutor.submit(new AccidentBatchProcessor(readQueue, writeQueues));
-//            readExecutor.submit(new ReadTerminator(readQueue));
-        }
-        System.out.println("All task submitted");
-
+        startTask();
 
         try {
             readQueueFinish();
@@ -127,10 +117,8 @@ public class HomeWork3 {
         }
 
     }
+
     public static void main(String[] args) throws Exception{
-        //handle2FilesWithRunnable();
-        //handle2FilesWithCallable();
-        //handleMultipleFilesWithCallable();
     }
 
     private static class ReadTerminator implements Runnable {
@@ -155,37 +143,12 @@ public class HomeWork3 {
         executor.shutdown();
         try {
             if (executor.awaitTermination(10, TimeUnit.SECONDS)) {
-                System.out.println("All task finished");
+                System.out.println("All task finished for " + executor.getClass().getSimpleName());
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Data loading finished");
+//        System.out.println("Data loading finished");
     }
-    private static class SimpleCallable implements Callable<Integer> {
-        static AtomicInteger sno = new AtomicInteger();
-        private Integer batchSize;
-        private BlockingQueue<List<RoadAccident>> dataQueue;
-        private String dataFileName;
 
-        public SimpleCallable(int batchSize, BlockingQueue<List<RoadAccident>> dataQueue, String dataFileName){
-            this.batchSize = batchSize;
-            this.dataQueue = dataQueue;
-            this.dataFileName = dataFileName;
-            this.batchSize = sno.incrementAndGet();
-        }
-
-        @Override
-        public Integer call() throws Exception {
-            for (int i = 0; i < 5; i++) {
-                try {
-                    Thread.sleep(1000/5);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Task " + batchSize + "=> " + dataFileName + " Stage: " + Integer.toString(i) );
-            }
-            return batchSize;
-        }
-    }
 }

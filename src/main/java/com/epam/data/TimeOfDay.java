@@ -8,17 +8,7 @@ import java.time.LocalTime;
  */
 
 public enum TimeOfDay {
-    MORNING, AFTERNOON, EVENING,  NIGHT;
-
-//    private String day = null;
-//    private int category = 0;
-//    private LocalTime time;
-
-/*
-    TimeOfDay(String day) {
-        this.day = day;
-    }
-*/
+    MORNING, AFTERNOON, EVENING, NIGHT;
 
     public static TimeOfDay getTimeOfDay(LocalTime time) {
         int hour = time.getHour();
@@ -32,16 +22,8 @@ public enum TimeOfDay {
             case 3:
             default:
                 return TimeOfDay.EVENING;
-//                break;
         }
     }
-
-/*
-    @Override
-    public String toString() {
-        return day;
-    }
-*/
 
     public int getCategory() {
         if(this.equals(TimeOfDay.MORNING) | this.equals(TimeOfDay.AFTERNOON)) {
