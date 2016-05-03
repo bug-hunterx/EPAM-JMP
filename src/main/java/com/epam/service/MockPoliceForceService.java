@@ -21,6 +21,6 @@ public class MockPoliceForceService implements PoliceForceService {
         } catch (InterruptedException e) {
             return "";
         }
-        return "asdf";
+        return "Phone number";
     }
 }

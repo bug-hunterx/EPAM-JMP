@@ -1,7 +1,5 @@
 package com.epam.data;
 
-
-import com.sun.istack.internal.Nullable;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -74,7 +72,7 @@ public class AccidentsDataLoader {
         return records.iterator().hasNext();
     }
 
-    public List<RoadAccident> loadRoadAccidents(@Nullable Integer rowsNum) {
+    public List<RoadAccident> loadRoadAccidents(Integer rowsNum) {
         List<RoadAccident> roadAccidentList = new ArrayList<>();
         int batchCounter = 0;
 
@@ -83,7 +81,7 @@ public class AccidentsDataLoader {
             try {
                 roadAccident = parseOneRecord(record);
             } catch (Exception e) {
-                System.out.println("Could not parse next record: " + record.toString());
+                //System.out.println("Could not parse next record: " + record.getRecordNumber());
             }
 
             if (roadAccident != null) {
