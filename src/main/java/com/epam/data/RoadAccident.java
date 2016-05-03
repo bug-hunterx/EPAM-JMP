@@ -168,4 +168,17 @@ public class RoadAccident {
 
         return result;
     }
+
+    @Override
+    public String toString() {
+    	return "RoadAccident:" +
+    			"\nid:" + this.accidentId +
+    			"\ndistrictAuthority:" + this.districtAuthority+
+    			"\npoliceForce:" + this.policeForce +
+    			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
+    			"\nweatherConditions:" + this.weatherConditions;
+    			
+    			
+    			
+    }
 }

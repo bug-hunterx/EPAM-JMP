@@ -1,17 +1,14 @@
 package com.epam.dataservice;
 
 import com.epam.data.RoadAccident;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.Queue;
+
 import java.util.concurrent.BlockingQueue;
 
 /**
