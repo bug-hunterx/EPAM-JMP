@@ -2,20 +2,27 @@ package com.epam.dataservice;
 
 import com.epam.data.AccidentsDataLoader;
 import com.epam.data.RoadAccident;
+import com.epam.data.RoadAccidentBuilder;
 import com.epam.data.TimeOfDay;
 import com.epam.processor.DataProcessor;
+import org.hamcrest.core.AnyOf;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.*;
 
 import static org.hamcrest.core.Is.is;
+import org.hamcrest.core.IsInstanceOf;
+import org.hamcrest.core.IsNull;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsInstanceOf.*;
 import static org.junit.Assert.*;
 
 
@@ -34,8 +41,73 @@ public class HomeWork3Test {
         homeWork3 = new HomeWork3(inputFiles);
     }
 
+    private RoadAccident createRoadAccident(String id, String time) {
+        RoadAccident roadAccident;
+        if (id == null) {
+            roadAccident = new RoadAccidentBuilder(null).build();
+        } else {
+            roadAccident = new RoadAccidentBuilder(id)
+                    .withTime(LocalTime.parse(time, DateTimeFormatter.ISO_LOCAL_TIME))
+                    .build();
+        }
+        return roadAccident;
+    }
+
+    private List<RoadAccident> createRoadAccidentListWithTime(String[] times) {
+        List<RoadAccident> roadAccidentList = new ArrayList<RoadAccident>();
+        for (String time : times ) {
+            roadAccidentList.add( createRoadAccident("ID"+Integer.toString(i), time) );
+        }
+        return roadAccidentList;
+    }
+
     @Test
-    public void test1() {
+    public void testAccidentBatchProcessor() throws Exception {
+        String[] times = {"00:00:00", "06:00:00", "17:59:59", "23:59:59"};
+        BlockingQueue<List<RoadAccident>> readQueue = new ArrayBlockingQueue<List<RoadAccident>>(2);
+        List<BlockingQueue<RoadAccident>> writeQueues = new ArrayList<>(2);
+        for (int i = 0; i < 2; i++) {
+            writeQueues.add( new ArrayBlockingQueue<RoadAccident>(2) );
+        }
+        ExecutorService procExecutor = Executors.newFixedThreadPool(2);
+        for (int i = 0; i < 2; i++) {
+            procExecutor.submit(new AccidentBatchProcessor(readQueue, writeQueues));
+        }
+        for (String time : times ) {
+            List<RoadAccident> roadAccidentList = new ArrayList<RoadAccident>();
+            roadAccidentList.add(createRoadAccident(time, time));
+            readQueue.put(roadAccidentList);
+        }
+        TimeUnit.SECONDS.sleep(1);
+
+        RoadAccident roadAccident;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                BlockingQueue<RoadAccident> writeQueue = writeQueues.get(j);
+                System.out.println("Q" + j + " Size=" + writeQueue.size());
+                roadAccident = writeQueue.take();
+                System.out.println(roadAccident.toCSV());
+                assertThat(roadAccident, instanceOf(RoadAccident.class));
+/*
+                if (j==0) {
+                    assertThat(roadAccident.getTimeOfDay(), isIn(Arrays.asList(TimeOfDay.EVENING, TimeOfDay.NIGHT));
+                } else {
+                    assertThat(roadAccident.getTimeOfDay(), isIn(Arrays.asList(TimeOfDay.MORNING, TimeOfDay.AFTERNOON));
+                }
+*/
+                assertThat(roadAccident.getTimeOfDay().getCategory(), equalTo(j));
+            }
+            TimeUnit.SECONDS.sleep(1);
+        }
+        for (int i = 0; i < 2; i++) {
+            assertThat(writeQueues.get(i).isEmpty(), equalTo(true));
+        }
+        assertThat(readQueue.isEmpty(), equalTo(true));
+        procExecutor.shutdown();
+    }
+
+    @Test
+    public void testMain() {
         homeWork3.run();
     }
 
@@ -51,8 +123,13 @@ public class HomeWork3Test {
     }
 
     @Test
-    public void test() {
-
+    public void testPoliceForceService() {
+        PoliceForceService policeForceService = new PoliceForceService();
+        assertThat(policeForceService.getContactNo("Norfolk"), equalTo("1316386236"));
+        assertThat(policeForceService.getContactNo("London"), equalTo("13163862"));
+        assertThat(policeForceService.getContactNo(""), equalTo("13163862"));
+        assertThat(policeForceService.getContactNo(null), equalTo("13163862"));
+//        assertThat(policeForceService.getContactNo("London"), IsNull.nullValue());
     }
 
 }

@@ -14,10 +14,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by bill on 16-5-1.
  */
 public class HomeWork3 {
-    private final int MAX_READ_THREADS = 2;
-    private final int MAX_PROC_THREADS = 4;
+    public final int MAX_READ_THREADS = 2;
+    public final int MAX_PROC_THREADS = 4;
     public static final int MAX_ENRICH_THREADS = 100;
-    private final int MAX_WRITE_THREADS = 2;
+    public final int MAX_WRITE_THREADS = 2;
     public static final int MAX_BATCH_SIZE = 40000;
     public static final String outputFileNames[] = {"NighttimeAccidents.csv", "DaytimeAccidents.csv"};
 
