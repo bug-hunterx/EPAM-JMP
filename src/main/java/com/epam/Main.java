@@ -3,19 +3,19 @@ package com.epam;
 import com.epam.data.AccidentsDataLoader;
 import com.epam.data.AccidentsDataWriter;
 import com.epam.data.RoadAccident;
-import com.epam.data.TimeOfDay;
 import com.epam.processor.DataProcessor;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+
+import static com.epam.data.TimeOfDay.*;
 
 
 /**
@@ -55,6 +55,7 @@ public class Main {
         ExecutorService outputExecutor = createExecutor("Writing", writingThreadsNum, writingQueueDepth);
 
         // Start reading thread(s)
+        long start = System.currentTimeMillis();
         files.stream()
                 .forEach(file -> readingExecutor.execute(() -> {
                     AccidentsDataLoader accidentsDataLoader = null;
@@ -97,6 +98,8 @@ public class Main {
             }
         }
         outputExecutor.shutdown();
+
+        System.out.println("Finished in " + (System.currentTimeMillis()-start));
     }
 
     private static int parseIntProp(String propName) {
@@ -138,11 +141,11 @@ public class Main {
             synchronized (batchesProcessed) {batchesProcessed.notify();}
 
             List<RoadAccident> dayAccidents = accidentsBatch.stream()
-                    .filter(roadAccident -> roadAccident.getTimeOfDay() == TimeOfDay.MORNING || roadAccident.getTimeOfDay() == TimeOfDay.AFTERNOON)
+                    .filter(roadAccident -> roadAccident.getTimeOfDay() == MORNING || roadAccident.getTimeOfDay() == AFTERNOON)
                     .collect(Collectors.toList());
 
             List<RoadAccident> nightAccidents = accidentsBatch.stream()
-                    .filter(roadAccident -> roadAccident.getTimeOfDay() == TimeOfDay.EVENING || roadAccident.getTimeOfDay() == TimeOfDay.NIGHT)
+                    .filter(roadAccident -> roadAccident.getTimeOfDay() == EVENING || roadAccident.getTimeOfDay() == NIGHT)
                     .collect(Collectors.toList());
 
             if(!dayAccidents.isEmpty()) {

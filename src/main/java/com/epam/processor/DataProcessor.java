@@ -213,13 +213,14 @@ public class DataProcessor {
     }
 
     private static TimeOfDay timeOfDayFromTime(LocalTime time) {
+        TimeOfDay result = null;
         for (TimeOfDay part : TimeOfDay.values()) {
             if (!time.isAfter(part.getEnd()) && !time.isBefore(part.getStart())) {
-                return part;
+                result = part;
+                break;
             }
         }
-
-        throw new RuntimeException("Could not define day part for time provided: " + time.toString());
+        return result;
     }
 
     public void enrichWithForceContact(List<RoadAccident> accidents) {
