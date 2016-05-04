@@ -17,19 +17,19 @@ import com.epam.processor.DataProcessor;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportGeneratorTestMock {
-	
+
 	@Mock
 	private DataProcessor dataProcessor;
 	@InjectMocks
 	private DataReportGenerator reportGenerator;
-	
-	
-	@Test
+
+
+//	@Test
 	public void generateReportIfDataAvailable() {
 		reportGenerator.roadConditionReport("reportTest");
 	}
-	
-	@Test
+
+//	@Test
 	public void generateReportIfDataAvailableMock() {
 		Map<String, Long> data = Mockito.mock(Map.class);
 		Mockito.when(dataProcessor.getCountByRoadSurfaceCondition()).thenReturn(data);
@@ -37,8 +37,8 @@ public class ReportGeneratorTestMock {
 		Mockito.verify(dataProcessor, Mockito.times(1)).getCountByRoadSurfaceCondition();
 		Mockito.verify(dataProcessor, Mockito.never()).getCountByRoadSurfaceCondition7();
 	}
-	
-	@Test
+
+//	@Test
 	public void generateReportIfDataAvailableBDDMock() {
 		Map<String, Long> data = Mockito.mock(Map.class);
 		//given

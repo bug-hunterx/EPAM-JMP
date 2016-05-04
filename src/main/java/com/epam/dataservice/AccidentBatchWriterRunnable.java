@@ -7,6 +7,7 @@ import org.apache.commons.csv.CSVPrinter;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
+import java.io.IOException;
 import java.util.List;
 
 import java.util.concurrent.BlockingQueue;
@@ -36,23 +37,27 @@ public class AccidentBatchWriterRunnable implements Runnable {
 
             while (batch != null && !batch.isEmpty()) {
 
-                    for(RoadAccident accident: batch) {
-                        roadAccidentPrinter.printRecord(accident.toListString());
-                    }
-                    System.out.println("Flushed " + batch.size() + " to file " + dataFileName);
+                for (RoadAccident accident : batch) {
+                    roadAccidentPrinter.printRecord(accident.toListString());
+                }
+                System.out.println("Flushed " + batch.size() + " to file " + dataFileName);
                 roadAccidentPrinter.flush();
-                    batch = getNextBatch();
+                batch = getNextBatch();
             }
-            System.out.println("Closed " + dataFileName + " for writing");
-            roadAccidentPrinter.close();
 
         } catch (Exception e) {
-
+            e.printStackTrace();
+        } finally {
+            try {
+                roadAccidentPrinter.close();
+                System.out.println("Closed " + dataFileName + " for writing");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private List<RoadAccident> getNextBatch() throws InterruptedException
-    {
+    private List<RoadAccident> getNextBatch() throws InterruptedException {
         return dataQueue.take();
     }
 

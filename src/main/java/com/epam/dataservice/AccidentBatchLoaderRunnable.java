@@ -49,6 +49,7 @@ public class AccidentBatchLoaderRunnable implements Runnable {
                 }
                 dataQueue.put(roadAccidentBatch);
             }
+            System.out.println("Finished loading from " + dataFileName);
         }catch (Exception e){
             e.printStackTrace();
         }

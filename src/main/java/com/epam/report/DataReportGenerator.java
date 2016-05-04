@@ -13,7 +13,7 @@ import com.epam.processor.DataProcessor;
 
 public class DataReportGenerator {
 
-	private static final String REPORT_FOLDER = "C:/Olga/JMP/code/";
+	private static final String REPORT_FOLDER = "G:/Dev/EPAM-JMP/";
 	private DataProcessor dataProcessor;
 	
 	public DataReportGenerator(DataProcessor dataProcessor) {

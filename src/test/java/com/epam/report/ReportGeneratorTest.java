@@ -39,8 +39,8 @@ public class ReportGeneratorTest {
 	private DataProcessor dataProcessor;
 	@InjectMocks
 	private DataReportGenerator reportGenerator;
-	
-	@Test
+
+//	@Test
 	public void generateReportIfDataAvailableMock() {
 		Map<String, Long> data = createData();
 		Mockito.when(dataProcessor.getCountByRoadSurfaceCondition()).thenReturn(data );
@@ -48,7 +48,7 @@ public class ReportGeneratorTest {
 		Mockito.verify(dataProcessor, Mockito.times(1)).getCountByRoadSurfaceCondition();
 		Mockito.verify(dataProcessor, Mockito.never()).getCountByRoadSurfaceCondition7();
 	}
-	
+
 	private Map<String, Long> createData() {
 		HashMap data = new HashMap<>();
 		data.put("key", 1000L);
@@ -58,10 +58,10 @@ public class ReportGeneratorTest {
 		return data;
 	}
 
-	@Test
+//	@Test
 	public void generateReportIfDataAvailableBDDMock() {
 		Map<String, Long> data = Mockito.mock(Map.class);
-		
+
 		//given
 		BDDMockito.given(dataProcessor.getCountByRoadSurfaceCondition()).willReturn(data);
 	    //when

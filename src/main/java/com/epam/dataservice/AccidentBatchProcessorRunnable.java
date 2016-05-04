@@ -25,8 +25,7 @@ public class AccidentBatchProcessorRunnable implements Runnable{
     public void run() {
         while(true) {
             try {
-
-                List<RoadAccident> currentBatch = dataQueue.poll();
+                List<RoadAccident> currentBatch = dataQueue.take();
 
                 List<RoadAccident> morningBatch = new ArrayList<>();
                 List<RoadAccident> eveningBatch = new ArrayList<>();
@@ -45,18 +44,22 @@ public class AccidentBatchProcessorRunnable implements Runnable{
 
                     }
                 }
+
                  if (morningBatch.size() > 0) {
-                     System.out.println("Added " + morningBatch.size() + " to morning acc");
+
                      resultQueue1.add(morningBatch);
-                 }
-                 if (eveningBatch.size() > 0) {
-                     System.out.println("Added " + eveningBatch.size() + " to evening acc");
-                     resultQueue2.add(eveningBatch);
+                     System.out.println("Added " + morningBatch.size() + " to morning acc, total " + resultQueue1.size());
                  }
 
+                 if (eveningBatch.size() > 0) {
+                     resultQueue2.add(eveningBatch);
+                     System.out.println("Added " + eveningBatch.size() + " to evening acc, total " + resultQueue2.size());
+                 }
+
+                System.out.println("Consumer: queue size" + dataQueue.size());
 
             } catch(Exception e){
-
+                e.printStackTrace();
             }
 
 

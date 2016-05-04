@@ -34,6 +34,9 @@ public class AccidentConcurrentParser {
         BlockingQueue<List<RoadAccident>> eveningConcurrentQueue = new ArrayBlockingQueue<List<RoadAccident>>(CAPACITY);
 
         executor.execute(new AccidentBatchLoaderRunnable(400, accidentsConcurrentQueue, filePath1));
+        executor.execute(new AccidentBatchLoaderRunnable(400, accidentsConcurrentQueue, filePath2));
+        executor.execute(new AccidentBatchLoaderRunnable(400, accidentsConcurrentQueue, filePath3));
+        executor.execute(new AccidentBatchLoaderRunnable(400, accidentsConcurrentQueue, filePath4));
 
         executor.execute(new AccidentBatchProcessorRunnable(accidentsConcurrentQueue, morningConcurrentQueue, eveningConcurrentQueue));
 
