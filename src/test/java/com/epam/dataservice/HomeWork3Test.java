@@ -6,6 +6,7 @@ import com.epam.data.RoadAccidentBuilder;
 import com.epam.data.TimeOfDay;
 import com.epam.processor.DataProcessor;
 import org.hamcrest.core.AnyOf;
+import org.hamcrest.core.StringStartsWith;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -53,14 +54,6 @@ public class HomeWork3Test {
         return roadAccident;
     }
 
-    private List<RoadAccident> createRoadAccidentListWithTime(String[] times) {
-        List<RoadAccident> roadAccidentList = new ArrayList<RoadAccident>();
-        for (String time : times ) {
-            roadAccidentList.add( createRoadAccident("ID"+Integer.toString(i), time) );
-        }
-        return roadAccidentList;
-    }
-
     @Test
     public void testAccidentBatchProcessor() throws Exception {
         String[] times = {"00:00:00", "06:00:00", "17:59:59", "23:59:59"};
@@ -78,7 +71,7 @@ public class HomeWork3Test {
             roadAccidentList.add(createRoadAccident(time, time));
             readQueue.put(roadAccidentList);
         }
-        TimeUnit.SECONDS.sleep(1);
+//        TimeUnit.SECONDS.sleep(1);
 
         RoadAccident roadAccident;
         for (int i = 0; i < 2; i++) {
@@ -96,8 +89,9 @@ public class HomeWork3Test {
                 }
 */
                 assertThat(roadAccident.getTimeOfDay().getCategory(), equalTo(j));
+                assertThat(roadAccident.getForceContact(), StringStartsWith.startsWith("13163862"));
             }
-            TimeUnit.SECONDS.sleep(1);
+//            TimeUnit.SECONDS.sleep(1);
         }
         for (int i = 0; i < 2; i++) {
             assertThat(writeQueues.get(i).isEmpty(), equalTo(true));
