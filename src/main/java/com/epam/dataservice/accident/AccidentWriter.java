@@ -25,10 +25,10 @@ public class AccidentWriter implements Runnable {
 		try {
 			FileWriter accidentFileWriter = new FileWriter(this.accidentFile);
 			csvPrinter = new CSVPrinter(accidentFileWriter, CSVFormat.DEFAULT.withRecordSeparator("\n"));
-			csvPrinter.printRecord("Accident_Index", "Longitude", "Latitude");
+			csvPrinter.printRecord("Accident_Index", "Longitude", "Latitude", "Accident_Hour");
 			while (true) {
 				RoadAccident accident = accidentQueue.take();
-				csvPrinter.printRecord(accident.getAccidentId(), accident.getLongitude(), accident.getLatitude());
+				csvPrinter.printRecord(accident.getAccidentId(), accident.getLongitude(), accident.getLatitude(), accident.getTime().getHour());
 			}
 		} catch (InterruptedException e) {
 		} catch (Exception e) {
