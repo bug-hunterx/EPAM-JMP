@@ -23,40 +23,46 @@ public class AccidentBatchProcessorRunnable implements Runnable{
 
     @Override
     public void run() {
-        while(true) {
-            try {
-                List<RoadAccident> currentBatch = dataQueue.take();
 
-                List<RoadAccident> morningBatch = new ArrayList<>();
-                List<RoadAccident> eveningBatch = new ArrayList<>();
+        List<RoadAccident> currentBatch = new ArrayList<>();
 
-                //Stupid processing here
-                for (RoadAccident current: currentBatch) {
-                    String no = current.getPoliceForce();
-                    current.setDayTime(DayTime.getDayTime(current.getTime()));
-                    //
-                    if (current.getDayTime() == DayTime.MORNING || current.getDayTime() == DayTime.AFTERNOON) {
-                        morningBatch.add(current);
-                    } else {
-                        if (current.getDayTime() == DayTime.EVENING || current.getDayTime() == DayTime.NIGHT) {
-                            eveningBatch.add(current);
+
+        try {
+
+                while(true) {
+                    List<RoadAccident> morningBatch = new ArrayList<>();
+                    List<RoadAccident> eveningBatch = new ArrayList<>();
+                    currentBatch = dataQueue.take();
+
+                    //Stupid processing here
+                    for (RoadAccident current: currentBatch) {
+                        String no = current.getPoliceForce();
+                        current.setDayTime(DayTime.getDayTime(current.getTime()));
+                        //
+                        if (current.getDayTime() == DayTime.MORNING || current.getDayTime() == DayTime.AFTERNOON) {
+                            morningBatch.add(current);
+                        } else {
+                            if (current.getDayTime() == DayTime.EVENING || current.getDayTime() == DayTime.NIGHT) {
+                                eveningBatch.add(current);
+                            }
+
                         }
-
                     }
+
+                    if (morningBatch.size() > 0) {
+                        resultQueue1.add(morningBatch);
+                        System.out.println("Added " + morningBatch.size() + " to morning acc, total " + resultQueue1.size());
+                    }
+
+                    if (eveningBatch.size() > 0) {
+                        resultQueue2.add(eveningBatch);
+                        System.out.println("Added " + eveningBatch.size() + " to evening acc, total " + resultQueue2.size());
+                    }
+
+                    System.out.println("Consumer: queue size" + dataQueue.size());
+
                 }
 
-                 if (morningBatch.size() > 0) {
-
-                     resultQueue1.add(morningBatch);
-                     System.out.println("Added " + morningBatch.size() + " to morning acc, total " + resultQueue1.size());
-                 }
-
-                 if (eveningBatch.size() > 0) {
-                     resultQueue2.add(eveningBatch);
-                     System.out.println("Added " + eveningBatch.size() + " to evening acc, total " + resultQueue2.size());
-                 }
-
-                System.out.println("Consumer: queue size" + dataQueue.size());
 
             } catch(Exception e){
                 e.printStackTrace();
@@ -64,6 +70,6 @@ public class AccidentBatchProcessorRunnable implements Runnable{
 
 
 
-        }
+
     }
 }

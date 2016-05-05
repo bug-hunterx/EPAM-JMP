@@ -1,43 +1,56 @@
 package com.epam.report;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.util.Map;
+import java.util.List;
+import java.util.concurrent.*;
 
 import com.epam.data.RoadAccident;
-import com.epam.processor.DataProcessor;
+import com.epam.dataservice.AccidentBatchLoaderRunnable;
+import com.epam.dataservice.AccidentBatchProcessorRunnable;
+import com.epam.dataservice.AccidentBatchWriterRunnable;
 
 public class DataReportGenerator {
 
-	private static final String REPORT_FOLDER = "G:/Dev/EPAM-JMP/";
-	private DataProcessor dataProcessor;
-	
-	public DataReportGenerator(DataProcessor dataProcessor) {
-		this.dataProcessor = dataProcessor;
+	List<String> inputFilesList;
+	String morningFileName;
+	String eveningFileName;
+
+	final static int BLOCKING_QUEUE_CAPACITY = 600;
+	final static int BATCH_SIZE = 400;
+
+	public DataReportGenerator(List<String> inputFilesList, String morningFileName, String eveningFileName) {
+		this.inputFilesList = inputFilesList;
+		this.morningFileName = morningFileName;
+		this.eveningFileName = eveningFileName;
 	}
 	
-	public int roadConditionReport(String fileName) {
-		String index = "200901BS70021";
-        RoadAccident data = dataProcessor.getAccidentByIndex7(index);
-		//Map<String, Long> data = dataProcessor.getCountByRoadSurfaceCondition();
-		generateReport(fileName, data.toString());
-		
-		return data.hashCode();
-	}
-	
-	private void generateReport(String name, Object data) {
-		try {
-			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REPORT_FOLDER + name + ".txt", true)));
-		    out.println(data);
-		    out.close();
-	         System.out.printf("Serialized data is saved in "+ REPORT_FOLDER + name + ".txt");
-	      } catch(IOException i) {
-	          i.printStackTrace();
-	      }
+
+	public void generateReport() throws InterruptedException {
+
+		ExecutorService executor = Executors.newFixedThreadPool(inputFilesList.size() + 3);
+
+		BlockingQueue<List<RoadAccident>> accidentsConcurrentQueue = new ArrayBlockingQueue<List<RoadAccident>>(BLOCKING_QUEUE_CAPACITY);
+
+		BlockingQueue<List<RoadAccident>> morningConcurrentQueue = new ArrayBlockingQueue<List<RoadAccident>>(BLOCKING_QUEUE_CAPACITY);
+		BlockingQueue<List<RoadAccident>> eveningConcurrentQueue = new ArrayBlockingQueue<List<RoadAccident>>(BLOCKING_QUEUE_CAPACITY);
+
+		for(String fileName : inputFilesList) {
+			executor.execute(new AccidentBatchLoaderRunnable(BATCH_SIZE, accidentsConcurrentQueue, fileName));
+		}
+
+		executor.execute(new AccidentBatchProcessorRunnable(accidentsConcurrentQueue, morningConcurrentQueue, eveningConcurrentQueue));
+
+		executor.execute(new AccidentBatchWriterRunnable(morningConcurrentQueue, morningFileName));
+		executor.execute(new AccidentBatchWriterRunnable(eveningConcurrentQueue, eveningFileName));
+
+		executor.shutdown();
+
+		if(executor.awaitTermination(30, TimeUnit.SECONDS)){
+			System.out.println("task completed");
+		} else {
+			System.out.println("Shutting down");
+			executor.shutdownNow();
+		};
+		System.out.println("That's all folks!");
 	}
 	
 }

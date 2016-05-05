@@ -39,7 +39,7 @@ public class AccidentBatchProcessorRunnableTest extends TestCase {
     BlockingQueue<List<RoadAccident>> resultQueue2;
 
     private BlockingQueue<List<RoadAccident>> createData() throws ParseException {
-        RoadAccident r1, r2, r3, r4;
+        RoadAccident roadAccident1, roadAccident2, roadAccident3, roadAccident4;
 
         String dayTimeStr = "08:03:10 AM";
         String nightTimeStr = "08:03:10 PM";
@@ -50,37 +50,37 @@ public class AccidentBatchProcessorRunnableTest extends TestCase {
 
         dataQueue = new ArrayBlockingQueue<List<RoadAccident>>(3);
         List<RoadAccident> batch1 = new ArrayList<>();
-        r1 = new RoadAccidentBuilder("11").withTime(nightTime).build();
-        r2 = new RoadAccidentBuilder("12").withTime(dayTime).build();
-        r3 = new RoadAccidentBuilder("13").withTime(nightTime).build();
-        r4 = new RoadAccidentBuilder("14").withTime(dayTime).build();
+        roadAccident1 = new RoadAccidentBuilder("11").withTime(nightTime).build();
+        roadAccident2 = new RoadAccidentBuilder("12").withTime(dayTime).build();
+        roadAccident3 = new RoadAccidentBuilder("13").withTime(nightTime).build();
+        roadAccident4 = new RoadAccidentBuilder("14").withTime(dayTime).build();
 
-        batch1.add(r1);
-        batch1.add(r2);
-        batch1.add(r3);
-        batch1.add(r4);
+        batch1.add(roadAccident1);
+        batch1.add(roadAccident2);
+        batch1.add(roadAccident3);
+        batch1.add(roadAccident4);
 
         List<RoadAccident> batch2 = new ArrayList<>();
-        r1 = new RoadAccidentBuilder("21").withTime(dayTime).build();
-        r2 = new RoadAccidentBuilder("22").withTime(dayTime).build();
-        r3 = new RoadAccidentBuilder("23").withTime(dayTime).build();
-        r4 = new RoadAccidentBuilder("24").withTime(nightTime).build();
+        roadAccident1 = new RoadAccidentBuilder("21").withTime(dayTime).build();
+        roadAccident2 = new RoadAccidentBuilder("22").withTime(dayTime).build();
+        roadAccident3 = new RoadAccidentBuilder("23").withTime(dayTime).build();
+        roadAccident4 = new RoadAccidentBuilder("24").withTime(nightTime).build();
 
-        batch2.add(r1);
-        batch2.add(r2);
-        batch2.add(r3);
-        batch2.add(r4);
+        batch2.add(roadAccident1);
+        batch2.add(roadAccident2);
+        batch2.add(roadAccident3);
+        batch2.add(roadAccident4);
 
         List<RoadAccident> batch3 = new ArrayList<>();
-        r1 = new RoadAccidentBuilder("31").withTime(nightTime).build();
-        r2 = new RoadAccidentBuilder("32").withTime(dayTime).build();
-        r3 = new RoadAccidentBuilder("33").withTime(nightTime).build();
-        r4 = new RoadAccidentBuilder("34").withTime(nightTime).build();
+        roadAccident1 = new RoadAccidentBuilder("31").withTime(nightTime).build();
+        roadAccident2 = new RoadAccidentBuilder("32").withTime(dayTime).build();
+        roadAccident3 = new RoadAccidentBuilder("33").withTime(nightTime).build();
+        roadAccident4 = new RoadAccidentBuilder("34").withTime(nightTime).build();
 
-        batch3.add(r1);
-        batch3.add(r2);
-        batch3.add(r3);
-        batch3.add(r4);
+        batch3.add(roadAccident1);
+        batch3.add(roadAccident2);
+        batch3.add(roadAccident3);
+        batch3.add(roadAccident4);
 
         dataQueue.add(batch1);
         dataQueue.add(batch2);
@@ -99,7 +99,7 @@ public class AccidentBatchProcessorRunnableTest extends TestCase {
 
         executor.execute(new AccidentBatchProcessorRunnable(dataQueue, resultQueue1, resultQueue2));
 
-        Thread.sleep(50000);
+        Thread.sleep(1000);
 
         assertEquals(resultQueue1.size(), 3);
         assertEquals(resultQueue2.size(), 3);
