@@ -15,10 +15,6 @@ public class HsqlInit {
     Connection connection = null;
     ResultSet rs = null;
 
-
-
-
-
     public void initTablesFromFiles(Connection connection){
         try {
             String workingDir = System.getProperty("user.dir");
