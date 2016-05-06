@@ -8,6 +8,13 @@ import java.time.LocalTime;
  * Contains information about one road accident
  */
 public class RoadAccident {
+	//newly added
+	public enum DAYTIMETYPE{
+		 MORNING,AFTERNOON,EVENING,NIGHT
+	}
+	private String forceContact;
+	private DAYTIMETYPE timeosDay;
+	
     private String accidentId;
     private float longitude;
     private float latitude;
@@ -36,6 +43,8 @@ public class RoadAccident {
         this.lightConditions = builder.lightConditions;
         this.weatherConditions = builder.weatherConditions;
         this.roadSurfaceConditions = builder.roadSurfaceConditions;
+        this.forceContact = builder.forceContact;
+        this.timeosDay = builder.timeosDay;
     }
 
 
@@ -146,4 +155,36 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+    
+    public String getForceContact() {
+		return forceContact;
+	}
+
+
+	public void setForceContact(String forceContact) {
+		this.forceContact = forceContact;
+	}
+
+
+	public DAYTIMETYPE getTimeosDay() {
+		return timeosDay;
+	}
+
+
+	public void setTimeosDay(DAYTIMETYPE timeosDay) {
+		this.timeosDay = timeosDay;
+	}
+
+
+	public String toString() {
+    	return "RoadAccident:" +
+    			"\nid:" + this.accidentId +
+    			"\ndistrictAuthority:" + this.districtAuthority+
+    			"\npoliceForce:" + this.policeForce +
+    			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
+    			"\nweatherConditions:" + this.weatherConditions;
+    			
+    			
+    			
+    } 
 }
