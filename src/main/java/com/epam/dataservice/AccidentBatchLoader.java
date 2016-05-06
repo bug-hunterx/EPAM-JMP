@@ -52,10 +52,18 @@ public class AccidentBatchLoader implements Callable<Integer> {
         return dataCount;
     }
 
-    private Iterator<CSVRecord> getRecordIterator() throws Exception{
-        Reader reader = new FileReader(dataFileName);
-        return new CSVParser(reader, CSVFormat.EXCEL.withHeader()).iterator();
-    }
+	private Iterator<CSVRecord> getRecordIterator() throws Exception {
+		Reader reader = null;
+		try {
+			reader = new FileReader(dataFileName);
+			return new CSVParser(reader, CSVFormat.EXCEL.withHeader())
+					.iterator();
+		} finally {
+			if (reader != null) {
+				reader.close();
+			}
+		}
+	}
 
     private List<RoadAccident> getNextBatch(Iterator<CSVRecord> recordIterator){
         List<RoadAccident> roadAccidentBatch = new ArrayList<RoadAccident>();
