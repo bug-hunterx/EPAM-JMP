@@ -1,6 +1,6 @@
 package com.epam.integration.tests;
 
-import com.epam.dataservice.Session3Processor;
+import com.epam.session3.Session3Processor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

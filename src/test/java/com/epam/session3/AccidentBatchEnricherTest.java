@@ -1,8 +1,9 @@
-package com.epam.dataservice;
+package com.epam.session3;
 
 import com.epam.data.RoadAccident;
 import com.epam.data.RoadAccidentBuilder;
 import com.epam.data.TimeOfDay;
+import com.epam.dataservice.PoliceForceService;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;

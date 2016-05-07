@@ -1,4 +1,4 @@
-package com.epam.dataservice;
+package com.epam.session3;
 
 import com.epam.data.RoadAccident;
 import com.epam.data.RoadAccidentBuilder;
