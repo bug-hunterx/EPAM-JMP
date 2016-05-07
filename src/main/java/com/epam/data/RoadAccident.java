@@ -150,7 +150,6 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
-
     public String getForceContact() {
         return forceContact;
     }
@@ -169,10 +168,16 @@ public class RoadAccident {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(RoadAccident.class)
-             .add("accidentId", this.accidentId)
-             .add("forceContact", this.forceContact)
-             .add("dayTime", this.dayTime)
-            .toString();
-    }
+    	return "RoadAccident:" +
+    			"\nid:" + this.accidentId +
+                "\nforceContact:" + this.forceContact +
+                "\ndayTime:" + this.dayTime +
+    			"\ndistrictAuthority:" + this.districtAuthority+
+    			"\npoliceForce:" + this.policeForce +
+    			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
+    			"\nweatherConditions:" + this.weatherConditions;
+    			
+    			
+    			
+    } 
 }
