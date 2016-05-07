@@ -146,4 +146,16 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+    
+    public String toString() {
+    	return "RoadAccident:" +
+    			"\nid:" + this.accidentId +
+    			"\ndistrictAuthority:" + this.districtAuthority+
+    			"\npoliceForce:" + this.policeForce +
+    			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
+    			"\nweatherConditions:" + this.weatherConditions;
+    			
+    			
+    			
+    } 
 }
