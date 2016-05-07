@@ -28,3 +28,11 @@ In pull request mark your mentor (@mentorName) so it can review it.
 To complite task one you need to fix DataProcessorTest unit tests. 
 All methods in DataProcessor with "7" in a name should be implemented using Java 7, when other should be done with Java 8 streaming api. 
 
+## Hometask 4
+In the code what you did on Hometask 3 please create tests to achieve at least 50% test coverage in your new classes. Use IDE plugin to measure.  At least 1 integration test is required. Try to use BDD approach.  
+
+Recommendations will be : 
+1. write unit test for getContactNumber (JUnit)
+2. write unit tests for your service from hometask3 (Mockito/PowerMock: you have to mock all external/additional services which you use in your solution). This part depends on your own solution. 
+3. write integration test for your file writing functionality ( don't use any mocks here) 
+
