@@ -165,12 +165,15 @@ public class RoadAccident {
         this.dayTime = dayTime;
     }
 
-    @Override
     public String toString() {
-        return Objects.toStringHelper(RoadAccident.class)
-                .add("accidentId", this.accidentId)
-                .add("forceContact", this.forceContact)
-                .add("dayTime", this.dayTime)
-                .toString();
+    	return "RoadAccident:" +
+    			"\nid:" + this.accidentId +
+    			"\ndistrictAuthority:" + this.districtAuthority+
+    			"\npoliceForce:" + this.policeForce +
+    			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
+    			"\nweatherConditions:" + this.weatherConditions;
+    			
+    			
+    			
     }
 }
