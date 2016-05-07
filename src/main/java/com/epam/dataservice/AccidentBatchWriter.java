@@ -11,11 +11,12 @@ import java.util.concurrent.BlockingQueue;
 public class AccidentBatchWriter implements Runnable{
 
     private BlockingQueue<List<RoadAccident>> inboundQueue;
-    private FileWriter outputWriter;
+    FileWriter outputWriter;
 
     public AccidentBatchWriter(BlockingQueue<List<RoadAccident>> inboundQueue,
                                String destination) throws IOException{
-        new File(destination).deleteOnExit();
+        File existingFile = new File(destination);
+        if(existingFile.exists())existingFile.delete();
         this.inboundQueue = inboundQueue;
         this.outputWriter = new FileWriter(destination);
     }

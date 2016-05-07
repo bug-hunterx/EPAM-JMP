@@ -46,15 +46,15 @@ public class AccidentBatchEnricherTest {
         RoadAccident dummyRoadAccident = createRoadAccident("mockPoliceForce", 0);
         inboundQueue.put(ImmutableList.of(dummyRoadAccident));
 
-        Thread enrichThread = new Thread(enricher);
-        enrichThread.start();
+        Thread enricherThread = new Thread(enricher);
+        enricherThread.start();
 
         List<RoadAccident> outputRoadAccidents = nighttimeOutboundQueue.take();
         assertThat(outputRoadAccidents.size()).isEqualTo(1);
         RoadAccident outputRoadAccident = outputRoadAccidents.get(0);
         assertThat(outputRoadAccident.getForceContact()).isEqualTo("Contact of mockPoliceForce");
 
-        enrichThread.interrupt();
+        enricherThread.interrupt();
     }
 
     @Test
@@ -62,15 +62,15 @@ public class AccidentBatchEnricherTest {
         RoadAccident dummyRoadAccident = createRoadAccident("mockPoliceForce", 8);
         inboundQueue.put(ImmutableList.of(dummyRoadAccident));
 
-        Thread enrichThread = new Thread(enricher);
-        enrichThread.start();
+        Thread enricherThread = new Thread(enricher);
+        enricherThread.start();
 
         List<RoadAccident> outputRoadAccidents = daytimeOutboundQueue.take();
         assertThat(outputRoadAccidents.size()).isEqualTo(1);
         RoadAccident outputRoadAccident = outputRoadAccidents.get(0);
         assertThat(outputRoadAccident.getDayTime()).isEqualTo(TimeOfDay.MORNING);
 
-        enrichThread.interrupt();
+        enricherThread.interrupt();
     }
 
     @Test
@@ -78,15 +78,15 @@ public class AccidentBatchEnricherTest {
         RoadAccident dummyRoadAccident = createRoadAccident("mockPoliceForce", 14);
         inboundQueue.put(ImmutableList.of(dummyRoadAccident));
 
-        Thread enrichThread = new Thread(enricher);
-        enrichThread.start();
+        Thread enricherThread = new Thread(enricher);
+        enricherThread.start();
 
         List<RoadAccident> outputRoadAccidents = daytimeOutboundQueue.take();
         assertThat(outputRoadAccidents.size()).isEqualTo(1);
         RoadAccident outputRoadAccident = outputRoadAccidents.get(0);
         assertThat(outputRoadAccident.getDayTime()).isEqualTo(TimeOfDay.AFTERNOON);
 
-        enrichThread.interrupt();
+        enricherThread.interrupt();
     }
 
     @Test
@@ -94,15 +94,15 @@ public class AccidentBatchEnricherTest {
         RoadAccident dummyRoadAccident = createRoadAccident("mockPoliceForce", 20);
         inboundQueue.put(ImmutableList.of(dummyRoadAccident));
 
-        Thread enrichThread = new Thread(enricher);
-        enrichThread.start();
+        Thread enricherThread = new Thread(enricher);
+        enricherThread.start();
 
         List<RoadAccident> outputRoadAccidents = nighttimeOutboundQueue.take();
         assertThat(outputRoadAccidents.size()).isEqualTo(1);
         RoadAccident outputRoadAccident = outputRoadAccidents.get(0);
         assertThat(outputRoadAccident.getDayTime()).isEqualTo(TimeOfDay.EVENING);
 
-        enrichThread.interrupt();
+        enricherThread.interrupt();
     }
 
     @Test
@@ -110,15 +110,15 @@ public class AccidentBatchEnricherTest {
         RoadAccident dummyRoadAccident = createRoadAccident("mockPoliceForce", 2);
         inboundQueue.put(ImmutableList.of(dummyRoadAccident));
 
-        Thread enrichThread = new Thread(enricher);
-        enrichThread.start();
+        Thread enricherThread = new Thread(enricher);
+        enricherThread.start();
 
         List<RoadAccident> outputRoadAccidents = nighttimeOutboundQueue.take();
         assertThat(outputRoadAccidents.size()).isEqualTo(1);
         RoadAccident outputRoadAccident = outputRoadAccidents.get(0);
         assertThat(outputRoadAccident.getDayTime()).isEqualTo(TimeOfDay.NIGHT);
 
-        enrichThread.interrupt();
+        enricherThread.interrupt();
     }
 
     private RoadAccident createRoadAccident(String policeForce, int hourOfAccidentTime){
