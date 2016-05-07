@@ -167,9 +167,12 @@ public class RoadAccident {
         this.dayTime = dayTime;
     }
 
+    @Override
     public String toString() {
     	return "RoadAccident:" +
     			"\nid:" + this.accidentId +
+                "\nforceContact:" + this.forceContact +
+                "\ndayTime:" + this.dayTime +
     			"\ndistrictAuthority:" + this.districtAuthority+
     			"\npoliceForce:" + this.policeForce +
     			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
