@@ -28,7 +28,7 @@ public class Main {
     
     private static final int DEFAULT_THREAD_POOL_SIZE = 5;
     private static final int DEFAULT_BATCH_SIZE = 40000;
-    private static final int DEFAULT_PRODUCER_SIZE = 3;
+    private static final int DEFAULT_PRODUCER_SIZE = 2;
     private static final int DEFAULT_CONSUMER_SIZE = 2;
     private static final int DEFAULT_STORAGE_QUEUE_SIZE = 10;
     private static final String OUTPUT_FILE_PATH_DAYTIME="src/main/resources/DaytimeAccidents.csv";
@@ -83,17 +83,20 @@ public class Main {
         CSVPrinter csvWriterNightTime = new CSVPrinter(fileWriter2,csvFormat);
         printCSVHeader(csvWriterNightTime);
         //start consumer threads
+        System.out.println("Starting Consumers");
         for(int i=0;i<consumerSize;i++){
         	executor.execute(new DataCSVFileWriter(dataQueue, csvWriterDayTime,csvWriterNightTime));
         }    
             
-        System.out.println("Started Consumers");
+       
 
         //Create 2 reader task and start
+        System.out.println("Starting readers");
         List<FutureTask<Integer>> futureTaskList = new ArrayList<FutureTask<Integer>>(); 
         
         for (int i = 0; i < producerSize; i++) {
 			if (inputFileQueue.isEmpty()) {
+				Thread.sleep(1000*5);
 				break;
 			}
 			FutureTask<Integer> readerTask = new FutureTask<Integer>(
@@ -102,11 +105,8 @@ public class Main {
 			futureTaskList.add(readerTask);
 			executor.execute(readerTask);
 
-		}        
-        
-        System.out.println("Starting readers");
-        
-
+		}      
+               
         while(!inputFileQueue.isEmpty()){
         	List<FutureTask<Integer>> newFutureTaskList = new ArrayList<FutureTask<Integer>>();
         	for(FutureTask<Integer> task:futureTaskList){
@@ -127,7 +127,7 @@ public class Main {
     		futureTaskList = newFutureTaskList;
     		Thread.sleep(1000*5); //process 1 round and sleep
         }
-
+        
         while(!dataQueue.isEmpty()){
             Thread.sleep(1000*5);
         }
@@ -140,10 +140,10 @@ public class Main {
         try {
             executor.awaitTermination(5, TimeUnit.MINUTES);        
         }finally{
-        	fileWriter1.close();
-        	fileWriter2.close();
         	CSVPrinter1.close();
         	CSVPrinter2.close();
+        	fileWriter1.close();
+        	fileWriter2.close();        	
         }
         System.out.println("Data processing finished");
     }

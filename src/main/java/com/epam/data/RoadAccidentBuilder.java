@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import com.epam.data.RoadAccident.DAYTIMETYPE;
 import com.epam.dataservice.PoliceForceService;
+import com.epam.dataservice.DaytimeTypeService;
 
 /**
  * Created by Tkachi on 2016/3/31.
@@ -28,6 +29,7 @@ public class RoadAccidentBuilder {
 	String forceContact;
 	DAYTIMETYPE timeosDay;
 	PoliceForceService policeForceService = new PoliceForceService();
+	DaytimeTypeService daytimeTypeService = new DaytimeTypeService();
 
 	public RoadAccidentBuilder(String accidentId) {
 		this.accidentId = accidentId;
@@ -96,18 +98,7 @@ public class RoadAccidentBuilder {
 
 	public RoadAccident build() {
 		forceContact = policeForceService.getContactNo(policeForce);
-		if (time != null) {
-			int hour = time.getHour();
-			if (hour >= 6 && hour < 12) {
-				timeosDay = DAYTIMETYPE.MORNING;
-			}else if(hour>=12 && hour < 18){
-				timeosDay = DAYTIMETYPE.AFTERNOON;
-			}else if(hour>=18 && hour < 24){
-				timeosDay = DAYTIMETYPE.EVENING;
-			}else{
-				timeosDay = DAYTIMETYPE.NIGHT;
-			}
-		}
+		timeosDay = daytimeTypeService.getDaytimeType(time);		
 		return new RoadAccident(this);
 	}
 }
