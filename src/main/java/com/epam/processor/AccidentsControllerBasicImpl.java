@@ -1,4 +1,4 @@
-package com.epam.db;
+package com.epam.processor;
 
 import com.epam.data.RoadAccident;
 import com.epam.data.RoadAccidentBuilder;
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.*;
 
 /**
- * Created by Tkachi on 5/5/2016.
+ * This is the worst implementation of AccidentController. You task is to fix it with any framework you want.
  */
-public class AccidentControllerBasicImpl implements AccidentsController {
+public class AccidentsControllerBasicImpl implements AccidentsController {
 
     @Autowired
     private Connection connection;
@@ -19,12 +19,17 @@ public class AccidentControllerBasicImpl implements AccidentsController {
     public RoadAccident findOne(String accidentId) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("select *  from accidents where Accident_Index = ?;");
-            preparedStatement.setString(0, accidentId);
+            preparedStatement.setString(1, accidentId);
             ResultSet accidentResultSet = preparedStatement.executeQuery();
 
-            return new RoadAccidentBuilder(accidentId)
-                    .withLongitude(accidentResultSet.getFloat("Longitude"))
-                    .build();
+            if(accidentResultSet.next()) {
+
+                return new RoadAccidentBuilder(accidentId)
+                        .withLongitude(accidentResultSet.getFloat("Longitude"))
+                        .withLatitude(accidentResultSet.getFloat("Latitude"))
+                        //and go on... You got the point - it sucks without JPA/Hibernate/Data - any proper framework
+                        .build();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
