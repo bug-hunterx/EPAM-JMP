@@ -171,9 +171,8 @@ public class RoadAccident {
     			"\ndistrictAuthority:" + this.districtAuthority+
     			"\npoliceForce:" + this.policeForce +
     			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
-    			"\nweatherConditions:" + this.weatherConditions;
-    			
-    			
-    			
+    			"\nweatherConditions:" + this.weatherConditions +
+    			"\npliceForceContact:" + this.forceContact +
+                 "\ndayTime:" + this.dayTime;
     }
 }
