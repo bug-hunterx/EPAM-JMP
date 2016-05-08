@@ -41,6 +41,7 @@ public class PoliceForceService{
     }
 
     public String getContactNo(String policeForceName){
+        /*
         if(executionCount.get() == HALT_AT_EXECUTION){
             try {
                 Thread.sleep(HALT_FOR);
@@ -49,7 +50,8 @@ public class PoliceForceService{
             }
         }
         Integer idx = forceMap.get(policeForceName);
-        executionCount.incrementAndGet();
+        executionCount.incrementAndGet();*/
+        Integer idx = forceMap.get(policeForceName);
         return idx == null ? PHONE_PREFIX : PHONE_PREFIX + idx.toString() ;
     }
 

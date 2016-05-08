@@ -20,6 +20,8 @@ public class RoadAccidentBuilder {
     String lightConditions;
     String weatherConditions;
     String roadSurfaceConditions;
+    String forcecontact;
+    String timeOfDay;
 
 
     public RoadAccidentBuilder(String accidentId){
@@ -89,4 +91,22 @@ public class RoadAccidentBuilder {
     public RoadAccident build(){
         return new RoadAccident(this);
     }
+
+    public String getForcecontact() {
+        return forcecontact;
+    }
+
+    public void setForcecontact(String forcecontact) {
+        this.forcecontact = forcecontact;
+    }
+
+
+    public String getTimeOfDay() {
+        return timeOfDay;
+    }
+
+    public void setTimeOfDay(String timeOfDay) {
+        this.timeOfDay = timeOfDay;
+    }
+
 }

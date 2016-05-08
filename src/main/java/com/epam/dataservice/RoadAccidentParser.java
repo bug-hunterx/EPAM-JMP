@@ -2,6 +2,7 @@ package com.epam.dataservice;
 
 import com.epam.data.RoadAccident;
 import com.epam.data.RoadAccidentBuilder;
+import com.epam.data.RoadAccidentParserBuilder;
 import org.apache.commons.csv.CSVRecord;
 
 import java.time.LocalDate;
@@ -13,7 +14,6 @@ import java.time.format.DateTimeParseException;
  * Created by Tanmoy on 4/25/2016.
  */
 public class RoadAccidentParser {
-
     public RoadAccident parseRecord(CSVRecord record) {
         try {
             String accidentId = record.get("Accident_Index");

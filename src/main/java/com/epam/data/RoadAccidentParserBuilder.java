@@ -1,5 +1,7 @@
 package com.epam.data;
 
+import com.epam.dataservice.RoadAccidentParser;
+
 import java.util.Map;
 
 /**
@@ -46,7 +48,7 @@ public class RoadAccidentParserBuilder {
     }
 
     public RoadAccidentParser build(){
-        return new RoadAccidentParser(this);
+        return new RoadAccidentParser();
     }
 
 }
