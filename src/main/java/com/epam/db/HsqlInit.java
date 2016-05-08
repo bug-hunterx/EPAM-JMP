@@ -11,9 +11,8 @@ import java.sql.SQLException;
  * Created by Olga on 04.05.2016.
  */
 public class HsqlInit {
-    Server hsqlServer = null;
-    Connection connection = null;
-    ResultSet rs = null;
+    private static Server hsqlServer = null;
+    private static Connection connection = null;
 
     public void initTablesFromFiles(Connection connection){
         try {
@@ -74,7 +73,7 @@ public class HsqlInit {
             connection.prepareStatement("SET TABLE accidents SOURCE \"" + workingDir +"\\src\\main\\resources\\DfTRoadSafety_Accidents_2009.csv;ignore_first=true\"").execute();
 
             // query from the db
-            rs = connection.prepareStatement("select code, label  from accident_severity;").executeQuery();
+            ResultSet rs = connection.prepareStatement("select code, label  from accident_severity;").executeQuery();
             while(rs.next()) {
                 System.out.println(String.format("Severity_Id: %1d, Severity: %1s", rs.getInt(1), rs.getString(2)));
             }
@@ -84,7 +83,7 @@ public class HsqlInit {
 
     }
 
-    public Connection intiDatabase(){
+    public static Connection initDatabase(){
         System.setProperty("textdb.allow_full_path", "true");
         hsqlServer = new Server();
         hsqlServer.setLogWriter(null);

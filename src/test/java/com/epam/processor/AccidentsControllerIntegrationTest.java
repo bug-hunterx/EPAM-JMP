@@ -20,7 +20,7 @@ public class AccidentsControllerIntegrationTest {
     @Test
     public void testFindOne() throws Exception {
         RoadAccident roadAccident = accidentsController.findOne("200901BS70001");
-        assertThat(roadAccident.getLongitude(), is(111));
+        assertThat(roadAccident.getLongitude(), is(-0.201349f));
 
     }
 

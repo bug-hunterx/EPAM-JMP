@@ -18,15 +18,15 @@ public class HsqlInitTest {
     Connection connection;
 
     @Before
-    public void inti(){
+    public void init(){
         hsqlInit = new HsqlInit();
-        connection = hsqlInit.intiDatabase();
+        connection = hsqlInit.initDatabase();
     }
 
     @Test
-    public void test() throws SQLException {
+    public void runThisTestToBuildHSQLDBLocally() throws SQLException {
 
-//        hsqlInit.initTablesFromFiles(connection);
+        hsqlInit.initTablesFromFiles(connection);
 
         // query from the db
         ResultSet rs = connection.prepareStatement("select code, label  from accident_severity;").executeQuery();
