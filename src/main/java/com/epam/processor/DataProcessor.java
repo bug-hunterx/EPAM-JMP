@@ -1,14 +1,19 @@
 package com.epam.processor;
 
-import com.epam.data.RoadAccident;
-import com.google.common.collect.Multimap;
-
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import com.epam.data.RoadAccident;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 
 /**
- * This is to be completed by mentees
+ * This is to be completed by sam pang
  */
 public class DataProcessor {
 
@@ -17,8 +22,8 @@ public class DataProcessor {
     public DataProcessor(List<RoadAccident> roadAccidentList){
         this.roadAccidentList = roadAccidentList;
     }
-
-
+  
+    
 //    First try to solve task using java 7 style for processing collections
 
     /**
@@ -27,6 +32,12 @@ public class DataProcessor {
      * @return
      */
     public RoadAccident getAccidentByIndex7(String index){
+        for(RoadAccident ra : roadAccidentList){
+        	if(ra.getAccidentId().equals(index)){
+        		return ra;
+        	}
+        }
+        
         return null;
     }
 
@@ -40,7 +51,17 @@ public class DataProcessor {
      * @return
      */
     public Collection<RoadAccident> getAccidentsByLocation7(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
-        return null;
+        List<RoadAccident> list = new ArrayList<>();
+        for(RoadAccident ra : roadAccidentList){
+        	if(ra.getLongitude() >= minLongitude 
+        			&& ra.getLongitude() <= maxLongitude
+        			&& ra.getLatitude() >= minLatitude
+        			&& ra.getLatitude() <= maxLatitude){
+        		list.add(ra);
+        	}
+        }
+        
+        return list;
     }
 
     /**
@@ -51,7 +72,21 @@ public class DataProcessor {
      * @return
      */
     public Map<String, Long> getCountByRoadSurfaceCondition7(){
-        return null;
+        Map<String, Long> map = new HashMap<>();
+        long dry = 0, wet = 0;
+        
+        for(RoadAccident ra : roadAccidentList){
+        	if(ra.getRoadSurfaceConditions().equals("2") || ra.getRoadSurfaceConditions().equalsIgnoreCase("wet")){
+        		wet++;
+        	}else if(ra.getRoadSurfaceConditions().equals("5") || ra.getRoadSurfaceConditions().equalsIgnoreCase("dry")){
+        		dry++;
+        	}
+        }
+        
+        map.put("Dry", dry);
+        map.put("Wet", wet);
+        
+        return map;
     }
 
     /**
@@ -59,8 +94,38 @@ public class DataProcessor {
      * as example if there were 10 accidence in rain, 5 in snow, 6 in sunny and 1 in foggy, then your result list should contain {rain, sunny, snow} - top three in decreasing order
      * @return
      */
-    public List<String> getTopThreeWeatherCondition7(){
-        return null;
+    public List<String> getTopThreeWeatherCondition7(){  	
+    	List<String> list = new LinkedList<>();
+    	List<Long> countList = new LinkedList<>();
+    	Multimap<String, Long> multiMap = HashMultimap.create(); 	    	
+    	Long count = 0l;
+    	
+    	for(RoadAccident ra : roadAccidentList){
+    		multiMap.put(ra.getWeatherConditions(), count++);
+    	}
+    	
+    	for(int i = 0;i < 2;i++){
+    		countList.add(0l);
+    	}
+    	    	
+    	for(String key : multiMap.keySet()){
+    		long size = multiMap.get(key).size();
+    		if(size > countList.get(0)){
+    			list.add(0, key);
+    			countList.add(0, size);
+    		}else if(size > countList.get(1)){
+    			list.add(1, key);
+    			countList.add(1, size);
+    		}else if(size > countList.get(2)){
+    			list.add(2, key);
+    			countList.add(2, size);
+    		} 		
+    		if(list.size() == 4){
+    			list.remove(3);
+    		}
+    	}
+    	    	
+    	return list;
     }
 
     /**
@@ -71,7 +136,13 @@ public class DataProcessor {
      * @return
      */
     public Multimap<String, String> getAccidentIdsGroupedByAuthority7(){
-        return null;
+    	Multimap<String, String> multiMap = HashMultimap.create();
+    	long count = 0l;
+    	for(RoadAccident ra : roadAccidentList){
+    		multiMap.put(ra.getDistrictAuthority(), ra.getAccidentId() + count++);
+    	}
+    	
+        return multiMap;
     }
 
 
@@ -79,8 +150,10 @@ public class DataProcessor {
 
 
 
-    public RoadAccident getAccidentByIndex(String index){
-        return null;
+    public RoadAccident getAccidentByIndex(String index){  	
+        return roadAccidentList.stream()
+        			.filter(ra -> ra.getAccidentId().equals(index))
+        			.findFirst().orElse(null);
     }
 
 
@@ -93,31 +166,57 @@ public class DataProcessor {
      * @return
      */
     public Collection<RoadAccident> getAccidentsByLocation(float minLongitude, float maxLongitude, float minLatitude, float maxLatitude){
-        return null;
+        return roadAccidentList.stream()
+        		.filter(ra -> ra.getLongitude() >= minLongitude && ra.getLongitude() <= maxLongitude)
+        		.filter(ra -> ra.getLatitude() >= minLatitude && ra.getLatitude() <= maxLatitude)
+        		.collect(Collectors.toList());
     }
 
     /**
      * find the weather conditions which caused max number of incidents
      * @return
      */
-    public List<String> getTopThreeWeatherCondition(){
-        return null;
+    public List<String> getTopThreeWeatherCondition(){   	
+    	List<String> list = new ArrayList<>();
+    	Map<String, Long> map = roadAccidentList.stream()
+    								.map(RoadAccident::getWeatherConditions)
+    								.collect(Collectors.groupingBy(
+    										item -> item,
+    										Collectors.counting()
+    								));
+    	
+    			return map.entrySet().stream()
+    					.sorted((val1,val2) -> val2.getValue().compareTo(val1.getValue()))
+    					.map(Map.Entry::getKey)
+    					.limit(3)
+    					.collect(Collectors.toList());
     }
 
     /**
      * count incidents by road surface conditions
      * @return
      */
-    public Map<String, Long> getCountByRoadSurfaceCondition(){
-        return null;
+    public Map<String, Long> getCountByRoadSurfaceCondition(){ 
+    	Map<String, Long> map = new HashMap<>();
+    	
+    	long dry = roadAccidentList.stream().filter(ra -> ra.getRoadSurfaceConditions().equals("5") || ra.getRoadSurfaceConditions().equalsIgnoreCase("dry")).count();
+    	long wet = roadAccidentList.stream().filter(ra -> ra.getRoadSurfaceConditions().equals("2") || ra.getRoadSurfaceConditions().equalsIgnoreCase("wet")).count();
+    	
+    	map.put("Dry", dry);
+        map.put("Wet", wet);
+    	return map;  	
     }
 
     /**
      * To match streaming operations result, return type is a java collection instead of multimap
      * @return
      */
-    public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){
-        return null;
+    public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){  	
+    	return roadAccidentList.stream().collect(
+    				Collectors.groupingBy(
+    						RoadAccident::getDistrictAuthority,
+    						Collectors.mapping(RoadAccident::getAccidentId, Collectors.toList())		
+    		   ));
     }
 
 }
