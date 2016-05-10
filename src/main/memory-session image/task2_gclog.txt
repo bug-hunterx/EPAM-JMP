@@ -1,0 +1,17 @@
+Java HotSpot(TM) 64-Bit Server VM (25.77-b03) for windows-amd64 JRE (1.8.0_77-b03), built on Mar 20 2016 22:01:33 by "java_re" with MS VC++ 10.0 (VS2010)
+Memory: 4k page, physical 16683136k(10485344k free), swap 33460352k(26258892k free)
+CommandLine flags: -XX:InitialHeapSize=10485760 -XX:MaxHeapSize=52428800 -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:-UseLargePagesIndividualAllocation -XX:+UseParallelGC 
+2.865: [GC (Allocation Failure) [PSYoungGen: 893K->480K(2560K)] 31613K->31304K(36864K), 0.0010613 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+2.866: [GC (Allocation Failure) [PSYoungGen: 480K->496K(2560K)] 31304K->31336K(36864K), 0.0008553 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+2.867: [Full GC (Allocation Failure) [PSYoungGen: 496K->0K(2560K)] [ParOldGen: 30840K->31283K(34304K)] 31336K->31283K(36864K), [Metaspace: 2694K->2694K(1056768K)], 0.0063300 secs] [Times: user=0.02 sys=0.00, real=0.01 secs] 
+2.874: [GC (Allocation Failure) [PSYoungGen: 0K->0K(2560K)] 31283K->31283K(36864K), 0.0005964 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+2.874: [Full GC (Allocation Failure) [PSYoungGen: 0K->0K(2560K)] [ParOldGen: 31283K->31271K(34304K)] 31283K->31271K(36864K), [Metaspace: 2694K->2694K(1056768K)], 0.0050269 secs] [Times: user=0.00 sys=0.00, real=0.01 secs] 
+Heap
+ PSYoungGen      total 2560K, used 61K [0x00000000fef80000, 0x00000000ff480000, 0x0000000100000000)
+  eden space 2048K, 3% used [0x00000000fef80000,0x00000000fef8f748,0x00000000ff180000)
+  from space 512K, 0% used [0x00000000ff180000,0x00000000ff180000,0x00000000ff200000)
+  to   space 512K, 0% used [0x00000000ff400000,0x00000000ff400000,0x00000000ff480000)
+ ParOldGen       total 34304K, used 31271K [0x00000000fce00000, 0x00000000fef80000, 0x00000000fef80000)
+  object space 34304K, 91% used [0x00000000fce00000,0x00000000fec89cc8,0x00000000fef80000)
+ Metaspace       used 2725K, capacity 4486K, committed 4864K, reserved 1056768K
+  class space    used 292K, capacity 386K, committed 512K, reserved 1048576K
