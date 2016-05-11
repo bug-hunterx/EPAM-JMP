@@ -7,10 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by Alexey on 25.04.2016.
  */
-public class MockPoliceForceService implements PoliceForceService {
+public class DummyPoliceForceService implements PoliceForceService {
     private final long maxExecutionTime;
 
-    public MockPoliceForceService(long maxExecutionTime) {
+    public DummyPoliceForceService(long maxExecutionTime) {
         this.maxExecutionTime = maxExecutionTime;
     }
 

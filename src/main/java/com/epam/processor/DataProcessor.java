@@ -2,7 +2,7 @@ package com.epam.processor;
 
 import com.epam.data.TimeOfDay;
 import com.epam.data.RoadAccident;
-import com.epam.service.MockPoliceForceService;
+import com.epam.service.DummyPoliceForceService;
 import com.epam.service.PoliceForceService;
 import com.google.common.base.Function;
 import com.google.common.collect.ArrayListMultimap;
@@ -10,9 +10,18 @@ import com.google.common.collect.Multimap;
 
 import java.io.IOException;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Properties;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Comparator;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.mapping;
 
 /**
  * This is to be completed by mentees
@@ -24,7 +33,7 @@ public class DataProcessor {
         Properties props = new Properties();
         props.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
 
-        this.policeService = new MockPoliceForceService(Integer.valueOf(props.getProperty("max-service-response-time")));
+        this.policeService = new DummyPoliceForceService(Integer.valueOf(props.getProperty("max-service-response-time")));
     }
 
 

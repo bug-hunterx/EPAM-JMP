@@ -3,7 +3,6 @@ package com.epam.processor;
 import com.epam.data.AccidentsDataLoader;
 import com.epam.data.RoadAccident;
 import com.epam.data.RoadAccidentBuilder;
-import com.epam.data.TimeOfDay;
 import com.epam.service.PoliceForceService;
 import com.google.common.collect.Multimap;
 import org.junit.BeforeClass;
