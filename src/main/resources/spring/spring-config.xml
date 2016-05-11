@@ -6,6 +6,6 @@
     <bean id="controller" class="com.epam.processor.AccidentsControllerBasicImpl" autowire="byType"/>
 
     <bean id="hsqldb.connection" class="com.epam.db.HsqlInit"
-          factory-method="intiDatabase"/>
+          factory-method="initDatabase"/>
 
 </beans>
