@@ -169,6 +169,8 @@ public class RoadAccident {
         return result;
     }
 
+    public final static RoadAccident RA_POISON_PILL = new RoadAccidentBuilder("POISON").build();
+
     @Override
     public String toString() {
     	return "RoadAccident:" +

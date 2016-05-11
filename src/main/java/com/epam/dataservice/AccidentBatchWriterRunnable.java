@@ -35,7 +35,7 @@ public class AccidentBatchWriterRunnable implements Runnable {
             roadAccidentPrinter = new CSVPrinter(out, CSVFormat.EXCEL.withHeader());
             System.out.println("Opened " + dataFileName + " for writing");
 
-            while (batch != null && !batch.isEmpty()) {
+            while (!batch.contains(RoadAccident.RA_POISON_PILL)) {
 
                 for (RoadAccident accident : batch) {
                     roadAccidentPrinter.printRecord(accident.toListString());

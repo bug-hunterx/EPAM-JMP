@@ -20,19 +20,18 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
  * Created by Nick on 03.05.2016.
  */
-@RunWith(MockitoJUnitRunner.class)
-public class AccidentBatchProcessorRunnableTest extends TestCase {
 
+public class AccidentBatchProcessorRunnableTest {
+
+    final static int QUEUE_SIZE = 6;
 
     BlockingQueue<List<RoadAccident>> dataQueue;
     BlockingQueue<List<RoadAccident>> resultQueue1;
@@ -48,8 +47,9 @@ public class AccidentBatchProcessorRunnableTest extends TestCase {
         LocalTime dayTime = LocalTime.parse(dayTimeStr, parseFormat);
         LocalTime nightTime = LocalTime.parse(nightTimeStr, parseFormat);
 
-        dataQueue = new ArrayBlockingQueue<List<RoadAccident>>(3);
+        dataQueue = new ArrayBlockingQueue<List<RoadAccident>>(QUEUE_SIZE);
         List<RoadAccident> batch1 = new ArrayList<>();
+
         roadAccident1 = new RoadAccidentBuilder("11").withTime(nightTime).build();
         roadAccident2 = new RoadAccidentBuilder("12").withTime(dayTime).build();
         roadAccident3 = new RoadAccidentBuilder("13").withTime(nightTime).build();
@@ -82,27 +82,32 @@ public class AccidentBatchProcessorRunnableTest extends TestCase {
         batch3.add(roadAccident3);
         batch3.add(roadAccident4);
 
+        List<RoadAccident> poisonedBatch = new ArrayList<>();
+        poisonedBatch.add(RoadAccident.RA_POISON_PILL);
+
         dataQueue.add(batch1);
         dataQueue.add(batch2);
+        dataQueue.add(poisonedBatch);
         dataQueue.add(batch3);
+        dataQueue.add(poisonedBatch);
 
         return dataQueue;
     }
 
     @Test
     public void testRun() throws Exception {
-        resultQueue1 = new ArrayBlockingQueue<List<RoadAccident>>(3);
-        resultQueue2 = new ArrayBlockingQueue<List<RoadAccident>>(3);
+        resultQueue1 = new ArrayBlockingQueue<List<RoadAccident>>(QUEUE_SIZE);
+        resultQueue2 = new ArrayBlockingQueue<List<RoadAccident>>(QUEUE_SIZE);
         dataQueue = createData();
 
-        ExecutorService executor = Executors.newFixedThreadPool(1);
+        CountDownLatch counter = new CountDownLatch(2);
 
-        executor.execute(new AccidentBatchProcessorRunnable(dataQueue, resultQueue1, resultQueue2));
+        AccidentBatchProcessorRunnable accidentBatchProcessorRunnable = new AccidentBatchProcessorRunnable(dataQueue, resultQueue1, resultQueue2, counter);
 
-        Thread.sleep(1000);
+        accidentBatchProcessorRunnable.run();
 
-        assertEquals(resultQueue1.size(), 3);
-        assertEquals(resultQueue2.size(), 3);
+        assertEquals(resultQueue1.size(), 4);
+        assertEquals(resultQueue2.size(), 4);
 
 
     }

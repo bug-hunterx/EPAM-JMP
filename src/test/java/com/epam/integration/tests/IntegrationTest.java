@@ -48,8 +48,11 @@ public class IntegrationTest {
         File f1 = new File(testOutputMorningFileName);
         File f2 = new File(testOutputEveningFileName);
 
-        Assert.assertTrue(f1.exists() && !f1.isDirectory());
-        Assert.assertTrue(f2.exists() && !f2.isDirectory());
+        Assert.assertTrue("Output file1 exists", f1.exists());
+        Assert.assertTrue("Output file2 exists", f2.exists());
+        Assert.assertFalse("File1 is not a directory", f1.isDirectory());
+        Assert.assertFalse("File2 is not a directory", f2.isDirectory());
+
     }
 
 }
