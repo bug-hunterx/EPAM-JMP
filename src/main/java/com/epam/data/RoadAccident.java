@@ -1,5 +1,9 @@
 package com.epam.data;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -7,7 +11,9 @@ import java.time.LocalTime;
 /**
  * Contains information about one road accident
  */
+@Entity
 public class RoadAccident {
+    @Id
     private String accidentId;
     private float longitude;
     private float latitude;
@@ -17,10 +23,14 @@ public class RoadAccident {
     private int numberOfCasualties;
     private LocalDate date;
     private LocalTime time;
+    private int year;
     private String districtAuthority;
-    private String lightConditions;
-    private String weatherConditions;
-    private String roadSurfaceConditions;
+    private String lightCondition;
+    private String weatherCondition;
+    private String roadSurfaceCondition;
+
+    public RoadAccident() {
+    }
 
     RoadAccident(RoadAccidentBuilder builder){
         this.accidentId = builder.accidentId;
@@ -31,11 +41,12 @@ public class RoadAccident {
         this.numberOfVehicles = builder.numberOfVehicles;
         this.numberOfCasualties = builder.numberOfCasualties;
         this.date = builder.date;
+        this.year = date.getYear();
         this.time = builder.time;
         this.districtAuthority = builder.districtAuthority;
-        this.lightConditions = builder.lightConditions;
-        this.weatherConditions = builder.weatherConditions;
-        this.roadSurfaceConditions = builder.roadSurfaceConditions;
+        this.lightCondition = builder.lightConditions;
+        this.weatherCondition = builder.weatherConditions;
+        this.roadSurfaceCondition = builder.roadSurfaceConditions;
     }
 
 
@@ -123,28 +134,28 @@ public class RoadAccident {
         this.districtAuthority= districtAuthority;
     }
 
-    public String getLightConditions() {
-        return lightConditions;
+    public String getLightCondition() {
+        return lightCondition;
     }
 
-    public void setLightConditions(String lightConditions) {
-        this.lightConditions = lightConditions;
+    public void setLightCondition(String lightCondition) {
+        this.lightCondition = lightCondition;
     }
 
-    public String getWeatherConditions() {
-        return weatherConditions;
+    public String getWeatherCondition() {
+        return weatherCondition;
     }
 
-    public void setWeatherConditions(String weatherConditions) {
-        this.weatherConditions = weatherConditions;
+    public void setWeatherCondition(String weatherCondition) {
+        this.weatherCondition = weatherCondition;
     }
 
-    public String getRoadSurfaceConditions() {
-        return roadSurfaceConditions;
+    public String getRoadSurfaceCondition() {
+        return roadSurfaceCondition;
     }
 
-    public void setRoadSurfaceConditions(String roadSurfaceConditions) {
-        this.roadSurfaceConditions = roadSurfaceConditions;
+    public void setRoadSurfaceCondition(String roadSurfaceCondition) {
+        this.roadSurfaceCondition = roadSurfaceCondition;
     }
     
     public String toString() {
@@ -152,8 +163,8 @@ public class RoadAccident {
     			"\nid:" + this.accidentId +
     			"\ndistrictAuthority:" + this.districtAuthority+
     			"\npoliceForce:" + this.policeForce +
-    			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
-    			"\nweatherConditions:" + this.weatherConditions;
+    			"\nroadSurfaceCondition:" + this.roadSurfaceCondition +
+    			"\nweatherCondition:" + this.weatherCondition;
     			
     			
     			

@@ -89,7 +89,7 @@ public class AccidentsDataLoader {
                     .withAccidentSeverity(accidentSeverity.get(record.get("Accident_Severity")))
                     .withNumberOfVehicles(Integer.valueOf(record.get("Number_of_Vehicles")))
                     .withNumberOfCasualties(Integer.valueOf(record.get("Number_of_Casualties")))
-                    .withDate(LocalDate.parse(record.get("Date"), DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                    .withDate(LocalDate.parse(record.get("Date"), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                     .withTime(LocalTime.parse(record.get("Time"), DateTimeFormatter.ofPattern("H:mm")))
                     .withDistrictAuthority(districtAuthorities.get(Integer.valueOf(record.get("Local_Authority_(District)"))))
                     .withLightConditions(lightConditions.get(Integer.valueOf(record.get("Light_Conditions"))))
