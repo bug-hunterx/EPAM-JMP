@@ -150,6 +150,7 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+
     public String getForceContact() {
         return forceContact;
     }
@@ -176,8 +177,5 @@ public class RoadAccident {
     			"\npoliceForce:" + this.policeForce +
     			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
     			"\nweatherConditions:" + this.weatherConditions;
-    			
-    			
-    			
     } 
 }

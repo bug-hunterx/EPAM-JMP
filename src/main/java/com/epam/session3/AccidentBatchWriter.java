@@ -11,6 +11,7 @@ import java.util.concurrent.BlockingQueue;
 public class AccidentBatchWriter implements Runnable{
 
     private BlockingQueue<List<RoadAccident>> inboundQueue;
+
     private FileWriter outputWriter;
 
     public AccidentBatchWriter(BlockingQueue<List<RoadAccident>> inboundQueue,
@@ -39,5 +40,8 @@ public class AccidentBatchWriter implements Runnable{
         }
     }
 
+    public void setOutputWriter(FileWriter outputWriter) {
+        this.outputWriter = outputWriter;
+    }
 
 }
