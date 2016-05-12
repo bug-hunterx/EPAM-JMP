@@ -43,12 +43,14 @@ public class AccidentBatchLoaderRunnable implements Runnable {
                 dataCount = dataCount + roadAccidentBatch.size();
                 if(roadAccidentBatch.isEmpty()){
                     isDataLoadFinished = true;
+                    roadAccidentBatch.add(RoadAccident.RA_POISON_PILL);
                 }else{
                     ++batchCount;
                     System.out.println(" Completed reading " + dataCount + " in " + batchCount + " batches for " + dataFileName);
                 }
                 dataQueue.put(roadAccidentBatch);
             }
+            System.out.println("Finished loading from " + dataFileName);
         }catch (Exception e){
             e.printStackTrace();
         }
