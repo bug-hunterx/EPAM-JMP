@@ -25,7 +25,7 @@ public class AccidentDBServiceImpl implements AccidentService {
 
 	public Iterable<RoadAccident> getAllAccidentsByDate(Date date) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	public Boolean update(RoadAccident roadAccident) {
