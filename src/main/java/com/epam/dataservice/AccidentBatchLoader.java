@@ -44,7 +44,7 @@ public class AccidentBatchLoader implements Callable<Integer> {
                 isDataLoadFinished = true;
             }else{
                 ++batchCount;
-                System.out.println(" Completed reading " + dataCount + " in " + batchCount + " batches for " + dataFileName);
+                System.out.println("Reader Thread["+Thread.currentThread().getId()+"] completed reading " + dataCount + " in " + batchCount + " batches for " + dataFileName);
             }
             dataQueue.put(roadAccidentBatch);
         }
@@ -61,7 +61,7 @@ public class AccidentBatchLoader implements Callable<Integer> {
         List<RoadAccident> roadAccidentBatch = new ArrayList<RoadAccident>();
         int recordCount = 0;
         RoadAccident roadAccidentItem = null;
-        while(recordCount <= batchSize && recordIterator.hasNext() ){
+        while(recordCount < batchSize && recordIterator.hasNext() ){
             roadAccidentItem = roadAccidentParser.parseRecord(recordIterator.next());
             if(roadAccidentItem != null){
                 roadAccidentBatch.add(roadAccidentItem);
