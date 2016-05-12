@@ -44,7 +44,7 @@ public class StaticData {
     }
 
     private static Map<Integer, String> loadIntToStrignMap(String filepath) {
-        Map<Integer, String> resultMap = new HashMap<>();
+        Map<Integer, String> resultMap = new HashMap<Integer, String>();
 
         try {
             Reader reader = new FileReader(filepath);

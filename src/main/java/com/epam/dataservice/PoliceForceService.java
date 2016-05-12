@@ -16,7 +16,7 @@ public class PoliceForceService{
 
     private static final String POLICE_FORCE_CSV = "src/main/resources/police_force.csv";
     private final String PHONE_PREFIX = "13163862";
-    private Map<String,Integer> forceMap = new HashMap<>();
+    private Map<String,Integer> forceMap = new HashMap<String,Integer>();
     private AtomicInteger executionCount = new AtomicInteger(0);
     private final int HALT_AT_EXECUTION = 10;
     private final long HALT_FOR = 1000 * 2;
