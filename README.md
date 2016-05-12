@@ -39,13 +39,35 @@ Recommendations will be :
 
 ##Hometask 5
 
-In this task, instead of csv files, you will use HSQLDB as datasource.
-To initialize homework - run HsqlInitTest.runThisTestToBuildHSQLDBLocally()
-It will create database files in root folder of your project - jmpdb.*
+Scenarios to be implemented for Homework:
 
-After that run test AccidentsControllerIntegrationTest.testFindOne.
-It will connect to your local database and get one accident by Id.
+1. Find all the accidents by ID(Note: We can use findOne method which will accept the Accident ID as PK).
+2. Find all the accidents count groupby all roadsurface conditions .
+3. Find all the accidents count groupby accident year and weather condition .( For eg: in year 2009 we need to know the number of accidents based on each weather condition).
+4. On a given date,  fetch all the accidents and update the Time based on the below rules
+Time Logic: 
+MORNING - 6 am to 12 pm
+AFTERNOON - 12 pm to 6 pm
+EVENING - 6 pm to 12 am
+NIGHT - 12 am to 6 am
 
-As you can see AccidentControllerBasicImpl is quite dummy :)
-Improve it with some framework - Spring Data with JPA or Spring JDBC - up to you.
+    
+Recommendations:
+
+1. For above scenarios, you can use either Spring JDBC/ORM  or use Spring Data as we discussed in the session.​
+2. Use DI (either setter/constructor) for some dependencies.
+3. For repositories use Autowiring either declarative or Annotation approach.
+4. Please write the entities for all the tables required with all the associations using JPA annotations.
+5. DB related properties will be defined in persistence.xml
+6. JPA will be configured in spring config file which inturn will search for persistence.xml under META-INF/persistence.xml.
+
+Examples are availabe in below package:
+
+com.epam.demo.springdataexample1 -> example1 discussed in session
+com.epam.demo.springdataexample2 -> example2 discussed in session
+com.epam.dbrepositories  -> All repositories required for Spring Data will be here.
+com.epam.dbservice           -> Service Interface
+com.epam.entities               -> Will have the entities required by JPA incase you are using Spring Data JPA aaproach
+com.epam.processor. AccidentDBServiceImpl -> will actually interact with Spring Data repositories                
+
 
