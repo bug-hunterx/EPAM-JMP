@@ -1,5 +1,7 @@
 package com.epam.data;
 
+import com.epam.entities.RoadAccident;
+import com.epam.entities.RoadAccidentBuilder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;

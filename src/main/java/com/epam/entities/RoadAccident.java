@@ -1,5 +1,9 @@
-package com.epam.data;
+package com.epam.entities;
 
+import com.epam.data.TimeOfDay;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -7,21 +11,53 @@ import java.time.LocalTime;
 /**
  * Contains information about one road accident
  */
-public class RoadAccident {
+@Entity
+@Table(name = "accidents")
+public class RoadAccident implements Serializable {
+    @Id
+    @Column(name = "Accident_Index")
     private String accidentId;
+
+    @Transient
     private float longitude;
+
+    @Transient
     private float latitude;
+
+    @Transient
     private String policeForce;
+
+    @Transient
     private String forceContact;
+
+    @Transient
     private String accidentSeverity;
+
+    @Transient
     private int numberOfVehicles;
+
+    @Transient
     private int numberOfCasualties;
+
+    @Transient
     private LocalDate date;
+
+    @Transient
     private LocalTime time;
+
+    @Transient
     private TimeOfDay timeOfDay;
+
+    @Transient
     private String districtAuthority;
+
+    @Transient
     private String lightConditions;
+
+    @Transient
     private String weatherConditions;
+
+    @Transient
     private String roadSurfaceConditions;
 
     RoadAccident(RoadAccidentBuilder builder){

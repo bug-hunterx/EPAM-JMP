@@ -6,44 +6,42 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
  * Created by Alexey on 12.05.2016.
  */
-public abstract class AbstractJpaDao< T extends Serializable> {
+public abstract class AbstractJpaDao<T extends Serializable> {
 
-    private Class< T > clazz;
+    private Class<T> entityClass;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "defaultPU")
     EntityManager entityManager;
 
-    public final void setClazz( Class< T > clazzToSet ){
-        this.clazz = clazzToSet;
+    public AbstractJpaDao() {
+        this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public T findOne( String id ){
-        return entityManager.find( clazz, id );
-    }
-    public List< T > findAll(){
-        return entityManager.createQuery( "select * from " + clazz.getName() )
-                .getResultList();
+    public T findOne(String id) {
+        return entityManager.find(entityClass, id);
     }
 
-    public void create( T entity ){
-        entityManager.persist( entity );
+    public void create(T entity) {
+        entityManager.persist(entity);
     }
 
-    public T update( T entity ){
-        return entityManager.merge( entity );
+    public T update(T entity) {
+        return entityManager.merge(entity);
     }
 
-    public void delete( T entity ){
-        entityManager.remove( entity );
+    public void delete(T entity) {
+        entityManager.remove(entity);
     }
-    public void deleteById( String entityId ){
-        T entity = findOne( entityId );
-        delete( entity );
+
+    public void deleteById(String entityId) {
+        T entity = findOne(entityId);
+        delete(entity);
     }
 }
 

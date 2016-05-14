@@ -1,6 +1,6 @@
 package com.epam.processor;
 
-import com.epam.data.RoadAccident;
+import com.epam.entities.RoadAccident;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

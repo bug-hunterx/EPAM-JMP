@@ -83,16 +83,7 @@ public class HsqlInit {
 
     }
 
-    public static Connection initDatabase(){
-        System.setProperty("textdb.allow_full_path", "true");
-        hsqlServer = new Server();
-        hsqlServer.setLogWriter(null);
-        hsqlServer.setSilent(true);
-        hsqlServer.setDatabaseName(0, "jmp");
-        hsqlServer.setDatabasePath(0, "file:jmpdb");
-
-        hsqlServer.start();
-
+    public static Connection createConnection() {
         // making a connection
         try {
             Class.forName("org.hsqldb.jdbcDriver");
@@ -106,7 +97,18 @@ public class HsqlInit {
        // end of stub code for in/out stub
     }
 
-    public void stopDatabase(){
+    public void start() {
+        System.setProperty("textdb.allow_full_path", "true");
+        hsqlServer = new Server();
+        hsqlServer.setLogWriter(null);
+        hsqlServer.setSilent(true);
+        hsqlServer.setDatabaseName(0, "jmp");
+        hsqlServer.setDatabasePath(0, "file:jmpdb");
+
+        hsqlServer.start();
+    }
+
+    public void stop() {
         hsqlServer.stop();
         hsqlServer = null;
     }

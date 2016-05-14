@@ -3,7 +3,7 @@ package com.epam.processor;
 import com.epam.Main;
 import com.epam.data.AccidentsDataLoader;
 import com.epam.data.AccidentsDataWriter;
-import com.epam.data.RoadAccident;
+import com.epam.entities.RoadAccident;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import java.io.File;

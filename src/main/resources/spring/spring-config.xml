@@ -1,33 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context-2.5.xsd
-       http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+       http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-    <context:component-scan base-package="com.epam"/>
+    <context:component-scan base-package="com.epam.dal"/>
 
-    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <bean id="hsqlStarter" class="com.epam.db.HsqlInit" init-method="start" destroy-method="stop"/>
 
-    <!--bean id="controller" class="com.epam.processor.AccidentsControllerBasicImpl" autowire="byType"/>
+    <bean id="hsqlConnection" class="com.epam.db.HsqlInit" factory-method="createConnection"/>
 
-    <bean id="hsqldb.connection" class="com.epam.db.HsqlInit"
-          factory-method="initDatabase"/-->
+    <bean id="testController" class="com.epam.processor.AccidentsControllerBasicImpl" autowire="byType"/>
+
+    <bean id="accidentService" class="com.epam.dbservice.AccidentDBServiceImpl"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="defaultPU" />
         <property name="persistenceXmlLocation" value="classpath:spring/persistence.xml"/>
-    </bean>
-
-    <bean id="dataSource" class="com.epam.db.HsqlDatasource" init-method="init">
-        <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-        <property name="url" value="jdbc:hsqldb:hsql://localhost/jmp" />
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -36,4 +29,6 @@
 
     <bean id="persistenceExceptionTranslationPostProcessor"
           class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+
 </beans>

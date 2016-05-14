@@ -1,6 +1,6 @@
 package com.epam.processor;
 
-import com.epam.data.RoadAccident;
+import com.epam.entities.RoadAccident;
 
 /**
  * Created by Tkachi on 5/5/2016.

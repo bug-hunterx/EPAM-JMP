@@ -2,7 +2,7 @@ package com.epam.dbservice;
 
 import java.util.Date;
 
-import com.epam.data.RoadAccident;
+import com.epam.entities.RoadAccident;
 
 public interface AccidentService {
 	

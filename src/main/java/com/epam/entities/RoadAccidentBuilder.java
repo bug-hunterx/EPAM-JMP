@@ -1,4 +1,4 @@
-package com.epam.data;
+package com.epam.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

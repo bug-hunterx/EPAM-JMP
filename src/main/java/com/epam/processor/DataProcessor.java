@@ -1,7 +1,7 @@
 package com.epam.processor;
 
 import com.epam.data.TimeOfDay;
-import com.epam.data.RoadAccident;
+import com.epam.entities.RoadAccident;
 import com.epam.service.DummyPoliceForceService;
 import com.epam.service.PoliceForceService;
 import com.google.common.base.Function;

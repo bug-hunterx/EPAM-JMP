@@ -42,13 +42,12 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <plugin> <!--This plugin is needed to Enhance Entity classes at build time-->
                 <groupId>org.apache.openjpa</groupId>
                 <artifactId>openjpa-maven-plugin</artifactId>
                 <version>2.4.1</version>
                 <configuration>
                     <includes>**/entities/*.class</includes>
-                    <excludes>**/entities/XML*.class</excludes>
                     <addDefaultConstructor>true</addDefaultConstructor>
                     <enforcePropertyRestrictions>true</enforcePropertyRestrictions>
                     <persistenceXmlFile>${project.build.outputDirectory}/spring/persistence.xml</persistenceXmlFile>
@@ -73,6 +72,8 @@
             </plugin>
         </plugins>
     </build>
+
+
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -135,25 +136,22 @@
             <artifactId>spring-context</artifactId>
             <version>4.2.5.RELEASE</version>
             <exclusions>
-                <exclusion>
+                <exclusion> <!--This is needed in order to user slf4j for logging-->
                     <artifactId>commons-logging</artifactId>
                     <groupId>commons-logging</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>4.2.5.RELEASE</version>
         </dependency>
-        
          <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.10.1.RELEASE</version>
         </dependency>
-        
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
@@ -164,18 +162,15 @@
             <artifactId>openjpa</artifactId>
             <version>2.4.1</version>
         </dependency>
-
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.21</version>
         </dependency>
-
     </dependencies>
 </project>

@@ -1,8 +1,8 @@
 package com.epam.processor;
 
 import com.epam.data.AccidentsDataLoader;
-import com.epam.data.RoadAccident;
-import com.epam.data.RoadAccidentBuilder;
+import com.epam.entities.RoadAccident;
+import com.epam.entities.RoadAccidentBuilder;
 import com.epam.service.PoliceForceService;
 import com.google.common.collect.Multimap;
 import org.junit.BeforeClass;

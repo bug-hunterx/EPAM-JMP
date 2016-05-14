@@ -20,7 +20,7 @@ public class HsqlInitTest {
     @Before
     public void init(){
         hsqlInit = new HsqlInit();
-        connection = hsqlInit.initDatabase();
+        connection = hsqlInit.createConnection();
     }
 
     @Test
@@ -51,6 +51,6 @@ public class HsqlInitTest {
 
     @After
     public void shutdown(){
-        hsqlInit.stopDatabase();
+        hsqlInit.stop();
     }
 }

@@ -1,9 +1,9 @@
 package com.epam.data;
 
+import com.epam.entities.RoadAccident;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;

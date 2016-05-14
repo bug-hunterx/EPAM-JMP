@@ -1,8 +1,7 @@
 package com.epam.processor;
 
-import com.epam.data.RoadAccident;
-import com.epam.data.RoadAccidentBuilder;
-import com.epam.processor.AccidentsController;
+import com.epam.entities.RoadAccident;
+import com.epam.entities.RoadAccidentBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
