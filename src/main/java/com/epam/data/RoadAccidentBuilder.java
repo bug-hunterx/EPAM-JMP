@@ -26,6 +26,9 @@ public class RoadAccidentBuilder {
         this.accidentId = accidentId;
     }
 
+    public RoadAccidentBuilder() {
+    }
+
     public RoadAccidentBuilder withLongitude(float longitude) {
         this.longitude = longitude;
         return this;

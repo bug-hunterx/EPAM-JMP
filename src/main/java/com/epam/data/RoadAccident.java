@@ -17,6 +17,12 @@ public class RoadAccident {
     private int numberOfCasualties;
     private LocalDate date;
     private LocalTime time;
+
+    public void setDayOfWeek(java.time.DayOfWeek dayOfWeek) {
+        DayOfWeek = dayOfWeek;
+    }
+
+    private DayOfWeek DayOfWeek;
     private String districtAuthority;
     private String lightConditions;
     private String weatherConditions;
@@ -146,4 +152,16 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+    
+    public String toString() {
+    	return "RoadAccident:" +
+    			"\nid:" + this.accidentId +
+    			"\ndistrictAuthority:" + this.districtAuthority+
+    			"\npoliceForce:" + this.policeForce +
+    			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
+    			"\nweatherConditions:" + this.weatherConditions;
+    			
+    			
+    			
+    } 
 }
