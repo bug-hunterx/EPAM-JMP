@@ -30,8 +30,8 @@ public class DataCSVFileWriter implements Runnable {
 		try {
 			consumedData = dataQueue.take();
 
-			while (consumedData != null && !consumedData.isEmpty()) {				
-				consumedData = dataQueue.take();
+			while (consumedData != null && !consumedData.isEmpty()) {			
+				
 				for (RoadAccident roadAccident : consumedData) {
 					if (roadAccident.getTimeosDay() != null) {
 						if (roadAccident.getTimeosDay() == DAYTIMETYPE.MORNING
@@ -44,6 +44,7 @@ public class DataCSVFileWriter implements Runnable {
 						}
 					}
 				}
+				consumedData = dataQueue.take();
 			}
 		} catch (InterruptedException | IOException e) {
 			e.printStackTrace();
