@@ -1,6 +1,7 @@
 package com.epam.dbservice;
 
 import java.util.Date;
+import java.util.List;
 
 import com.epam.dal.JpaRoadAccidentDao;
 import com.epam.entities.RoadAccident;
@@ -19,10 +20,9 @@ public class AccidentDBServiceImpl implements AccidentService {
 		return null;
 	}
 
-	public Iterable getAllAccidentsByWeatherConditionAndYear(
-			String weatherCondition, String year) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RoadAccident> getAllAccidentsByWeatherConditionAndYear(
+			String weatherCondition, Integer year) {
+		return accidentDao.findByWeatherConditionsAndYear(weatherCondition, year);
 	}
 
 	public Iterable<RoadAccident> getAllAccidentsByDate(Date date) {

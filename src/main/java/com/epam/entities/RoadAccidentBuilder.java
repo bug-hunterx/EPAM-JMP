@@ -2,6 +2,8 @@ package com.epam.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * Created by Tkachi on 2016/3/31.
@@ -14,7 +16,7 @@ public class RoadAccidentBuilder {
     String accidentSeverity;
     int numberOfVehicles;
     int numberOfCasualties;
-    LocalDate date;
+    Date date;
     LocalTime time;
     String districtAuthority;
     String lightConditions;
@@ -57,7 +59,7 @@ public class RoadAccidentBuilder {
     }
 
     public RoadAccidentBuilder withDate(LocalDate date) {
-        this.date = date;
+        this.date = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
         return this;
     }
 

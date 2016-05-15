@@ -13,7 +13,7 @@ public interface AccidentService {
     Iterable<RoadAccident> getAllAccidentsByRoadCondition();
     
     // scenario 3
-    Iterable<RoadAccident> getAllAccidentsByWeatherConditionAndYear(String weatherCondition,String year);
+    Iterable<RoadAccident> getAllAccidentsByWeatherConditionAndYear(String weatherCondition, Integer year);
     
  // scenario 4
     Iterable<RoadAccident> getAllAccidentsByDate(Date date);

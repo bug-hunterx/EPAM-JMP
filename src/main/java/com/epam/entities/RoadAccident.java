@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 /**
  * Contains information about one road accident
@@ -18,10 +19,8 @@ public class RoadAccident implements Serializable {
     @Column(name = "Accident_Index")
     private String accidentId;
 
-    @Transient
     private float longitude;
 
-    @Transient
     private float latitude;
 
     @Transient
@@ -33,14 +32,13 @@ public class RoadAccident implements Serializable {
     @Transient
     private String accidentSeverity;
 
-    @Transient
+    @Column(name = "NUMBER_OF_VEHICLES")
     private int numberOfVehicles;
 
-    @Transient
+    @Column(name = "NUMBER_OF_CASUALTIES")
     private int numberOfCasualties;
 
-    @Transient
-    private LocalDate date;
+    private Date date;
 
     @Transient
     private LocalTime time;
@@ -134,16 +132,16 @@ public class RoadAccident implements Serializable {
         this.numberOfCasualties = numberOfCasualties;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
     public DayOfWeek getDayOfWeek() {
-        return date.getDayOfWeek();
+        return DayOfWeek.of(date.getDay());
     }
 
     public LocalTime getTime() {
