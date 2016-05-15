@@ -18,7 +18,7 @@ public class RoadAccidentBuilder {
     LocalTime time;
     String districtAuthority;
     String lightConditions;
-    String weatherConditions;
+    WeatherConditions weatherConditions;
     String roadSurfaceConditions;
 
 
@@ -77,7 +77,8 @@ public class RoadAccidentBuilder {
     }
 
     public RoadAccidentBuilder withWeatherConditions(String weatherConditions) {
-        this.weatherConditions = weatherConditions;
+        this.weatherConditions = new WeatherConditions();
+        this.weatherConditions.setLabel(weatherConditions);
         return this;
     }
 

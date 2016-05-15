@@ -109,7 +109,7 @@ public class DataProcessor {
      */
     public List<String> getTopThreeWeatherCondition7(List<RoadAccident> roadAccidentList){
         // Get stats
-        List<Map.Entry<String, Long>> weatherStats = new ArrayList<>(getCountBy(roadAccidentList, RoadAccident::getWeatherConditions).entrySet());
+        List<Map.Entry<String, Long>> weatherStats = new ArrayList<>(getCountBy(roadAccidentList, RoadAccident::getWeatherConditionsLabel).entrySet());
 
         //Sort and choose top 3
         weatherStats.sort(new Comparator<Map.Entry<String, Long>>() {
@@ -185,7 +185,7 @@ public class DataProcessor {
      */
     public List<String> getTopThreeWeatherCondition(List<RoadAccident> roadAccidentList){
         Map<String, Long> weatherStatistics = roadAccidentList.stream()
-                .collect(groupingBy(RoadAccident::getWeatherConditions, counting()));
+                .collect(groupingBy(RoadAccident::getWeatherConditionsLabel, counting()));
 
         return weatherStatistics.entrySet().stream()
                 .sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue()))

@@ -12,7 +12,7 @@ import java.time.LocalTime;
  * Contains information about one road accident
  */
 @Entity
-@Table(name = "accidents")
+@Table(name = "ACCIDENTS")
 public class RoadAccident implements Serializable {
     @Id
     @Column(name = "Accident_Index")
@@ -54,8 +54,9 @@ public class RoadAccident implements Serializable {
     @Transient
     private String lightConditions;
 
-    @Transient
-    private String weatherConditions;
+    @ManyToOne
+    @JoinColumn(name = "WEATHER_CONDITIONS")
+    private WeatherConditions weatherConditions;
 
     @Transient
     private String roadSurfaceConditions;
@@ -169,11 +170,15 @@ public class RoadAccident implements Serializable {
         this.lightConditions = lightConditions;
     }
 
-    public String getWeatherConditions() {
+    public WeatherConditions getWeatherConditions() {
         return weatherConditions;
     }
 
-    public void setWeatherConditions(String weatherConditions) {
+    public String getWeatherConditionsLabel() {
+        return weatherConditions.getLabel();
+    }
+
+    public void setWeatherConditions(WeatherConditions weatherConditions) {
         this.weatherConditions = weatherConditions;
     }
 
@@ -217,7 +222,7 @@ public class RoadAccident implements Serializable {
                 ", timeOfDay=" + timeOfDay +
                 ", districtAuthority='" + districtAuthority + '\'' +
                 ", lightConditions='" + lightConditions + '\'' +
-                ", weatherConditions='" + weatherConditions + '\'' +
+                ", weatherConditions='" + weatherConditions.getLabel() + '\'' +
                 ", roadSurfaceConditions='" + roadSurfaceConditions + '\'' +
                 '}';
     }

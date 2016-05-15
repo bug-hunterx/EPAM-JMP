@@ -14,7 +14,7 @@ public class Main {
 
         AccidentDBServiceImpl accidentService = (AccidentDBServiceImpl) context.getBean("accidentService");
         RoadAccident accident = accidentService.findOne("200901BS70001");
-        System.out.println(accident.getAccidentId());
+        System.out.println(accident.toString());
 
         context.close();
     }

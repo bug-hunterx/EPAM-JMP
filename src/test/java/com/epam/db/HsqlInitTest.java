@@ -20,6 +20,7 @@ public class HsqlInitTest {
     @Before
     public void init(){
         hsqlInit = new HsqlInit();
+        hsqlInit.start();
         connection = hsqlInit.createConnection();
     }
 

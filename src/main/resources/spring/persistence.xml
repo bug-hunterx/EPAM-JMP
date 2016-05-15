@@ -9,6 +9,7 @@
     <persistence-unit name="defaultPU">
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
         <class>com.epam.entities.RoadAccident</class>
+        <class>com.epam.entities.WeatherConditions</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>

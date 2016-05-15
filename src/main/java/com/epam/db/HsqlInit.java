@@ -103,7 +103,7 @@ public class HsqlInit {
         hsqlServer.setLogWriter(null);
         hsqlServer.setSilent(true);
         hsqlServer.setDatabaseName(0, "jmp");
-        hsqlServer.setDatabasePath(0, "file:jmpdb");
+        hsqlServer.setDatabasePath(0, "file:db/jmpdb");
 
         hsqlServer.start();
     }

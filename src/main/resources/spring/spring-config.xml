@@ -9,6 +9,9 @@
        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
     <context:component-scan base-package="com.epam.dal"/>
+    <context:annotation-config/>
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
     <bean id="hsqlStarter" class="com.epam.db.HsqlInit" init-method="start" destroy-method="stop"/>
 
@@ -18,7 +21,7 @@
 
     <bean id="accidentService" class="com.epam.dbservice.AccidentDBServiceImpl"/>
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="hsqlStarter">
         <property name="persistenceUnitName" value="defaultPU" />
         <property name="persistenceXmlLocation" value="classpath:spring/persistence.xml"/>
     </bean>
