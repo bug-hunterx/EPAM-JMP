@@ -21,7 +21,7 @@ public class RoadAccidentBuilder {
     String districtAuthority;
     String lightConditions;
     WeatherConditions weatherConditions;
-    String roadSurfaceConditions;
+    RoadConditions roadSurfaceConditions;
 
 
     public RoadAccidentBuilder(String accidentId){
@@ -85,7 +85,8 @@ public class RoadAccidentBuilder {
     }
 
     public RoadAccidentBuilder withRoadSurfaceConditions(String roadSurfaceConditions) {
-        this.roadSurfaceConditions = roadSurfaceConditions;
+        this.roadSurfaceConditions = new RoadConditions();
+        this.roadSurfaceConditions.setLabel(roadSurfaceConditions);
         return this;
     }
 

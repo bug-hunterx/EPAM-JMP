@@ -4,8 +4,12 @@ import com.epam.entities.RoadAccident;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+
 @Repository
 public interface AccidentRepository extends CrudRepository<RoadAccident, Integer> {
+    List<RoadAccident> findByRoadSurfaceConditions_Label(String label);
 
-	// declare your query methods for default and if you want to execute any custom queries use @Query annotation.
+    List<RoadAccident> findByDate(Date date);
 }

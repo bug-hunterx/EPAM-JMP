@@ -19,9 +19,9 @@ public class JpaRoadAccidentDao extends AbstractJpaDao<RoadAccident> {
         TypedQuery<RoadAccident> query = entityManager
                 .createQuery("select a from RoadAccident a " +
                         "where a.date between :minDate and :maxDate and a.weatherConditions.label=:label", RoadAccident.class)
-                .setParameter("minDate", Date.from(LocalDate.parse(year.toString() + "-01-01").atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                .setParameter("maxDate", Date.from(LocalDate.parse(year.toString() + "-12-31").atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                .setParameter("label", "Fine no high winds");
+                .setParameter("minDate", Date.from(LocalDate.of(year, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .setParameter("maxDate", Date.from(LocalDate.of(year, 12, 31).atStartOfDay(ZoneId.systemDefault()).toInstant()))
+                .setParameter("label", weatherConditions);
 
         return query.getResultList();
     }

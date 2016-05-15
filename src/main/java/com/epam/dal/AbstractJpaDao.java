@@ -2,6 +2,8 @@ package com.epam.dal;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,6 +33,7 @@ public abstract class AbstractJpaDao<T extends Serializable> {
         entityManager.persist(entity);
     }
 
+    @Transactional
     public T update(T entity) {
         return entityManager.merge(entity);
     }

@@ -10,6 +10,7 @@
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
         <class>com.epam.entities.RoadAccident</class>
         <class>com.epam.entities.WeatherConditions</class>
+        <class>com.epam.entities.RoadConditions</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>

@@ -86,7 +86,7 @@ public class DataProcessor {
      * @return
      */
     public Map<String, Long> getCountByRoadSurfaceCondition7(List<RoadAccident> roadAccidentList){
-        return getCountBy(roadAccidentList, RoadAccident::getRoadSurfaceConditions);
+        return getCountBy(roadAccidentList, RoadAccident::getRoadSurfaceConditionsLabel);
     }
 
     private Map<String, Long> getCountBy(List<RoadAccident> roadAccidentList, Function<RoadAccident, String> classificationFunction) {
@@ -200,7 +200,7 @@ public class DataProcessor {
      */
     public Map<String, Long> getCountByRoadSurfaceCondition(List<RoadAccident> roadAccidentList){
         return roadAccidentList.stream()
-                .collect(groupingBy(RoadAccident::getRoadSurfaceConditions, counting()));
+                .collect(groupingBy(RoadAccident::getRoadSurfaceConditionsLabel, counting()));
     }
 
     /**

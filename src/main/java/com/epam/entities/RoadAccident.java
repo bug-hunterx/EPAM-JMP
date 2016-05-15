@@ -56,8 +56,9 @@ public class RoadAccident implements Serializable {
     @JoinColumn(name = "WEATHER_CONDITIONS")
     private WeatherConditions weatherConditions;
 
-    @Transient
-    private String roadSurfaceConditions;
+    @ManyToOne
+    @JoinColumn(name = "ROAD_SURFACE_CONDITIONS")
+    private RoadConditions roadSurfaceConditions;
 
     RoadAccident(RoadAccidentBuilder builder){
         this.accidentId = builder.accidentId;
@@ -180,11 +181,15 @@ public class RoadAccident implements Serializable {
         this.weatherConditions = weatherConditions;
     }
 
-    public String getRoadSurfaceConditions() {
+    public RoadConditions getRoadSurfaceConditions() {
         return roadSurfaceConditions;
     }
 
-    public void setRoadSurfaceConditions(String roadSurfaceConditions) {
+    public String getRoadSurfaceConditionsLabel() {
+        return roadSurfaceConditions.getLabel();
+    }
+
+    public void setRoadSurfaceConditions(RoadConditions roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
 
@@ -221,7 +226,7 @@ public class RoadAccident implements Serializable {
                 ", districtAuthority='" + districtAuthority + '\'' +
                 ", lightConditions='" + lightConditions + '\'' +
                 ", weatherConditions='" + weatherConditions.getLabel() + '\'' +
-                ", roadSurfaceConditions='" + roadSurfaceConditions + '\'' +
+                ", roadSurfaceConditions='" + roadSurfaceConditions.getLabel() + '\'' +
                 '}';
     }
 }
