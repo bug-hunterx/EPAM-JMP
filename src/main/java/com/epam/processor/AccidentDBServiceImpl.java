@@ -1,5 +1,6 @@
 package com.epam.processor;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,10 +31,6 @@ public class AccidentDBServiceImpl implements AccidentService {
 		return null;
 	}
 
-//	public void setAccidentRepository(AccidentRepository accidentRepository) {
-//		this.accidentRepository = accidentRepository;
-//	}
-
 	public Iterable getAllAccidentsByRoadCondition() {
 		return accidentRepository.findCountByRoadSurfaceConditions();
 	}
@@ -50,7 +47,7 @@ public class AccidentDBServiceImpl implements AccidentService {
 
 	public Boolean update(Accident accident) {
 		accidentRepository.save(accident);
-		return null;
+		return true;
 	}
 	
 	@Override
@@ -58,8 +55,30 @@ public class AccidentDBServiceImpl implements AccidentService {
 		Iterator iter = (Iterator) accidents.iterator();
 		while(iter.hasNext()) {
 			Accident accident = (Accident) iter.next();
+			String timeOfDay = getTimeOfDay(accident.getTime());
+			accident.setDayTime(timeOfDay);
 		}
-		return null;
+		
+		accidentRepository.save(accidents);
+		return true;
+	}
+
+	private String getTimeOfDay(String time) {
+		String[] timeArr = time.split(":");
+		int hour = Integer.valueOf(timeArr[0]);
+		String timeOfDay = "";
+		if(hour < 6)
+			timeOfDay = "NIGHT";
+		else if(hour < 12)
+			timeOfDay = "MORNING";
+		else if(hour < LocalTime.of(18, 0).getHour())
+			timeOfDay = "AFTERNOON";
+		else if(hour < 24)
+			timeOfDay = "EVENING";
+		else
+			timeOfDay = "INVALIDTIME";
+		
+		return timeOfDay;
 	}
 
 	public static void main(String[] args) {
