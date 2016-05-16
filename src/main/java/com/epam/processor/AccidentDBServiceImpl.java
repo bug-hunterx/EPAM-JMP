@@ -71,7 +71,7 @@ public class AccidentDBServiceImpl implements AccidentService {
 			timeOfDay = "NIGHT";
 		else if(hour < 12)
 			timeOfDay = "MORNING";
-		else if(hour < LocalTime.of(18, 0).getHour())
+		else if(hour < 18)
 			timeOfDay = "AFTERNOON";
 		else if(hour < 24)
 			timeOfDay = "EVENING";
