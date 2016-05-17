@@ -4,20 +4,24 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="accidents")
 public class Accident {
 
+	@Id  
+	@GeneratedValue 
 	@Column(name="Accident_Index")
 	private String accidentIndex;
 	
 	@Column(name="Longitude")
-	private int longitude;
+	private float longitude;
 	
 	@Column(name="Latitude")
-	private int latitude;
+	private float latitude;
 	
 	@Column(name="Accident_Severity")
 	private int accidentSeverity;
@@ -60,19 +64,19 @@ public class Accident {
 		this.accidentIndex = accidentIndex;
 	}
 
-	public int getLongitude() {
+	public float getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(int longitude) {
+	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
 
-	public int getLatitude() {
+	public float getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(int latitude) {
+	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
 

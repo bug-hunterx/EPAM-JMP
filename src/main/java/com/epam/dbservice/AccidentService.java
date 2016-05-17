@@ -10,7 +10,7 @@ public interface AccidentService {
     Accident findOne(String accidentId);
     
     // scenario 2
-    Iterable<Accident> getAllAccidentsByRoadCondition();
+    Iterable<Accident> getAllAccidentsByRoadCondition(int roadCondition);
     
     // scenario 3
     Iterable<Accident> getAllAccidentsByWeatherConditionAndYear(String weatherCondition,String year);
@@ -18,8 +18,8 @@ public interface AccidentService {
  // scenario 4
     Iterable<Accident> getAllAccidentsByDate(Date date);
 
-    Boolean update(Accident accident);
+    Accident update(Accident accident);
     
-    Boolean update(Iterable<Accident> accidents);
+    boolean update(Iterable<Accident> accidents);
 
 }
