@@ -12,8 +12,8 @@ import javax.persistence.Table;
 @Table(name="accidents")
 public class Accident {
 
-	@Id  
-	@GeneratedValue 
+	@Id
+	@GeneratedValue
 	@Column(name="Accident_Index")
 	private String accidentIndex;
 	
