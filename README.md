@@ -28,3 +28,18 @@ In pull request mark your mentor (@mentorName) so it can review it.
 To complite task one you need to fix DataProcessorTest unit tests. 
 All methods in DataProcessor with "7" in a name should be implemented using Java 7, when other should be done with Java 8 streaming api. 
 
+
+## Hometask 6
+
+To implement the REST service in EmployeeController for modal class Employee with EmployeeRepository as DAO, service functionalities including:
+    //todo add Restful services to getAll
+    
+    //todo add Restful services to get
+    
+    //todo add Restful services to getByName
+
+    //todo add Restful services to create
+
+    //todo add Restful services to put, response 404(Not Found) when encounter the exception that the id is not exist
+
+    //todo add Restful services to delete
