@@ -153,8 +153,12 @@ public class DataProcessor {
      * @return
      */
     public List<String> getTopThreeWeatherCondition(){
-
-        return null;
+    	Map<String, Long> groupbyWeather = roadAccidentList.stream()
+                .collect(Collectors.groupingBy(RoadAccident::getWeatherConditions, Collectors.counting()));
+        return groupbyWeather.keySet().stream()
+                .sorted((w1,w2) -> groupbyWeather.get(w2).compareTo(groupbyWeather.get(w1)))
+                .limit(3)
+                .collect(Collectors.toList());
     }
 
     /**
