@@ -3,7 +3,7 @@ package com.epam.data;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import com.google.common.base.Objects;
 /**
  * Contains information about one road accident
  */
@@ -21,6 +21,8 @@ public class RoadAccident {
     private String lightConditions;
     private String weatherConditions;
     private String roadSurfaceConditions;
+    private String forceContact;
+    private TimeOfDay dayTime;
 
     RoadAccident(RoadAccidentBuilder builder){
         this.accidentId = builder.accidentId;
@@ -146,16 +148,31 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
-    
+
+    public String getForceContact() {
+        return forceContact;
+    }
+
+    public void setForceContact(String forceContact) {
+        this.forceContact = forceContact;
+    }
+
+    public TimeOfDay getDayTime() {
+        return dayTime;
+    }
+
+    public void setDayTime(TimeOfDay dayTime) {
+        this.dayTime = dayTime;
+    }
+
     public String toString() {
     	return "RoadAccident:" +
     			"\nid:" + this.accidentId +
     			"\ndistrictAuthority:" + this.districtAuthority+
     			"\npoliceForce:" + this.policeForce +
     			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
-    			"\nweatherConditions:" + this.weatherConditions;
-    			
-    			
-    			
-    } 
+    			"\nweatherConditions:" + this.weatherConditions +
+    			"\npliceForceContact:" + this.forceContact +
+                 "\ndayTime:" + this.dayTime;
+    }
 }
