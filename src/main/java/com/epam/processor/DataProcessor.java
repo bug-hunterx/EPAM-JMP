@@ -1,15 +1,17 @@
 package com.epam.processor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.epam.data.RoadAccident;
-import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 /**
@@ -22,8 +24,7 @@ public class DataProcessor {
     public DataProcessor(List<RoadAccident> roadAccidentList){
         this.roadAccidentList = roadAccidentList;
     }
-  
-    
+
 //    First try to solve task using java 7 style for processing collections
 
     /**
@@ -73,19 +74,16 @@ public class DataProcessor {
      */
     public Map<String, Long> getCountByRoadSurfaceCondition7(){
         Map<String, Long> map = new HashMap<>();
-        long dry = 0, wet = 0;
         
         for(RoadAccident ra : roadAccidentList){
-        	if(ra.getRoadSurfaceConditions().equals("2") || ra.getRoadSurfaceConditions().equalsIgnoreCase("wet")){
-        		wet++;
-        	}else if(ra.getRoadSurfaceConditions().equals("5") || ra.getRoadSurfaceConditions().equalsIgnoreCase("dry")){
-        		dry++;
+        	long count = 0l;
+        	if(map.get(ra.getRoadSurfaceConditions()) != null){
+              	count = map.get(ra.getRoadSurfaceConditions());             	
         	}
+   
+        	map.put(ra.getRoadSurfaceConditions(),++count);
         }
-        
-        map.put("Dry", dry);
-        map.put("Wet", wet);
-        
+               
         return map;
     }
 
@@ -94,38 +92,35 @@ public class DataProcessor {
      * as example if there were 10 accidence in rain, 5 in snow, 6 in sunny and 1 in foggy, then your result list should contain {rain, sunny, snow} - top three in decreasing order
      * @return
      */
-    public List<String> getTopThreeWeatherCondition7(){  	
-    	List<String> list = new LinkedList<>();
-    	List<Long> countList = new LinkedList<>();
-    	Multimap<String, Long> multiMap = HashMultimap.create(); 	    	
-    	Long count = 0l;
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<String> getTopThreeWeatherCondition7(){  	
+    	String[] weatherCondition = new String[3];
+    	Map<String,Long> map = new HashMap<String,Long>(); 
     	
     	for(RoadAccident ra : roadAccidentList){
-    		multiMap.put(ra.getWeatherConditions(), count++);
+        	long count = 0l;
+        	if(map.get(ra.getWeatherConditions()) != null){
+              	count = map.get(ra.getWeatherConditions());             	
+        	}
+   
+        	map.put(ra.getWeatherConditions(),++count);
     	}
+   	   	
+		List list = new ArrayList(map.entrySet());  
+        Collections.sort(list, new Comparator(){  
+            public int compare(Object o1, Object o2) {  
+                Map.Entry obj1 = (Map.Entry) o1;  
+                Map.Entry obj2 = (Map.Entry) o2;  
+                return ((Long) obj2.getValue()).compareTo((Long)obj1.getValue());  
+                }  
+        }); 
     	
-    	for(int i = 0;i < 2;i++){
-    		countList.add(0l);
-    	}
-    	    	
-    	for(String key : multiMap.keySet()){
-    		long size = multiMap.get(key).size();
-    		if(size > countList.get(0)){
-    			list.add(0, key);
-    			countList.add(0, size);
-    		}else if(size > countList.get(1)){
-    			list.add(1, key);
-    			countList.add(1, size);
-    		}else if(size > countList.get(2)){
-    			list.add(2, key);
-    			countList.add(2, size);
-    		} 		
-    		if(list.size() == 4){
-    			list.remove(3);
-    		}
-    	}
-    	    	
-    	return list;
+        for(int i = 0; i < 3;i++){
+        	Map.Entry entry = (Map.Entry)list.get(i);
+        	weatherCondition[i] = (String)entry.getKey();
+        }
+        
+    	return  Arrays.asList(weatherCondition);
     }
 
     /**
@@ -136,10 +131,9 @@ public class DataProcessor {
      * @return
      */
     public Multimap<String, String> getAccidentIdsGroupedByAuthority7(){
-    	Multimap<String, String> multiMap = HashMultimap.create();
-    	long count = 0l;
+    	Multimap<String, String> multiMap = ArrayListMultimap.create();
     	for(RoadAccident ra : roadAccidentList){
-    		multiMap.put(ra.getDistrictAuthority(), ra.getAccidentId() + count++);
+    		multiMap.put(ra.getDistrictAuthority(), ra.getAccidentId());
     	}
     	
         return multiMap;
@@ -177,7 +171,6 @@ public class DataProcessor {
      * @return
      */
     public List<String> getTopThreeWeatherCondition(){   	
-    	List<String> list = new ArrayList<>();
     	Map<String, Long> map = roadAccidentList.stream()
     								.map(RoadAccident::getWeatherConditions)
     								.collect(Collectors.groupingBy(
@@ -197,14 +190,12 @@ public class DataProcessor {
      * @return
      */
     public Map<String, Long> getCountByRoadSurfaceCondition(){ 
-    	Map<String, Long> map = new HashMap<>();
-    	
-    	long dry = roadAccidentList.stream().filter(ra -> ra.getRoadSurfaceConditions().equals("5") || ra.getRoadSurfaceConditions().equalsIgnoreCase("dry")).count();
-    	long wet = roadAccidentList.stream().filter(ra -> ra.getRoadSurfaceConditions().equals("2") || ra.getRoadSurfaceConditions().equalsIgnoreCase("wet")).count();
-    	
-    	map.put("Dry", dry);
-        map.put("Wet", wet);
-    	return map;  	
+    	return roadAccidentList.stream()
+    			.map(RoadAccident::getRoadSurfaceConditions)
+    			.collect(Collectors.groupingBy(
+							item -> item,
+							Collectors.counting()
+    			));	
     }
 
     /**

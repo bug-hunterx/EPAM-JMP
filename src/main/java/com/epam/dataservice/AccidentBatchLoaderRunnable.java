@@ -1,18 +1,18 @@
 package com.epam.dataservice;
 
 
-import com.epam.data.RoadAccident;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
 import java.io.FileReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
+import com.epam.data.RoadAccident;
 
 public class AccidentBatchLoaderRunnable implements Runnable {
 

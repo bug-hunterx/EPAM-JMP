@@ -27,7 +27,7 @@ public class AccidentBatchLoader implements Callable<Integer> {
         this.dataFileName = dataFileName;
         roadAccidentParser = new RoadAccidentParser();
     }
-
+    
     @Override
     public Integer call() throws Exception {
         int dataCount = 0;
