@@ -3,11 +3,12 @@ package com.epam.dbservice;
 import java.util.Date;
 
 import com.epam.data.RoadAccident;
+import com.epam.entities.Accident;
 
 public interface AccidentService {
 	
 	// scenario 1
-    RoadAccident findOne(String accidentId);
+    Accident findOne(String accidentId);
     
     // scenario 2
     Iterable<RoadAccident> getAllAccidentsByRoadCondition();
