@@ -53,7 +53,7 @@ public class ReportGenerator {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} 
-		System.out.println("Data loading finished");
+		System.out.println("Data loading finished ");
 	}
 
 	private static void replay(){
