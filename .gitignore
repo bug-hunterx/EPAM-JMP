@@ -2,3 +2,7 @@
 target/*
 .idea/*
 /target/
+
+.classpath
+.project
+bin/
