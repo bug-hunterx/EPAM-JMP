@@ -20,6 +20,8 @@ public class RoadAccidentBuilder {
     String lightConditions;
     String weatherConditions;
     String roadSurfaceConditions;
+    String forceContact;
+    String dayTime;
 
 
     public RoadAccidentBuilder(String accidentId){
@@ -83,6 +85,16 @@ public class RoadAccidentBuilder {
 
     public RoadAccidentBuilder withRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
+        return this;
+    }
+    
+    public RoadAccidentBuilder withForceContact(String forceContact) {
+        this.forceContact = forceContact;
+        return this;
+    }
+    
+    public RoadAccidentBuilder withDayTime(String dayTime) {
+        this.dayTime = dayTime;
         return this;
     }
 
