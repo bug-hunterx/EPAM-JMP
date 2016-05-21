@@ -1,11 +1,10 @@
 package com.epam.entities;
 
-import com.epam.data.TimeOfDay;
+import com.epam.dataprocessing.TimeOfDay;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 

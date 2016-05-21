@@ -15,21 +15,19 @@
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="com.epam.dal"/>
-    <jpa:repositories base-package="com.epam.dbrepositories" />
+    <jpa:repositories base-package="com.epam.repositories" />
 
     <!--bean class="org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory"/>
 
-    <bean class="org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration"/-->
+    <bean class="org.springframework.dataprocessing.rest.webmvc.config.RepositoryRestMvcConfiguration"/-->
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
-    <bean id="hsqlStarter" class="com.epam.db.HsqlInit" init-method="start" destroy-method="stop"/>
+    <bean id="hsqlStarter" class="com.epam.dbutils.HsqlInit" init-method="start" destroy-method="stop"/>
 
-    <bean id="hsqlConnection" class="com.epam.db.HsqlInit" factory-method="createConnection"/>
+    <bean id="hsqlConnection" class="com.epam.dbutils.HsqlInit" factory-method="createConnection"/>
 
-    <bean id="testController" class="com.epam.processor.AccidentsControllerBasicImpl" autowire="byType"/>
-
-    <bean id="accidentService" class="com.epam.dbservice.AccidentDBServiceImpl"/>
+    <bean id="accidentService" class="com.epam.services.AccidentDBServiceImpl"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="hsqlStarter">
         <property name="persistenceUnitName" value="defaultPU" />
