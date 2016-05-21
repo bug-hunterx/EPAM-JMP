@@ -1,6 +1,6 @@
 package com.epam.it;
 
-import com.epam.Main;
+import com.epam.processor.MultithreadedProcessor;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -18,7 +18,7 @@ public class MainIntegrationTest {
 
     @Test
     public void should_write_two_files() throws IOException, InterruptedException {
-        Main.main(null);
+        MultithreadedProcessor.process();
         File day = new File("day.csv");
         File night = new File("night.csv");
 

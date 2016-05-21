@@ -1,6 +1,5 @@
 package com.epam.processor;
 
-import com.epam.Main;
 import com.epam.data.AccidentsDataLoader;
 import com.epam.data.AccidentsDataWriter;
 import com.epam.entities.RoadAccident;
@@ -31,7 +30,7 @@ public class MultithreadedProcessor {
 
     public static void process() throws IOException, InterruptedException {
         // Load properties
-        props.load(Main.class.getClassLoader().getResourceAsStream("config.properties"));
+        props.load(MultithreadedProcessor.class.getClassLoader().getResourceAsStream("config.properties"));
         int readingQueueDepth = parseIntProp("reading-queue-depth");
         int readingThreadsNum = parseIntProp("reading-thread-num");
         int batchSize = parseIntProp("batch-size");
