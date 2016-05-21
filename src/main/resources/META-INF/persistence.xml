@@ -12,6 +12,7 @@
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="eclipselink.weaving" value="false"/>
+            <property name="hsqldb.float_nan" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>

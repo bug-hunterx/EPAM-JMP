@@ -13,7 +13,14 @@ public class Accident {
     @Id
     @Column(name = "Accident_Index")
     private String accidentId;
-
+    @Column(name = "Longitude")
+    private String longitude;
+    @Column(name = "Latitude")
+    private String latitude;
+    @Column
+    private String date;
+    @Column
+    private String Time;
     @Column(name = "Weather_Conditions")
     private String weatherConditions;
     @Column(name = "Road_Surface_Conditions")
@@ -25,6 +32,38 @@ public class Accident {
 
     public void setAccidentId(String accidentId) {
         this.accidentId = accidentId;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
     }
 
     public String getWeatherConditions() {
