@@ -56,8 +56,8 @@ public class HsqlInit {
 
             connection.prepareStatement("CREATE TEXT TABLE accidents(\n" +
                     "   Accident_Index             VARCHAR(20) NOT NULL PRIMARY KEY\n" +
-                    "  ,Longitude                  NUMERIC(10,20) NOT NULL\n" +
-                    "  ,Latitude                   NUMERIC(10,20) NOT NULL\n" +
+                    "  ,Longitude                  VARCHAR(20) NOT NULL\n" +
+                    "  ,Latitude                   VARCHAR(20) NOT NULL\n" +
                     "  ,Police_Force               INTEGER  NOT NULL\n" +
                     "  ,Accident_Severity          INTEGER  NOT NULL\n" +
                     "  ,Number_of_Vehicles         INTEGER  NOT NULL\n" +
