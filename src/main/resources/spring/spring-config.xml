@@ -17,7 +17,9 @@
     <context:component-scan base-package="com.epam.dal"/>
     <jpa:repositories base-package="com.epam.dbrepositories" />
 
-    <bean class="org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory"/>
+    <!--bean class="org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory"/>
+
+    <bean class="org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration"/-->
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 

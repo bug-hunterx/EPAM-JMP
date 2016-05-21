@@ -88,46 +88,25 @@
     </parent>
 
     <dependencies>
+        <!-- SPRING BOOT -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.4.5</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.4.5</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>1.2</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>13.0.1</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.10.19</version>
-		</dependency>
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>2.3.2</version>
-        </dependency>
+
+        <!-- SPRING -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -141,11 +120,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>4.2.5.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
             <version>4.2.5.RELEASE</version>
         </dependency>
         <dependency>
@@ -164,7 +138,7 @@
             <artifactId>spring-context-support</artifactId>
             <version>4.2.5.RELEASE</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.10.1.RELEASE</version>
@@ -175,9 +149,45 @@
             <version>1.12.1.RELEASE</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-rest-hal-browser</artifactId>
+        </dependency>
+
+        <!-- DATABASE -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.openjpa</groupId>
             <artifactId>openjpa</artifactId>
             <version>2.4.1</version>
+        </dependency>
+
+        <!-- TESTING -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+        </dependency>
+
+        <!-- UTILS -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>13.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
