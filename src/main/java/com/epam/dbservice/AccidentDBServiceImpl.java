@@ -7,7 +7,12 @@ import com.epam.dal.JpaRoadAccidentDao;
 import com.epam.dbrepositories.AccidentRepository;
 import com.epam.entities.RoadAccident;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class AccidentDBServiceImpl implements AccidentService {
 	@Autowired
 	private JpaRoadAccidentDao accidentDao;
@@ -15,7 +20,8 @@ public class AccidentDBServiceImpl implements AccidentService {
 	@Autowired
     private AccidentRepository accidentRepository;
 
-	public RoadAccident findOne(String accidentId) {
+	@RequestMapping(path = "accidents/{accidentId}")
+	public RoadAccident findOne(@PathVariable String accidentId) {
 		return accidentDao.findOne(accidentId);
 	}
 
