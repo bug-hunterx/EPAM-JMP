@@ -19,7 +19,7 @@ public class AccidentBatchLoaderTest {
 
         BlockingQueue<List<RoadAccident>> dataQueue1 = new ArrayBlockingQueue<List<RoadAccident>>(2);
         BlockingQueue<List<RoadAccident>> dataQueue2 = new ArrayBlockingQueue<List<RoadAccident>>(2);
-
+        
         AccidentBatchLoaderRunnable readerTask1 = new AccidentBatchLoaderRunnable(10000,dataQueue1,filePath1);
         AccidentBatchLoaderRunnable readerTask2 = new AccidentBatchLoaderRunnable(10000,dataQueue2,filePath2);
 
@@ -126,7 +126,7 @@ public class AccidentBatchLoaderTest {
     }
 
     public static void main(String[] args) throws Exception{
-        //handle2FilesWithRunnable();
+//        handle2FilesWithRunnable();
        //handle2FilesWithCallable();
         handleMultipleFilesWithCallable();
     }

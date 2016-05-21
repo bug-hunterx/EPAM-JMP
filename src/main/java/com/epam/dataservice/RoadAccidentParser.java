@@ -17,6 +17,11 @@ public class RoadAccidentParser {
     public RoadAccident parseRecord(CSVRecord record) {
         try {
             String accidentId = record.get("Accident_Index");
+            
+            if(accidentId.equals("")) {
+				return null;
+			}
+            
             RoadAccident roadAccident = new RoadAccidentBuilder(accidentId)
                     .withLongitude(Float.valueOf(record.get("Longitude")))
                     .withLatitude(Float.valueOf(record.get("Latitude")))
@@ -24,13 +29,14 @@ public class RoadAccidentParser {
                     .withAccidentSeverity(StaticData.getAccidentSeverity(record.get("Accident_Severity")))
                     .withNumberOfVehicles(Integer.valueOf(record.get("Number_of_Vehicles")))
                     .withNumberOfCasualties(Integer.valueOf(record.get("Number_of_Casualties")))
-                    .withDate(LocalDate.parse(record.get("Date"), DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                    .withDate(LocalDate.parse(record.get("Date"), DateTimeFormatter.ofPattern("d/M/yyyy")))
                     .withTime(LocalTime.parse(record.get("Time"), DateTimeFormatter.ofPattern("H:mm")))
                     .withDistrictAuthority(StaticData.getDistrictAuthority(record.get("Local_Authority_(District)")))
                     .withLightConditions(StaticData.getLightConditions(record.get("Light_Conditions")))
                     .withWeatherConditions(StaticData.getWeatherConditions(record.get("Weather_Conditions")))
                     .withRoadSurfaceConditions(StaticData.getRoadSurface(record.get("Road_Surface_Conditions")))
                     .build();
+                       
             return roadAccident;
         } catch (DateTimeParseException timeException) {
             //System.out.println("Some data quality issue with one of records - screw it, have plenty more");

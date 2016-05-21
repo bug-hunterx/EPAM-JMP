@@ -17,7 +17,7 @@ public class ReportGenerator {
 
 	private static boolean validate(){
 		if(null == pathList || pathList.size() == 0){
-			System.out.println("Please fill data first.");
+			System.out.println("--->>> Please Fill Data First.");
 			return false;
 		}
 		return true;
@@ -34,13 +34,13 @@ public class ReportGenerator {
 		}
 		
 		//start 
-		System.out.println("----->>>Started!");
+		System.out.println("----->>> Started!");
 		try {
 			ExecutorService executor = Executors.newFixedThreadPool(pathList.size()*2);
 			for(String filePath : pathList){
 				BlockingQueue<List<RoadAccident>> dataQueue = new ArrayBlockingQueue<List<RoadAccident>>(1);
-				AccidentBatchLoaderRunnable readerTask = new AccidentBatchLoaderRunnable(dealCount,dataQueue,filePath);
-				AccidentBatchWriteRunnable writeTask = new AccidentBatchWriteRunnable(dataQueue,filePath);
+				AccidentBatchLoaderRunnable readerTask = new AccidentBatchLoaderRunnable(dealCount,dataQueue,filePath+".csv");
+				AccidentBatchWriteRunnable writeTask = new AccidentBatchWriteRunnable(dataQueue,filePath+"_new.csv");
 				executor.execute(readerTask);
 				executor.execute(writeTask);
 			}		
@@ -53,7 +53,7 @@ public class ReportGenerator {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} 
-		System.out.println("Data loading finished ");
+		System.out.println("Data Generate Finished ");
 	}
 
 	private static void replay(){

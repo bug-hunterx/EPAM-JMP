@@ -30,13 +30,14 @@ public class AccidentBatchLoaderRunnable implements Runnable {
 
     @Override
     public void run() {
+    	System.out.println("--->>> Reader Thread:[" + Thread.currentThread().getId() + "] Started!");
         int dataCount = 0;
         try{
 
             Iterator<CSVRecord> recordIterator = getRecordIterator();
             int batchCount = 0;
             List<RoadAccident> roadAccidentBatch = null;
-
+                        
             boolean isDataLoadFinished = false;
             while(!isDataLoadFinished){
                 roadAccidentBatch = getNextBatch(recordIterator);
@@ -51,7 +52,10 @@ public class AccidentBatchLoaderRunnable implements Runnable {
             }
         }catch (Exception e){
             e.printStackTrace();
-        }
+        } finally {
+			Thread.currentThread().interrupt();
+			System.out.println("--->>> Data Read Successful. Quit Reader Thread:[" + Thread.currentThread().getId() + "]");
+		}
 
 
     }
@@ -74,4 +78,5 @@ public class AccidentBatchLoaderRunnable implements Runnable {
         }
         return  roadAccidentBatch;
     }
+  
 }
