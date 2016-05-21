@@ -13,9 +13,9 @@ public class Accident {
     @Id
     @Column(name = "Accident_Index")
     private String accidentId;
-    @Column(name = "Longitude")
+    @Column
     private String longitude;
-    @Column(name = "Latitude")
+    @Column
     private String latitude;
     @Column
     private String date;
