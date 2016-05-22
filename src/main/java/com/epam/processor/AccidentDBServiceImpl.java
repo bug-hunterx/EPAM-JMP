@@ -19,27 +19,20 @@ public class AccidentDBServiceImpl implements AccidentService {
 		return accidentRepository.findOne(accidentId);
 	}
 
-	public Iterable getAllAccidentsByRoadCondition(int roadCondition) {
+	public List<Accidents> getAllAccidentsByRoadCondition(int roadCondition) {
 		return accidentRepository.findByRoadCondition(roadCondition);
 	}
 
-	public Iterable getAllAccidentsByWeatherConditionAndYear(int weatherCondition, String year) {
+	public List<Accidents> getAllAccidentsByWeatherConditionAndYear(int weatherCondition, String year) {
 		return accidentRepository.findByWeatherConditionsAndYear(weatherCondition, year);
 	}
 
-	public Iterable<Accidents> getAllAccidentsByDate(Date date) {
+	public List<Accidents> getAllAccidentsByDate(Date date) {
 		return accidentRepository.findByDate(date);
 	}
 
 	public Accidents update(Accidents roadAccident) {
 		return accidentRepository.save(roadAccident);
-	}
-
-	public void updateTime(Date date) {
-		List<Accidents> list = accidentRepository.findByDate(date);
-		for (Accidents accident : list){
-			
-		}
 	}
 
 	public static String TIME_MORNING = "MORNING";
