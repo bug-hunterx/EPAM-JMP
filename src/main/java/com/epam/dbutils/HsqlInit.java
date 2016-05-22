@@ -58,15 +58,15 @@ public class HsqlInit {
                     "   Accident_Index             VARCHAR(20) NOT NULL PRIMARY KEY\n" +
                     "  ,Longitude                  NUMERIC(10,6) NOT NULL\n" +
                     "  ,Latitude                   NUMERIC(10,6) NOT NULL\n" +
-                    "  ,Police_Force               INTEGER  NOT NULL\n" +
-                    "  ,Accident_Severity          INTEGER  NOT NULL\n" +
+                    "  ,Police_Force               INTEGER  /*NOT NULL*/\n" +
+                    "  ,Accident_Severity          INTEGER  /*NOT NULL*/\n" +
                     "  ,Number_of_Vehicles         INTEGER  NOT NULL\n" +
                     "  ,Number_of_Casualties       INTEGER  NOT NULL\n" +
                     "  ,Date                       DATE  NOT NULL\n" +
-                    "  ,Day_of_Week                INTEGER  NOT NULL\n" +
-                    "  ,Time                       VARCHAR(15) NOT NULL\n" +
-                    "  ,Local_Authority_District   INTEGER  NOT NULL\n" +
-                    "  ,Light_Conditions           INTEGER  NOT NULL\n" +
+                    "  ,Day_of_Week                INTEGER  /*NOT NULL*/\n" +
+                    "  ,Time                       VARCHAR(15) /*NOT NULL*/\n" +
+                    "  ,Local_Authority_District   INTEGER  /*NOT NULL*/\n" +
+                    "  ,Light_Conditions           INTEGER  /*NOT NULL*/\n" +
                     "  ,Weather_Conditions         INTEGER  NOT NULL\n" +
                     "  ,Road_Surface_Conditions    INTEGER  NOT NULL\n" +
                     ");").execute();
@@ -103,7 +103,7 @@ public class HsqlInit {
         hsqlServer.setLogWriter(null);
         hsqlServer.setSilent(true);
         hsqlServer.setDatabaseName(0, "jmp");
-        hsqlServer.setDatabasePath(0, "file:dbutils/jmpdb");
+        hsqlServer.setDatabasePath(0, "file:db/jmpdb");
 
         hsqlServer.start();
     }

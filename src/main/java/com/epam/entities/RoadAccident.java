@@ -1,6 +1,8 @@
 package com.epam.entities;
 
 import com.epam.dataprocessing.TimeOfDay;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeId;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,12 +25,15 @@ public class RoadAccident implements Serializable {
     private float latitude;
 
     @Transient
+    @JsonIgnore
     private String policeForce;
 
     @Transient
+    @JsonIgnore
     private String forceContact;
 
     @Transient
+    @JsonIgnore
     private String accidentSeverity;
 
     @Column(name = "NUMBER_OF_VEHICLES")
@@ -40,15 +45,19 @@ public class RoadAccident implements Serializable {
     private Date date;
 
     @Transient
+    @JsonIgnore
     private LocalTime time;
 
     @Transient
+    @JsonIgnore
     private TimeOfDay timeOfDay;
 
     @Transient
+    @JsonIgnore
     private String districtAuthority;
 
     @Transient
+    @JsonIgnore
     private String lightConditions;
 
     @ManyToOne
@@ -140,8 +149,9 @@ public class RoadAccident implements Serializable {
         this.date = date;
     }
 
+    @JsonIgnore
     public DayOfWeek getDayOfWeek() {
-        return DayOfWeek.of(date.getDay());
+        return DayOfWeek.of(date.getDay()+1);
     }
 
     public LocalTime getTime() {
@@ -172,6 +182,7 @@ public class RoadAccident implements Serializable {
         return weatherConditions;
     }
 
+    @JsonIgnore
     public String getWeatherConditionsLabel() {
         return weatherConditions.getLabel();
     }
@@ -184,6 +195,7 @@ public class RoadAccident implements Serializable {
         return roadSurfaceConditions;
     }
 
+    @JsonIgnore
     public String getRoadSurfaceConditionsLabel() {
         return roadSurfaceConditions.getLabel();
     }
