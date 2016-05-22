@@ -54,6 +54,7 @@ public class AccidentDBServiceImpl implements AccidentService {
 				accident.setTime(TIME_EVENING);
 			}
 		}
+		accidentRepository.save(accidents);
 	}
 
 }
