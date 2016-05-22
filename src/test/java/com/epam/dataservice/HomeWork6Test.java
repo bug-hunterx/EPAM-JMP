@@ -1,7 +1,7 @@
 package com.epam.dataservice;
 
 import com.epam.springboot.AccidentsRestApplication;
-import com.epam.springboot.controller.HelloControllor;
+import com.epam.springboot.controller.HelloController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ public class HomeWork6Test {
 
     @Before
     public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(new HelloControllor()).build();
+        mvc = MockMvcBuilders.standaloneSetup(new HelloController()).build();
     }
 
     @Test

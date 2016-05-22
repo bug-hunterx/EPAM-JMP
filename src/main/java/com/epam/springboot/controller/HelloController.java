@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by bill on 16-5-22.
  */
 @RestController
-public class HelloControllor {
+public class HelloController {
 
     @RequestMapping(value = "hello/{name}")
     public String hello(@PathVariable String name){
