@@ -2,22 +2,24 @@ package com.epam.dbservice;
 
 import java.util.Date;
 
-import com.epam.data.RoadAccident;
+import com.epam.entities.Accidents;
 
 public interface AccidentService {
-	
+
 	// scenario 1
-    RoadAccident findOne(String accidentId);
-    
-    // scenario 2
-    Iterable<RoadAccident> getAllAccidentsByRoadCondition();
-    
-    // scenario 3
-    Iterable<RoadAccident> getAllAccidentsByWeatherConditionAndYear(String weatherCondition,String year);
-    
- // scenario 4
-    Iterable<RoadAccident> getAllAccidentsByDate(Date date);
+	Accidents findOne(String accidentId);
 
-    Boolean update(RoadAccident roadAccident);
+	// scenario 2
+	Iterable<Accidents> getAllAccidentsByRoadCondition(int roadCondition);
 
+	// scenario 3
+	Iterable<Accidents> getAllAccidentsByWeatherConditionAndYear(int weatherCondition, String year);
+
+	// scenario 4
+	Iterable<Accidents> getAllAccidentsByDate(Date date);
+
+	Accidents update(Accidents roadAccident);
+
+	// scenario 4
+	void updateTime(Iterable<Accidents> accidents);
 }
