@@ -1,6 +1,7 @@
 package com.epam.entities;
 
 import com.epam.dataprocessing.TimeOfDay;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 
@@ -42,6 +43,7 @@ public class RoadAccident implements Serializable {
     @Column(name = "NUMBER_OF_CASUALTIES")
     private int numberOfCasualties;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;
 
     @Transient
