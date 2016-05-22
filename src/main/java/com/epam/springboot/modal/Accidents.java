@@ -1,14 +1,12 @@
 package com.epam.springboot.modal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by bill on 16-5-22.
  */
 @Entity
+@Table(name="Accidents")
 public class Accidents {
     @Id
 //    @GeneratedValue

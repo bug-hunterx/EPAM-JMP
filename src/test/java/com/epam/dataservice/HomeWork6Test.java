@@ -45,5 +45,11 @@ public class HomeWork6Test {
                 .andExpect(content().string(equalTo("hello, " + name)));
     }
 
+    @Test
+    public void accidentAllTest() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/accidents").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
 
 }

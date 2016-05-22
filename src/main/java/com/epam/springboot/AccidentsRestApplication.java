@@ -17,9 +17,6 @@ import java.util.List;
  * Created by bill on 16-5-22.
  */
 
-@Configuration
-@ComponentScan
-@EnableAutoConfiguration
 @SpringBootApplication
 public class AccidentsRestApplication {
     public static ApplicationContext getContext() {
@@ -30,14 +27,17 @@ public class AccidentsRestApplication {
     public static void main(String[] args) {
         SpringApplication springApplication = new SpringApplication();
         context = SpringApplication.run(AccidentsRestApplication.class, args);
-//        initDB(context);
+        initDB(context);
     }
 
     private static void initDB(ApplicationContext ctx){
         AccidentRepository accidentRepository= ctx.getBean(AccidentRepository.class);
+//        accidentRepository.save()
         accidentRepository.save(new Accidents("200901BS70001",1,2));
         accidentRepository.save(new Accidents("200901BS70002",2,3));
         List<Accidents> accidentsList = accidentRepository.findAll();
         System.out.println(accidentsList);
     }
+//    @Bean
+
 }
