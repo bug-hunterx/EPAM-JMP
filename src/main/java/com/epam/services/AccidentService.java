@@ -19,6 +19,6 @@ public interface AccidentService {
  // scenario 4
     List<RoadAccident> getAllAccidentsByDate(Date date);
 
-    Boolean update(RoadAccident roadAccident) throws Exception;
+    Boolean update(String accidentId, RoadAccident roadAccident) throws Exception;
 
 }
