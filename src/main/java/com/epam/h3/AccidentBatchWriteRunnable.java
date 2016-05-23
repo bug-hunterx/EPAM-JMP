@@ -78,7 +78,7 @@ public class AccidentBatchWriteRunnable implements Runnable{
 			line[4] = roadAccident.getAccidentSeverity();
 			line[5] = String.valueOf(roadAccident.getNumberOfVehicles());
 			line[6] = String.valueOf(roadAccident.getNumberOfCasualties());
-			line[7] = roadAccident.getDate().format(DateTimeFormatter.ofPattern("d/M/yyyy"));
+			line[7] = roadAccident.getDate().format(DateTimeFormatter.ofPattern("M/d/yyyy"));
 			line[8] = roadAccident.getDate().format(DateTimeFormatter.ofPattern("e"));
 			line[9] = roadAccident.getTime().format(DateTimeFormatter.ofPattern("H:mm"));
 			line[10] = roadAccident.getDistrictAuthority();			
