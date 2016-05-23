@@ -23,7 +23,7 @@ public class CVSHead {
 		TITLE_LIST.add("Weather_Conditions");
 		TITLE_LIST.add("Road_Surface_Conditions");
 		TITLE_LIST.add("ForceContact");
-		TITLE_LIST.add("Type");
+		TITLE_LIST.add("TimeOfDay");
 	}
 	
 	public static List<String> getTitleList(){

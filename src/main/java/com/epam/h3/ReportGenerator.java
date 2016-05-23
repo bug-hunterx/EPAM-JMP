@@ -40,7 +40,7 @@ public class ReportGenerator {
 			for(String filePath : pathList){
 				BlockingQueue<List<RoadAccident>> dataQueue = new ArrayBlockingQueue<List<RoadAccident>>(1);
 				AccidentBatchLoaderRunnable readerTask = new AccidentBatchLoaderRunnable(dealCount,dataQueue,filePath+".csv");
-				AccidentBatchWriteRunnable writeTask = new AccidentBatchWriteRunnable(dataQueue,filePath+"_new.csv");
+				AccidentBatchWriteRunnable writeTask = new AccidentBatchWriteRunnable(dataQueue,filePath);
 				executor.execute(readerTask);
 				executor.execute(writeTask);
 			}		

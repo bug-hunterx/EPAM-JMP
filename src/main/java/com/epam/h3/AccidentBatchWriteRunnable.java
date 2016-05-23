@@ -59,14 +59,20 @@ public class AccidentBatchWriteRunnable implements Runnable{
 	}
 	
 	private void writeHead()throws IOException{
-		CSVWriter writer = new CSVWriter(new FileWriter(dataFileName, true));
+		CSVWriter daytimeWriter = new CSVWriter(new FileWriter(dataFileName+"_daytime.csv", true));
+		CSVWriter nighttimeWriter = new CSVWriter(new FileWriter(dataFileName+"_nighttime.csv", true));
 		String[] line = CVSHead.getTitleList().toArray(new String[CVSHead.getTitleList().size()]);
-		writer.writeNext(line); 
-		writer.flush();
+		daytimeWriter.writeNext(line); 
+		daytimeWriter.flush();
+		daytimeWriter.close();
+		nighttimeWriter.writeNext(line); 
+		nighttimeWriter.flush();
+		nighttimeWriter.close();
 	}
 	
 	private void writeData(List<RoadAccident> list) throws IOException{	
-		CSVWriter writer = new CSVWriter(new FileWriter(dataFileName, true));  	
+		CSVWriter daytimeWriter = new CSVWriter(new FileWriter(dataFileName+"_daytime.csv", true));  	
+		CSVWriter nighttimeWriter = new CSVWriter(new FileWriter(dataFileName+"_nighttime.csv", true));
 		String[] line = new String[CVSHead.getTitleList().size()];
 		PoliceForceService service = new PoliceForceService();
 		
@@ -86,12 +92,21 @@ public class AccidentBatchWriteRunnable implements Runnable{
 			line[12] = roadAccident.getWeatherConditions();
 			line[13] = roadAccident.getRoadSurfaceConditions();
 			line[14] = service.getContactNo(roadAccident.getPoliceForce());
-			line[15] = "Type";
+			line[15] = TimeOfDay.valueOfTime(roadAccident.getTime()).toString();
 			
-			writer.writeNext(line); 
-			writer.flush();
+			if(TimeOfDay.MORNING.toString().equals(line[15])
+					|| TimeOfDay.AFTERNOON.toString().equals(line[15])){
+				daytimeWriter.writeNext(line); 
+				daytimeWriter.flush();
+			}else{
+				nighttimeWriter.writeNext(line); 
+				nighttimeWriter.flush();
+			}
+			
 		}
-		writer.close(); 			
+		
+		daytimeWriter.close(); 	
+		nighttimeWriter.close();
 	}
 
 }

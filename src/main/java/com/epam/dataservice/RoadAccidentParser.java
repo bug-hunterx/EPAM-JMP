@@ -29,7 +29,7 @@ public class RoadAccidentParser {
                     .withAccidentSeverity(StaticData.getAccidentSeverity(record.get("Accident_Severity")))
                     .withNumberOfVehicles(Integer.valueOf(record.get("Number_of_Vehicles")))
                     .withNumberOfCasualties(Integer.valueOf(record.get("Number_of_Casualties")))
-                    .withDate(LocalDate.parse(record.get("Date"), DateTimeFormatter.ofPattern("d/M/yyyy")))
+                    .withDate(LocalDate.parse(record.get("Date"), DateTimeFormatter.ofPattern("M/d/yyyy")))
                     .withTime(LocalTime.parse(record.get("Time"), DateTimeFormatter.ofPattern("H:mm")))
                     .withDistrictAuthority(StaticData.getDistrictAuthority(record.get("Local_Authority_(District)")))
                     .withLightConditions(StaticData.getLightConditions(record.get("Light_Conditions")))
@@ -39,7 +39,7 @@ public class RoadAccidentParser {
                        
             return roadAccident;
         } catch (DateTimeParseException timeException) {
-            //System.out.println("Some data quality issue with one of records - screw it, have plenty more");
+        	timeException.printStackTrace();
             return null;
         }
     }
