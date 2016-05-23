@@ -3,11 +3,9 @@ package com.epam.processor;
 import com.epam.data.RoadAccident;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Multimap;
 
 import java.util.*;
-import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -31,11 +29,11 @@ public class DataProcessor {
      * @return
      */
     public RoadAccident getAccidentByIndex7(String index){
-        Map<String, RoadAccident> accidentMap = new HashMap<String, RoadAccident>();
         for(RoadAccident roadAccident : roadAccidentList){
-            accidentMap.put(roadAccident.getAccidentId(), roadAccident);
+            if (roadAccident.getAccidentId().equals(index))
+            return roadAccident;
         }
-        return accidentMap.get(index);
+        return null;
     }
 
 
@@ -111,8 +109,9 @@ public class DataProcessor {
      */
     public Multimap<String, String> getAccidentIdsGroupedByAuthority7(){
         Multimap<String, String> resultMap = ArrayListMultimap.create();
-        roadAccidentList.stream()
-                .forEach(accident -> resultMap.put(accident.getDistrictAuthority(), accident.getAccidentId()));
+        for (RoadAccident roadAccident : roadAccidentList) {
+            resultMap.put(roadAccident.getDistrictAuthority(), roadAccident.getAccidentId());
+        }
         return resultMap;
     }
 
@@ -174,12 +173,9 @@ public class DataProcessor {
      * To match streaming operations result, return type is a java collection instead of multimap
      * @return
      */
-    public Map<String, List<String>> getAccidentIdsGroupedByAuthority(){
-        Map<String, List<String>> resultMap = new HashMap<String, List<String>>();
-        Multimap<String,String> authorityToIdsMap = ArrayListMultimap.create();
-        roadAccidentList.stream().forEach(roadAccident -> authorityToIdsMap.put(roadAccident.getDistrictAuthority(), roadAccident.getAccidentId()));
-        authorityToIdsMap.keySet().stream().forEach(authority -> resultMap.put(authority, ImmutableList.copyOf(authorityToIdsMap.get(authority))));
-        return resultMap;
+    public Map<String, List<String>> getAccidentIdsGroupedByAuthority() {
+        return roadAccidentList.stream()
+                .collect(Collectors.groupingBy(RoadAccident::getDistrictAuthority, Collectors.mapping(RoadAccident::getAccidentId, Collectors.toList())));
     }
 
 }

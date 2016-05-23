@@ -51,6 +51,8 @@ public class Session3Processor {
         startWriters();
         startEnrichers();
         startReaders();
+        executorService.shutdown();
+        executorService.awaitTermination(10, TimeUnit.SECONDS);
     }
 
     private Collection<String> detectFiles(){
@@ -74,26 +76,17 @@ public class Session3Processor {
         }
     }
 
-    private void startReaders(){
-        for(int i=0;i<sizeOfReaderThreads;i++){
-            new Thread(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                while (!filenameQueue.isEmpty()) {
-                                    String filename = filenameQueue.poll();
-                                    System.out.println("Start reading " + filename);
-                                    Future<Integer> readerTask = executorService.submit(new AccidentBatchLoader(batchSize, incomingQueue, dataDir + "/" + filename));
-                                    Integer counter = readerTask.get();
-                                    System.out.println("Done of reading " + filename +" counter is " + counter);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-            ).start();
+    private void startReaders() {
+        try {
+            while (!filenameQueue.isEmpty()) {
+                String filename = filenameQueue.poll();
+                System.out.println("Start reading " + filename);
+                Future<Integer> readerTask = executorService.submit(new AccidentBatchLoader(batchSize, incomingQueue, dataDir + "/" + filename));
+                Integer counter = readerTask.get();
+                System.out.println("Done of reading " + filename + " counter is " + counter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
