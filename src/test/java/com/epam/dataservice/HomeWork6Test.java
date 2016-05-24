@@ -53,3 +53,13 @@ public class HomeWork6Test {
 
 
 }
+/*
+//todo add Restful services to get all accidents
+//todo add Restful services to get accident by Id
+//todo add Restful services to get accident by day
+//todo add Restful services to create new accident (with POST and PUT - you do remember difference, right? ;) )
+//todo add Restful services to update existed accident
+//todo add Restful services to delete accident
+//todo for put method response 404(Not Found) when encounter the exception that the id is not exist​
+
+ */

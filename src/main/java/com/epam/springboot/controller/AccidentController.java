@@ -5,7 +5,6 @@ import com.epam.springboot.repository.AccidentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -34,7 +33,7 @@ public class AccidentController {
     @RequestMapping(method= RequestMethod.GET, value= "/accidentsByRoadCondition/{id}", headers="Accept=application/json")
     public @ResponseBody
     List<Accidents> getAllAccidentsByRoadCondition(@PathVariable Integer id){
-        List<Accidents> accidents= repository.getAllAccidentsByRoadCondition(id);
+        List<Accidents> accidents= repository.findByRoadSurfaceConditions(id);
 
         return accidents;
     }
