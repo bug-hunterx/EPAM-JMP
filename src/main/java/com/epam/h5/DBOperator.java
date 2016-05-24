@@ -32,6 +32,4 @@ public class DBOperator {
     	return service.getAllAccidentsByDate(date);
     }
 
-	
-	
 }
