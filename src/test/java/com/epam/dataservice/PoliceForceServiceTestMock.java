@@ -26,5 +26,16 @@ public class PoliceForceServiceTestMock {
 		Mockito.verify(policeForceService, Mockito.atMost(1)).getContactNo("North Yorkshire1");
 		Mockito.verify(policeForceService).getContactNo("North Yorkshire");
 	}
+	
+	@Test
+	public void testNumberChecker() {
+		NumberChecker numberChecker = new NumberChecker(policeForceService);
+		
+		Mockito.when(policeForceService.getContactNo("North Yorkshire")).thenReturn("ABCDEFGH");
+		Mockito.when(policeForceService.getContactNo("North Yorkshire1")).thenReturn("ABCDEFGH1");
+		
+		assertTrue(numberChecker.isSpecialNumber("North Yorkshire"));
+		assertFalse(numberChecker.isSpecialNumber("North Yorkshire1"));
+	}
 
 }

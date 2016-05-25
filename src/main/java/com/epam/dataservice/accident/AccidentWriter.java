@@ -31,6 +31,7 @@ public class AccidentWriter implements Runnable {
 				csvPrinter.printRecord(accident.getAccidentId(), accident.getLongitude(), accident.getLatitude(), accident.getTime().getHour());
 			}
 		} catch (InterruptedException e) {
+			//will interrupt when queue is empty and no more data come in
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
