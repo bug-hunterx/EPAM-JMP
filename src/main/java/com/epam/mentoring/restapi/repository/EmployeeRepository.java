@@ -15,7 +15,7 @@ import com.epam.mentoring.restapi.modal.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-	@Query(value = "SELECT * FROM Employee WHERE name := name")
+	@Query(value = "SELECT e FROM Employee e WHERE e.name = ?1")
 	List<Employee> findByName(@Param("name") String name);
 
 }

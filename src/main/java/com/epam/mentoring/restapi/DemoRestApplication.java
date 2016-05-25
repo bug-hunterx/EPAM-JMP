@@ -1,7 +1,9 @@
 package com.epam.mentoring.restapi;
 
 import com.epam.mentoring.restapi.modal.Department;
+import com.epam.mentoring.restapi.modal.Employee;
 import com.epam.mentoring.restapi.repository.DepartmentRepository;
+import com.epam.mentoring.restapi.repository.EmployeeRepository;
 import com.epam.mentoring.restapi.web.SecurityFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,17 +25,21 @@ public class DemoRestApplication {
 		DepartmentRepository deptRepository= (DepartmentRepository) ctx.getBean(DepartmentRepository.class);
 		deptRepository.save(new Department("HR", "Human Resource"));
 		deptRepository.save(new Department("DEV", "Development"));
+
+
+		EmployeeRepository employeeRepository = (EmployeeRepository) ctx.getBean(EmployeeRepository.class);
+		employeeRepository.save(new Employee("name", "code", 1L, null));
 	}
 
-
-	@Bean
-	public FilterRegistrationBean filterRegistrationBean() {
-		FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-		SecurityFilter securityFilter = new SecurityFilter();
-		registrationBean.setFilter(securityFilter);
-		registrationBean.addUrlPatterns("/api/*");
-
-		return registrationBean;
-	}
+//
+//	@Bean
+//	public FilterRegistrationBean filterRegistrationBean() {
+//		FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//		SecurityFilter securityFilter = new SecurityFilter();
+//		registrationBean.setFilter(securityFilter);
+//		registrationBean.addUrlPatterns("/api/*");
+//
+//		return registrationBean;
+//	}
 
 }

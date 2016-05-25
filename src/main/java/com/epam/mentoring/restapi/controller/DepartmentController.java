@@ -18,45 +18,52 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/")
 public class DepartmentController {
-    private static org.apache.log4j.Logger LOG= org.apache.log4j.Logger.getLogger(DepartmentController.class);
+    private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(DepartmentController.class);
     @Autowired
     private DepartmentRepository repository;
 
-    @RequestMapping(method= RequestMethod.GET, value= "/departments")
-    public @ResponseBody List<Department> getDepartments(){
-        List<Department> list= repository.findAll();
-
+    @RequestMapping(method = RequestMethod.GET, value = "/departments")
+    public
+    @ResponseBody
+    List<Department> getDepartments() {
+        List<Department> list = repository.findAll();
         return list;
     }
 
-    ////produces = {"application/json","application/xml"})
-    @RequestMapping(method= RequestMethod.GET, value= "/departments/{id}", headers="Accept=application/json")
-    public @ResponseBody
-    Department getDepartment(@PathVariable long id){
-        Department department= repository.findOne(id);
-
+    @RequestMapping(method = RequestMethod.GET, value = "/departments/{id}")
+    public
+    @ResponseBody
+    Department getDepartment(@PathVariable long id) {
+        Department department = repository.findOne(id);
         return department;
     }
 
-    @RequestMapping(method= RequestMethod.POST, value= "/departments", headers="Accept=application/json")
-    public @ResponseBody Long save(@RequestBody Department s){
-        LOG.info("creating Department: "+ s.getName());
-            //validate(s, false);
+
+    @RequestMapping(method = RequestMethod.POST, value = "/departments")
+    public
+    @ResponseBody
+    Long save(@RequestBody Department s) {
+        LOG.info("creating Department: " + s.getName());
+        //validate(s, false);
         repository.save(s);
         return s.getId();
     }
 
-    @RequestMapping(method= RequestMethod.PUT, value= "/departments/{id}", headers="Accept=application/json")
-public @ResponseBody void update(@RequestBody Department s, @PathVariable long id){
-        LOG.info("update Department: "+ id+ ","+ s.getName());
-        if(s.getId()!= id)
+    @RequestMapping(method = RequestMethod.PUT, value = "/departments/{id}")
+    public
+    @ResponseBody
+    void update(@RequestBody Department s, @PathVariable long id) {
+        LOG.info("update Department: " + id + "," + s.getName());
+        if (s.getId() != id)
             throw new BadRequestError("id is not match");
         repository.save(s);
     }
 
-    @RequestMapping(method= RequestMethod.DELETE, value= "/departments/{id}", headers="Accept=application/json")
-    public @ResponseBody void delete(@PathVariable long id){
-        LOG.info("delUser: "+ id);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/departments/{id}")
+    public
+    @ResponseBody
+    void delete(@PathVariable long id) {
+        LOG.info("delUser: " + id);
         repository.delete(id);
     }
 
