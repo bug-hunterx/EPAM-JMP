@@ -2,7 +2,7 @@ package com.epam.dataservice;
 
 import com.epam.data.RoadAccident;
 
-import java.util.*;
+import java.util.*; 
 import java.util.concurrent.*;
 
 /**
