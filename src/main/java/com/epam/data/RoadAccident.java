@@ -43,8 +43,7 @@ public class RoadAccident {
         this.lightConditions = builder.lightConditions;
         this.weatherConditions = builder.weatherConditions;
         this.roadSurfaceConditions = builder.roadSurfaceConditions;
-        this.forceContact = builder.forceContact;
-        this.timeosDay = builder.timeosDay;
+       
     }
 
 
@@ -156,6 +155,7 @@ public class RoadAccident {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
     
+
     public String getForceContact() {
 		return forceContact;
 	}
@@ -177,6 +177,7 @@ public class RoadAccident {
 
 
 	public String toString() {
+
     	return "RoadAccident:" +
     			"\nid:" + this.accidentId +
     			"\ndistrictAuthority:" + this.districtAuthority+

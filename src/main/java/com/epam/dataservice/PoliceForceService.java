@@ -39,7 +39,7 @@ public class PoliceForceService{
             e.printStackTrace();
         }
     }
-//Can't modify this method assuming it's web service based.but how could executionCount continue to increase?
+
     public String getContactNo(String policeForceName){
         if(executionCount.get() == HALT_AT_EXECUTION){
             try {

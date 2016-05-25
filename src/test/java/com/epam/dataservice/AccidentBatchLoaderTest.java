@@ -141,11 +141,6 @@ public class AccidentBatchLoaderTest {
             this.dataQueue = dataQueue;
             this.fileName = fileName;
         }
-        /* Question:Observe that for final batch,it will print consume twice as below sample.For consumeData zero list case? 
-         Completed reading 154406 in 4 batches for src/main/resources/DfTRoadSafety_Accidents_2010.csv
- Consumed 299972 records from dataQueue2
- Consumed 299972 records from dataQueue2
-         */
 
         @Override
         public void run() {
