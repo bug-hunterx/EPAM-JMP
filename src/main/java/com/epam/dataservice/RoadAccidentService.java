@@ -2,11 +2,9 @@ package com.epam.dataservice;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import com.epam.data.RoadAccident;
 
@@ -20,8 +18,8 @@ public class RoadAccidentService implements Runnable {
 	private static int NUMBER_OF_THREAD = 6;
 	
 	private BlockingQueue<RoadAccident> accidentReaderQueue;
-	private BlockingQueue<RoadAccident> daytimeQueue;
-	private BlockingQueue<RoadAccident> nighttimeQueue;
+	private BlockingQueue<RoadAccident> dayTimeQueue;
+	private BlockingQueue<RoadAccident> nightTimeQueue;
 	private PoliceForceService policeForceService;
 
 	private static List<String> roadAccidentFiles = new ArrayList<String>();
@@ -34,15 +32,15 @@ public class RoadAccidentService implements Runnable {
 	}
 	
 	public RoadAccidentService(BlockingQueue<RoadAccident> accidentReaderQueue,
-			BlockingQueue<RoadAccident> daytimeQueue, BlockingQueue<RoadAccident> nighttimeQueue,
+			BlockingQueue<RoadAccident> dayTimeQueue, BlockingQueue<RoadAccident> nightTimeQueue,
 			PoliceForceService policeForceService) {
 		this.accidentReaderQueue = accidentReaderQueue;
-		this.daytimeQueue = daytimeQueue;
-		this.nighttimeQueue = nighttimeQueue;
+		this.dayTimeQueue = dayTimeQueue;
+		this.nightTimeQueue = nightTimeQueue;
 		this.policeForceService = policeForceService;
 	}
 
-	public static ExecutorService readFromRoadAccientFileTo(BlockingQueue<RoadAccident> readerQueue) {
+	public ExecutorService readFromRoadAccientFileTo(BlockingQueue<RoadAccident> readerQueue) {
 		ExecutorService readerExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREAD);
 		for (String accidentFile : roadAccidentFiles) {
 			readerExecutor.execute(new RoadAccidentReader(accidentFile, readerQueue));
@@ -50,13 +48,13 @@ public class RoadAccidentService implements Runnable {
 		return readerExecutor;
 	}
 	
-	public static Thread writeRoadAccidentToFile(BlockingQueue<RoadAccident> accidentQueue, String fileName) {
+	public Thread writeRoadAccidentToFile(BlockingQueue<RoadAccident> accidentQueue, String fileName) {
 		Thread writerThread = new Thread(new RoadAccidentWriter(fileName, accidentQueue));
 		writerThread.start();
 		return writerThread;
 	}  
 
-	public static List<Thread> startRoadAccidentService(BlockingQueue<RoadAccident> readerQueue,  
+	public List<Thread> startRoadAccidentService(BlockingQueue<RoadAccident> readerQueue,  
 			BlockingQueue<RoadAccident> dayTimeQueue, BlockingQueue<RoadAccident> nightTimeQueue) {
 		List<Thread> serviceThreadList = new ArrayList<Thread>();
 		PoliceForceService policeForceService = new PoliceForceService();
@@ -81,16 +79,16 @@ public class RoadAccidentService implements Runnable {
 				roadAccident.setForceContact(policeForceService.getContactNo(roadAccident.getPoliceForce()));
 				if (roadAccident.getTime().getHour() >= 18) {
 					roadAccident.setDayTime(DAY_TIME_NIGHT);
-					nighttimeQueue.put(roadAccident);
+					nightTimeQueue.put(roadAccident);
 				} else if (roadAccident.getTime().getHour() >= 12) {
 					roadAccident.setDayTime(DAY_TIME_AFTERNOON);
-					daytimeQueue.put(roadAccident);
+					dayTimeQueue.put(roadAccident);
 				} else if (roadAccident.getTime().getHour() >= 6) {
 					roadAccident.setDayTime(DAY_TIME_MORNING);
-					daytimeQueue.put(roadAccident);
+					dayTimeQueue.put(roadAccident);
 				} else {
 					roadAccident.setDayTime(DAY_TIME_EVENING);
-					nighttimeQueue.put(roadAccident);
+					nightTimeQueue.put(roadAccident);
 				}
 			}
 		} catch (InterruptedException e) {
@@ -105,40 +103,15 @@ public class RoadAccidentService implements Runnable {
 	}
 
 	public void setDaytimeQueue(BlockingQueue<RoadAccident> daytimeQueue) {
-		this.daytimeQueue = daytimeQueue;
+		this.dayTimeQueue = daytimeQueue;
 	}
 
 	public void setNighttimeQueue(BlockingQueue<RoadAccident> nighttimeQueue) {
-		this.nighttimeQueue = nighttimeQueue;
+		this.nightTimeQueue = nighttimeQueue;
 	}
 
 	public void setPoliceForceService(PoliceForceService policeForceService) {
 		this.policeForceService = policeForceService;
 	}
 	
-	public static void main(String[] args) throws InterruptedException {
-//		BlockingQueue<RoadAccident> accidentReaderQueue = new ArrayBlockingQueue<RoadAccident>(5000);
-//		BlockingQueue<RoadAccident> daytimeQueue = new ArrayBlockingQueue<RoadAccident>(5000);
-//		BlockingQueue<RoadAccident> nighttimeQueue = new ArrayBlockingQueue<RoadAccident>(5000);
-//
-//		ExecutorService readerExecutor = readFromRoadAccientFileTo(accidentReaderQueue);
-//		List<Thread> serviceThreadList = startRoadAccidentService(accidentReaderQueue, daytimeQueue, nighttimeQueue);
-//		Thread daytimeWriterThread = writeRoadAccidentToFile(daytimeQueue, "src/main/resources/DaytimeAccidents.csv");
-//		Thread nighttimeWriterThread = writeRoadAccidentToFile(nighttimeQueue,
-//				"src/main/resources/NighttimeAccidents.csv");
-//
-//		readerExecutor.shutdown();
-//		readerExecutor.awaitTermination(5, TimeUnit.MINUTES);
-//		while (!accidentReaderQueue.isEmpty())
-//			Thread.sleep(1000);
-//		for (Thread processorThread : serviceThreadList)
-//			processorThread.interrupt();
-//		while (!daytimeQueue.isEmpty())
-//			Thread.sleep(1000);
-//		daytimeWriterThread.interrupt();
-//		while (!nighttimeQueue.isEmpty())
-//			Thread.sleep(1000);
-//		nighttimeWriterThread.interrupt();
-
-	}
 }
