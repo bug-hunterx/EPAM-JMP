@@ -24,6 +24,20 @@ public class Accidents {
 	@Column(name = "Date")
 	private Date date;
 
+	@Column(name = "Time")
+	private String time;
+
+	public Accidents() {
+
+	}
+
+	public Accidents(String accidentIndex, int roadCondition, int weatherConditions, Date date) {
+		this.accidentIndex = accidentIndex;
+		this.roadCondition = roadCondition;
+		this.weatherConditions = weatherConditions;
+		this.date = date;
+	}
+
 	public String getTime() {
 		return time;
 	}
@@ -31,9 +45,6 @@ public class Accidents {
 	public void setTime(String time) {
 		this.time = time;
 	}
-
-	@Column(name = "Time")
-	private String time;
 
 	public String getAccidentIndex() {
 		return accidentIndex;
@@ -67,4 +78,9 @@ public class Accidents {
 		this.date = date;
 	}
 
+	@Override
+	public String toString() {
+		return "Accident -- " + " accidentIndex:" + accidentIndex + " roadCondition:" + roadCondition
+				+ " weatherConditions:" + weatherConditions + " date:" + date + " time:" + time;
+	}
 }

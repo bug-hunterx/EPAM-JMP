@@ -5,11 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.epam.dbrepositories.AccidentRepository;
 import com.epam.dbservice.AccidentService;
 import com.epam.entities.Accidents;
 
+@Service
 public class AccidentDBServiceImpl implements AccidentService {
 
 	@Autowired
@@ -40,21 +42,19 @@ public class AccidentDBServiceImpl implements AccidentService {
 	public static String TIME_EVENING = "EVENING";
 	public static String TIME_NIGHT = "NIGHT";
 
-	public void updateTime(Iterable<Accidents> accidents) {
-		Calendar calendar=Calendar.getInstance();
-		for (Accidents accident : accidents){
-			calendar.setTime(accident.getDate());
-			if (calendar.get(Calendar.HOUR_OF_DAY) >= 18) {
-				accident.setTime(TIME_NIGHT);
-			} else if (calendar.get(Calendar.HOUR_OF_DAY) >= 12) {
-				accident.setTime(TIME_AFTERNOON);
-			} else if (calendar.get(Calendar.HOUR_OF_DAY) >= 6) {
-				accident.setTime(TIME_MORNING);
-			} else {
-				accident.setTime(TIME_EVENING);
-			}
+	public void updateTime(Accidents accident) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(accident.getDate());
+		if (calendar.get(Calendar.HOUR_OF_DAY) >= 18) {
+			accident.setTime(TIME_NIGHT);
+		} else if (calendar.get(Calendar.HOUR_OF_DAY) >= 12) {
+			accident.setTime(TIME_AFTERNOON);
+		} else if (calendar.get(Calendar.HOUR_OF_DAY) >= 6) {
+			accident.setTime(TIME_MORNING);
+		} else {
+			accident.setTime(TIME_EVENING);
 		}
-		accidentRepository.save(accidents);
+		accidentRepository.save(accident);
 	}
 
 }

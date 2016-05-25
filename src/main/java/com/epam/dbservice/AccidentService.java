@@ -21,5 +21,5 @@ public interface AccidentService {
 	Accidents update(Accidents roadAccident);
 
 	// scenario 4
-	void updateTime(Iterable<Accidents> accidents);
+	void updateTime(Accidents accidents);
 }

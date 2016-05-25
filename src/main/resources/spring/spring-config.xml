@@ -12,9 +12,4 @@
     <bean id="hsqldb.connection" class="com.epam.db.HsqlInit"
           factory-method="initDatabase"/>
 
-	<bean id="accidentDBServiceImpl" class="com.epam.processor.AccidentDBServiceImpl">
-	</bean>
-	
-	<jpa:repositories base-package="com.epam.dbrepositories"/>
-	
 </beans>

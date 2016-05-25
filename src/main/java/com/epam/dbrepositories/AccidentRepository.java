@@ -15,13 +15,13 @@ public interface AccidentRepository extends CrudRepository<Accidents, String> {
 
 	// declare your query methods for default and if you want to execute any
 	// custom queries use @Query annotation.
-	@Query(value = "SELECT * FROM Accidents WHERE roadCondition := roadCondition")
+	@Query(value = "SELECT a FROM Accidents a WHERE a.roadCondition = ?")
 	List<Accidents> findByRoadCondition(@Param("roadCondition") int roadCondition);
 
-	@Query(value = "SELECT * FROM Accidents WHERE weatherConditions = :weatherConditions AND to_char(a.date, 'YYYY') = :year")
+	@Query(value = "SELECT a FROM Accidents a WHERE a.weatherConditions = ? AND to_char(a.date, 'YYYY') = ?")
 	List<Accidents> findByWeatherConditionsAndYear(@Param("weatherConditions") int weatherConditions,
 			@Param("year") String year);
 
-	@Query(value = "SELECT * FROM accidents WHERE date = :date")
+	@Query(value = "SELECT a FROM Accidents a WHERE a.date = ?")
 	List<Accidents> findByDate(@Param("date") Date date);
 }
