@@ -194,6 +194,7 @@ public class Accidents {
     }
 
     public static void main(String[] args) {
+/*
         Date date=new Date("20/05/2016");
         System.out.println(date);
 //        DateTimeFormatter.ofPattern("dd/MM/yyyy")
@@ -205,5 +206,6 @@ public class Accidents {
             e.printStackTrace();
         }
         System.out.println(ss);
+*/
     }
 }

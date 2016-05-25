@@ -27,6 +27,9 @@ public class DbPrepare {
                 System.out.println(table);
                 int count = table.getRowCount();
                 System.out.println("Row Count="+count);
+                for (int i = 0; i <count ; i++) {
+                    System.out.println("Row["+i+"]="+ table.getValue(i,"label"));
+                }
             }
         } catch (DataSetException e) {
             e.printStackTrace();

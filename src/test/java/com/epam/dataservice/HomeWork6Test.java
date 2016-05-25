@@ -14,6 +14,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,6 +51,35 @@ public class HomeWork6Test {
     @Test
     public void accidentAllTest() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/accidents").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void createAccidentTest() throws Exception {
+        String test_id = "200901BS70008";
+        Map<String,String> param = new HashMap<>();
+        param.put("Id",test_id);
+        param.put("dayOfWeek","5");
+        mvc.perform(MockMvcRequestBuilders.post("/accidents",param).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateAccidentTest() throws Exception {
+        String test_id = "200901BS70004";
+        Map<String,String> param = new HashMap<>();
+        param.put("Id",test_id);
+        param.put("dayOfWeek","5");
+        mvc.perform(MockMvcRequestBuilders.put("/accidents/"+test_id,param).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteAccidentTest() throws Exception {
+        String test_id = "200901BS70004";
+        mvc.perform(MockMvcRequestBuilders.delete("/accidents/"+test_id).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        mvc.perform(MockMvcRequestBuilders.get("/accidents/"+test_id).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
