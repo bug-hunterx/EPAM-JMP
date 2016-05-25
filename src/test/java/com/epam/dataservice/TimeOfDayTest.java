@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalTime;
-
+ 
 import static com.epam.data.TimeOfDay.getTimeOfDay;
 import static org.junit.Assert.assertEquals;
 
