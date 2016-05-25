@@ -21,7 +21,7 @@ public class AccidentIntegrationTest {
         private static final String DAYTIME_ACCIDENTS_CSV = "src/main/resources/DaytimeAccidents.csv";
         private static final String NIGHTTIME_ACCIDENTS_CSV = "src/main/resources/NighttimeAccidents.csv";
 
-
+ 
         @Test
         public void should_Generate_AccidentRecords() {
             //Main.main();
