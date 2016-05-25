@@ -1,38 +1,60 @@
 package com.epam.processor;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
-import com.epam.data.RoadAccident;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.epam.dbrepositories.AccidentRepository;
 import com.epam.dbservice.AccidentService;
+import com.epam.entities.Accidents;
 
+@Service
 public class AccidentDBServiceImpl implements AccidentService {
 
-	public RoadAccident findOne(String accidentId) {
-		// TODO Auto-generated method stub
-		return null;
+	@Autowired
+	private AccidentRepository accidentRepository;
+
+	public Accidents findOne(String accidentId) {
+		return accidentRepository.findOne(accidentId);
 	}
 
-	public Iterable getAllAccidentsByRoadCondition() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Accidents> getAllAccidentsByRoadCondition(int roadCondition) {
+		return accidentRepository.findByRoadCondition(roadCondition);
 	}
 
-	public Iterable getAllAccidentsByWeatherConditionAndYear(
-			String weatherCondition, String year) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Accidents> getAllAccidentsByWeatherConditionAndYear(int weatherCondition, String year) {
+		return accidentRepository.findByWeatherConditionsAndYear(weatherCondition, year);
 	}
 
-	public Iterable<RoadAccident> getAllAccidentsByDate(Date date) {
-		// TODO Auto-generated method stub
-		
+	public List<Accidents> getAllAccidentsByDate(Date date) {
+		return accidentRepository.findByDate(date);
 	}
 
-	public Boolean update(RoadAccident roadAccident) {
-		// TODO Auto-generated method stub
-		return null;
+	public Accidents update(Accidents roadAccident) {
+		return accidentRepository.save(roadAccident);
 	}
-	
-	
+
+	public static String TIME_MORNING = "MORNING";
+	public static String TIME_AFTERNOON = "AFTERNOON";
+	public static String TIME_EVENING = "EVENING";
+	public static String TIME_NIGHT = "NIGHT";
+
+	public void updateTime(Accidents accident) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(accident.getDate());
+		if (calendar.get(Calendar.HOUR_OF_DAY) >= 18) {
+			accident.setTime(TIME_NIGHT);
+		} else if (calendar.get(Calendar.HOUR_OF_DAY) >= 12) {
+			accident.setTime(TIME_AFTERNOON);
+		} else if (calendar.get(Calendar.HOUR_OF_DAY) >= 6) {
+			accident.setTime(TIME_MORNING);
+		} else {
+			accident.setTime(TIME_EVENING);
+		}
+		accidentRepository.save(accident);
+	}
 
 }
