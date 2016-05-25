@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,22 +32,19 @@ import static org.mockito.Mockito.verify;
  * Created by rahul.mujnani on 5/9/2016.
  */
 
-/*@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring-context.xml")*/
+/*@RunWith(SpringJUnit4ClassRunner.class)*/
+@ContextConfiguration("classpath*:/spring-config.xml")
 public class AccidentDBServiceImplTest {
 
-    HsqlInit hsqlInit;
-    Connection connection;
+    /**Start Db**/
+    HsqlInit hsqlInit=new HsqlInit();
+    Connection connection=hsqlInit.initDatabase();
     public AccidentDBServiceImpl accidentDBServiceImpl = null;
 
     @Before
     public void init() {
-        hsqlInit = new HsqlInit();
-        connection = hsqlInit.initDatabase();
-
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath*:/spring-config.xml");
         accidentDBServiceImpl = (AccidentDBServiceImpl) context.getBean("accidentDBServiceImpl");
-       // hsqlInit = (HsqlInit) context.getBean("hsqldb.connection");
     }
 
 
@@ -77,6 +75,7 @@ public class AccidentDBServiceImplTest {
         while (iteratorWeatherCondition.hasNext()) {
             RoadAccident roadAccidentdWeather = (RoadAccident)iteratorWeatherCondition.next();
             assertEquals(roadAccidentdWeather.getWeatherConditions(), "Fine no high winds");
+            //assertEquals(roadAccidentdWeather.getAccidentId(), "Fine no high winds");
             break;
         }
         assertNotNull(iteratorWeatherCondition);
