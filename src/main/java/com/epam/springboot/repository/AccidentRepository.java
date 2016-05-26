@@ -28,7 +28,9 @@ public interface AccidentRepository extends JpaRepository<Accidents, String> {
 //    List<Accidents> findByWeatherConditionsAndYear(String weatherConditions,String year);
 
     // scenario 4
-    List<Accidents> findByDate(LocalDate date);
+    // Todo
+//    @Query("select * from Accidents r where r.date=?1")
+//    List<Accidents> findByDate(LocalDate date);
 /*
     // scenario 3
     List<Accidents> getAllAccidentsByWeatherConditionAndYear(String weatherCondition,String year);

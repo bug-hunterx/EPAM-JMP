@@ -89,7 +89,7 @@ public class HomeWork5Test {
     @Test
     public void getAllAccidentsByDateTest() {
         LocalDate date = LocalDate.parse("05/01/2009", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        List<Accidents> accidentsList = repository.findByDate(date);
+        List<Accidents> accidentsList = repository.findAll(); //findByDate(date);
         log.info(accidentsList);
         assertThat(accidentsList.size(), equalTo(2));
         assertThat(accidentsList.get(0).getDate(), equalTo(date));
@@ -98,7 +98,7 @@ public class HomeWork5Test {
     @Test
     public void getAllAccidentsByWeatherConditionAndYearTest() {
         LocalDate date = LocalDate.parse("05/01/2009", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        List<Accidents> accidentsList = repository.findByDate(date);
+        List<Accidents> accidentsList = repository.findAll(); //findByDate(date);
         log.info(accidentsList);
         assertThat(accidentsList.size(), equalTo(2));
         assertThat(accidentsList.get(0).getDate(), equalTo(date));
