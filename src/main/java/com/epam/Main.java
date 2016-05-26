@@ -30,7 +30,7 @@ public class Main {
         SpringApplication.run(Main.class);
     }
 
-    @Bean
+//    @Bean
     public CommandLineRunner demo(AccidentService repository) {
 //        AccidentsDataLoader loader = new AccidentsDataLoader();
 //        List<RoadAccident> accidents = loader.loadRoadAccidents("src/main/resources/DfTRoadSafety_Accidents_2009.csv");

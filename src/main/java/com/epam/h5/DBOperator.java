@@ -1,35 +1,32 @@
 package com.epam.h5;
 
-import java.util.Date;
+import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.epam.dbservice.AccidentService;
+import com.epam.h5.dao.AccidentRepository;
 import com.epam.h5.entity.Accidents;
 
+@Component
 public class DBOperator {
 	
-	@Autowired
-	AccidentService service;
+	@Resource
+	AccidentRepository dao;
 	
-	// scenario 1
     public Accidents findOne(String accidentId){
-    	return service.findOne(accidentId);
+    	return dao.findOne(accidentId);
     }
     
-    // scenario 2
-    public Iterable<Accidents> getAllAccidentsByRoadSurfaceCondition(String roadSurfaceCondition){
-    	return service.getAllAccidentsByRoadSurfaceCondition(roadSurfaceCondition);
-    }
-    
-    // scenario 3
-    public Iterable<Accidents> getAllAccidentsByWeatherConditionAndPoliceForce(String weatherCondition,int policeForce){
-    	return service.getAllAccidentsByWeatherConditionAndPoliceForce(weatherCondition, policeForce);
-    }
-    
-    // scenario 4
-    public Iterable<Accidents> getAllAccidentsByDate(Date date){
-    	return service.getAllAccidentsByDate(date);
-    }
+//    public Iterable<Accidents> getAllAccidentsByRoadSurfaceCondition(String roadSurfaceCondition){
+//    	return dao.getAllAccidentsByRoadSurfaceCondition(roadSurfaceCondition);
+//    }
+//    
+//    public Iterable<Accidents> getAllAccidentsByWeatherConditionAndPoliceForce(String weatherCondition,int policeForce){
+//    	return dao.getAllAccidentsByWeatherConditionAndPoliceForce(weatherCondition, policeForce);
+//    }
+//    
+//    public Iterable<Accidents> getAllAccidentsByDate(Date date){
+//    	return dao.getAllAccidentsByDate(date);
+//    }
 
 }
