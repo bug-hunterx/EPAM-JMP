@@ -31,6 +31,7 @@ public class AccidentController {
         return accidents;
     }
 
+/*
     @RequestMapping(method= RequestMethod.GET, value= "/accidentsByRoadCondition/{id}", headers="Accept=application/json")
     public @ResponseBody
     List<Accidents> getAllAccidentsByRoadCondition(@PathVariable Integer id){
@@ -38,6 +39,7 @@ public class AccidentController {
 
         return accidents;
     }
+*/
 
     @RequestMapping(method= RequestMethod.POST, value= "/accidents", headers="Accept=application/json")
     public @ResponseBody String save(@RequestBody Accidents accidents){

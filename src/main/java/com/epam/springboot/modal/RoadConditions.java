@@ -17,7 +17,7 @@ public class RoadConditions {
     Accidents aa;
     private Set<Accidents> accidents;
 
-    @OneToMany(mappedBy = "roadSurfaceConditions", cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "roadSurfaceConditions", cascade = CascadeType.ALL)
     public Set<Accidents> getAccidents() {
         return accidents;
     }

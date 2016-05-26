@@ -7,29 +7,28 @@ import org.dbunit.dataset.ITableIterator;
 import org.dbunit.dataset.csv.CsvDataSet;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.dataset.xml.XmlDataSetWriter;
+import org.dbunit.util.TableFormatter;
 import org.dbunit.util.fileloader.CsvDataFileLoader;
 import org.dbunit.util.fileloader.DataFileLoader;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by bill on 16-5-25.
  */
 public class DbPrepare {
-    public static String filepath = "/home/bill/IdeaProjects/EPAM-JMP/CSV/";
+    public static String DB_DATA_PATH = Paths.get("src","main","resources").toString();
+    public static Path table_xml = Paths.get(DB_DATA_PATH,"tables.xml");
 
     public void dumpTables(IDataSet dataSet) {
         try {
             ITableIterator tableIterator = dataSet.iterator();
             while (tableIterator.next()) {
                 ITable table = tableIterator.getTable();
-                System.out.println(table);
-                int count = table.getRowCount();
-                System.out.println("Row Count="+count);
-                for (int i = 0; i <count ; i++) {
-                    System.out.println("Row["+i+"]="+ table.getValue(i,"label"));
-                }
+                System.out.println(new TableFormatter().format(table));
             }
         } catch (DataSetException e) {
             e.printStackTrace();
@@ -41,7 +40,7 @@ public class DbPrepare {
         DataFileLoader loader = new CsvDataFileLoader();
         String[] tables = new String[0];
         try {
-            IDataSet dataSet = loader.load(filepath);
+            IDataSet dataSet = loader.load(DB_DATA_PATH);
             tables = dataSet.getTableNames();
         } catch (DataSetException e) {
             e.printStackTrace();
@@ -52,7 +51,8 @@ public class DbPrepare {
     @Test
     public void loadXml() {
         try {
-            IDataSet dataSet2 = new XmlDataSet(new FileInputStream("tables.xml"));
+            System.out.println("Loading " + table_xml.toString());
+            IDataSet dataSet2 = new XmlDataSet(new FileInputStream(table_xml.toString()));
             dumpTables(dataSet2);
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,11 +62,11 @@ public class DbPrepare {
     }
 
     @Test
-    public void csvUtil() {
+    public void csvToDbunitXml() {
         try {
-            IDataSet dataSet = new CsvDataSet(new File(filepath));
+            IDataSet dataSet = new CsvDataSet(new File(DB_DATA_PATH));
             dumpTables(dataSet);
-            FileOutputStream fos = new FileOutputStream("tables.xml");
+            FileOutputStream fos = new FileOutputStream(table_xml.toString());
             XmlDataSetWriter xmlWriter = new XmlDataSetWriter(fos, null);
             xmlWriter.write(dataSet);
         } catch (DataSetException e) {

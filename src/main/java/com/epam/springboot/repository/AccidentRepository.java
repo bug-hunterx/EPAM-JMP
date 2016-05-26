@@ -17,11 +17,11 @@ import java.util.List;
 @Repository
 public interface AccidentRepository extends JpaRepository<Accidents, String> {
     // scenario 1
-    Accidents findOne(String accidentId);
+//    Accidents findOne(String accidentId);
 
     // scenario 2
 //    @Query(value="select * from Accidents r where r.Police_Force=?1",nativeQuery=true)
-    List<Accidents> findByRoadSurfaceConditions(Integer RoadCondition);
+//    List<Accidents> findByRoadSurfaceConditions(Integer RoadCondition);
 
     // scenario 3
 //    @Query("select * from Accidents r where r.weatherConditions=?1 and YEAR(date)"

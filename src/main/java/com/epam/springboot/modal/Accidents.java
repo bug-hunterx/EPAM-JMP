@@ -1,12 +1,9 @@
 package com.epam.springboot.modal;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.sql.Date;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -19,27 +16,28 @@ public class Accidents {
 //    @GeneratedValue
     private String id;
 
-    private double longitude;
-    private double latitude;
+    private double longitude = 0.0;
+    private double latitude = 0.0;
     @Column(name="Police_Force")
-    private Integer policeForce;
+    private Integer policeForce = 1;
     @Column(name="Severity")
-    private Integer severity;
-    private int numberOfVehicles;
-    private int numberOfCasualties;
-    private Date date;
+    private Integer severity = 1;
+    private int numberOfVehicles = 0;
+    private int numberOfCasualties = 0;
+    private LocalDate date;
     private Integer dayOfWeek;
     private LocalTime time;
-    private Integer districtAuthority;
-    private Integer lightConditions;
-    private Integer weatherConditions;
-    private Integer roadSurfaceConditions;
+    private Integer districtAuthority = 1;
+    private Integer lightConditions = -1;
+    private Integer weatherConditions = -1;
+    private Integer roadSurfaceConditions = -1;
 //    private RoadConditions roadConditions;
 
     protected Accidents() {
     }
 
     public Accidents(String id, double longitude, double latitude, Integer policeForce, Integer severity, int numberOfVehicles, int numberOfCasualties, String date, Integer dayOfWeek, String time, Integer districtAuthority, Integer lightConditions, Integer weatherConditions, Integer roadSurfaceConditions) {
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -47,7 +45,7 @@ public class Accidents {
         this.severity = severity;
         this.numberOfVehicles = numberOfVehicles;
         this.numberOfCasualties = numberOfCasualties;
-        this.date = Date.valueOf(date);
+        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.dayOfWeek = dayOfWeek;
         this.time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
         this.districtAuthority = districtAuthority;
@@ -56,10 +54,11 @@ public class Accidents {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
 
-    public Accidents(String id, Integer policeForce, Integer severity) {
+    public Accidents(String id) {
         this.id = id;
-        this.policeForce = policeForce;
-        this.severity = severity;
+        this.date = LocalDate.now();
+        this.time = LocalTime.now();
+        this.dayOfWeek = 1; //Todo this.date.getDayOfWeek();
     }
 
     public String getId() {
@@ -118,13 +117,15 @@ public class Accidents {
         this.numberOfCasualties = numberOfCasualties;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
+/*
     public void setDate(Date date) {
         this.date = date;
     }
+*/
 
     public Integer getDayOfWeek() {
         return dayOfWeek;
@@ -134,6 +135,7 @@ public class Accidents {
         this.dayOfWeek = dayOfWeek;
     }
 
+/*
     public LocalTime getTime() {
         return time;
     }
@@ -141,6 +143,7 @@ public class Accidents {
     public void setTime(LocalTime time) {
         this.time = time;
     }
+*/
 
     public Integer getDistrictAuthority() {
         return districtAuthority;
