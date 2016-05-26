@@ -30,16 +30,17 @@ public class Main {
         SpringApplication.run(Main.class);
     }
 
-    @Bean
+//    @Bean
     public CommandLineRunner demo(AccidentService repository) {
-        AccidentsDataLoader loader = new AccidentsDataLoader();
-        List<RoadAccident> accidents = loader.loadRoadAccidents("src/main/resources/DfTRoadSafety_Accidents_2009.csv");
-        return (args) -> {
-            accidents.forEach(accident -> repository.save(accident));
-            System.out.println(repository.findAll().iterator().next());
-            System.out.println(repository.getAllAccidentsByRoadSurfaceCondition("Dry").iterator().next());
-            System.out.println(repository.getAllAccidentsByWeatherConditionAndYear("Fine no high winds", 2009).iterator().next());
-        };
+//        AccidentsDataLoader loader = new AccidentsDataLoader();
+//        List<RoadAccident> accidents = loader.loadRoadAccidents("src/main/resources/DfTRoadSafety_Accidents_2009.csv");
+//        return (args) -> {
+//            accidents.forEach(accident -> repository.save(accident));
+//            System.out.println(repository.findAll().iterator().next());
+//            System.out.println(repository.getAllAccidentsByRoadSurfaceCondition("Dry").iterator().next());
+//            System.out.println(repository.getAllAccidentsByWeatherConditionAndYear("Fine no high winds", 2009).iterator().next());
+//        };
+    	return null;
     }
 
 

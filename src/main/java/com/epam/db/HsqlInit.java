@@ -18,6 +18,14 @@ public class HsqlInit {
         try {
             String workingDir = System.getProperty("user.dir");
 
+            connection.prepareStatement("DROP TABLE IF EXISTS accident_severity").execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS district_authority").execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS light_condition").execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS police_force").execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS road_surface").execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS weather_conditions").execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS accidents").execute();
+            
             connection.prepareStatement("CREATE TEXT TABLE accident_severity(\n" +
                     "   code  INTEGER  NOT NULL PRIMARY KEY \n" +
                     "  ,label VARCHAR(70) NOT NULL\n" +
@@ -62,7 +70,7 @@ public class HsqlInit {
                     "  ,Accident_Severity          INTEGER  NOT NULL\n" +
                     "  ,Number_of_Vehicles         INTEGER  NOT NULL\n" +
                     "  ,Number_of_Casualties       INTEGER  NOT NULL\n" +
-                    "  ,Date                       DATE  NOT NULL\n" +
+                    "  ,Date                       VARCHAR(15)  NOT NULL\n" +
                     "  ,Day_of_Week                INTEGER  NOT NULL\n" +
                     "  ,Time                       VARCHAR(15) NOT NULL\n" +
                     "  ,Local_Authority_District   INTEGER  NOT NULL\n" +

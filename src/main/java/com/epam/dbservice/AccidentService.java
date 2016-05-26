@@ -2,24 +2,25 @@ package com.epam.dbservice;
 
 import java.util.Date;
 
-import com.epam.data.RoadAccident;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.epam.h5.entity.Accidents;
+
 @Repository
-public interface AccidentService extends CrudRepository<RoadAccident, String> {
+public interface AccidentService extends CrudRepository<Accidents, String> {
 	
 	// scenario 1
-    RoadAccident findOne(String accidentId);
+    Accidents findOne(String accidentId);
     
     // scenario 2
-    Iterable<RoadAccident> getAllAccidentsByRoadSurfaceCondition(String roadSurfaceCondition);
+    Iterable<Accidents> getAllAccidentsByRoadSurfaceCondition(String roadSurfaceCondition);
     
     // scenario 3
-    Iterable<RoadAccident> getAllAccidentsByWeatherConditionAndYear(String weatherCondition,int year);
+    Iterable<Accidents> getAllAccidentsByWeatherConditionAndPoliceForce(String weatherCondition,int policeForce);
     
- // scenario 4
-    Iterable<RoadAccident> getAllAccidentsByDate(Date date);
+    // scenario 4
+    Iterable<Accidents> getAllAccidentsByDate(Date date);
 
 
 }
