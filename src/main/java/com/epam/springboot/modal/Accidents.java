@@ -34,6 +34,7 @@ public class Accidents {
     private Integer lightConditions;
     private Integer weatherConditions;
     private Integer roadSurfaceConditions;
+//    private RoadConditions roadConditions;
 
     protected Accidents() {
     }
@@ -173,6 +174,18 @@ public class Accidents {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
 
+//    @ManyToOne
+//    @JoinColumn(name = "road_surface_code")
+/*
+    public RoadConditions getRoadConditions() {
+        return roadConditions;
+    }
+
+    public void setRoadConditions(RoadConditions roadConditions) {
+        this.roadConditions = roadConditions;
+    }
+*/
+
     @Override
     public String toString() {
         return "Accidents{" +
@@ -193,8 +206,8 @@ public class Accidents {
                 '}' + "\n";
     }
 
-    public static void main(String[] args) {
-        Date date=new Date("20/05/2016");
+    /*public static void main(String[] args) {
+        Date date=new Date("2/05/2016");
         System.out.println(date);
 //        DateTimeFormatter.ofPattern("dd/MM/yyyy")
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -205,5 +218,5 @@ public class Accidents {
             e.printStackTrace();
         }
         System.out.println(ss);
-    }
+    }*/
 }
