@@ -14,8 +14,12 @@ import java.time.format.DateTimeFormatter;
 public class Accidents {
     @Id
 //    @GeneratedValue
+    @Column(name="Accident_Index")
     private String id;
+    @Column(name="Road_Surface_Conditions")
+    private Integer roadSurfaceConditions = -1;
 
+/*
     private double longitude = 0.0;
     private double latitude = 0.0;
     @Column(name="Police_Force")
@@ -24,18 +28,23 @@ public class Accidents {
     private Integer severity = 1;
     private int numberOfVehicles = 0;
     private int numberOfCasualties = 0;
-    private LocalDate date;
+//    private LocalDate date;
     private Integer dayOfWeek;
-    private LocalTime time;
+//    private LocalTime time;
     private Integer districtAuthority = 1;
     private Integer lightConditions = -1;
     private Integer weatherConditions = -1;
-    private Integer roadSurfaceConditions = -1;
 //    private RoadConditions roadConditions;
+*/
 
     protected Accidents() {
     }
 
+    public Accidents(String id, Integer roadSurfaceConditions) {
+        this.id = id;
+        this.roadSurfaceConditions = roadSurfaceConditions;
+    }
+/*
     public Accidents(String id, double longitude, double latitude, Integer policeForce, Integer severity, int numberOfVehicles, int numberOfCasualties, String date, Integer dayOfWeek, String time, Integer districtAuthority, Integer lightConditions, Integer weatherConditions, Integer roadSurfaceConditions) {
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.id = id;
@@ -45,20 +54,21 @@ public class Accidents {
         this.severity = severity;
         this.numberOfVehicles = numberOfVehicles;
         this.numberOfCasualties = numberOfCasualties;
-        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.dayOfWeek = dayOfWeek;
-        this.time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
+//        this.time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
         this.districtAuthority = districtAuthority;
         this.lightConditions = lightConditions;
         this.weatherConditions = weatherConditions;
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+*/
 
     public Accidents(String id) {
         this.id = id;
-        this.date = LocalDate.now();
-        this.time = LocalTime.now();
-        this.dayOfWeek = 1; //Todo this.date.getDayOfWeek();
+//        this.date = LocalDate.now();
+//        this.time = LocalTime.now();
+//        this.dayOfWeek = 1; //Todo this.date.getDayOfWeek();
     }
 
     public String getId() {
@@ -69,64 +79,65 @@ public class Accidents {
         this.id = id;
     }
 
-    public Integer getPoliceForce() {
-        return policeForce;
-    }
+//    public Integer getPoliceForce() {
+//        return policeForce;
+//    }
+//
+//    public void setPoliceForce(Integer policeForce) {
+//        this.policeForce = policeForce;
+//    }
+//
+//    public Integer getSeverity() {
+//        return severity;
+//    }
+//
+//    public void setSeverity(Integer severity) {
+//        this.severity = severity;
+//    }
+//
+//    public double getLongitude() {
+//        return longitude;
+//    }
+//
+//    public void setLongitude(double longitude) {
+//        this.longitude = longitude;
+//    }
+//
+//    public double getLatitude() {
+//        return latitude;
+//    }
+//
+//    public void setLatitude(double latitude) {
+//        this.latitude = latitude;
+//    }
+//
+//    public int getNumberOfVehicles() {
+//        return numberOfVehicles;
+//    }
+//
+//    public void setNumberOfVehicles(int numberOfVehicles) {
+//        this.numberOfVehicles = numberOfVehicles;
+//    }
+//
+//    public int getNumberOfCasualties() {
+//        return numberOfCasualties;
+//    }
+//
+//    public void setNumberOfCasualties(int numberOfCasualties) {
+//        this.numberOfCasualties = numberOfCasualties;
+//    }
 
-    public void setPoliceForce(Integer policeForce) {
-        this.policeForce = policeForce;
-    }
-
-    public Integer getSeverity() {
-        return severity;
-    }
-
-    public void setSeverity(Integer severity) {
-        this.severity = severity;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public int getNumberOfVehicles() {
-        return numberOfVehicles;
-    }
-
-    public void setNumberOfVehicles(int numberOfVehicles) {
-        this.numberOfVehicles = numberOfVehicles;
-    }
-
-    public int getNumberOfCasualties() {
-        return numberOfCasualties;
-    }
-
-    public void setNumberOfCasualties(int numberOfCasualties) {
-        this.numberOfCasualties = numberOfCasualties;
-    }
-
+/*
     public LocalDate getDate() {
         return date;
     }
 
-/*
     public void setDate(Date date) {
         this.date = date;
     }
 */
 
+/*
     public Integer getDayOfWeek() {
         return dayOfWeek;
     }
@@ -134,6 +145,7 @@ public class Accidents {
     public void setDayOfWeek(Integer dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
+*/
 
 /*
     public LocalTime getTime() {
@@ -144,6 +156,7 @@ public class Accidents {
         this.time = time;
     }
 */
+/*
 
     public Integer getDistrictAuthority() {
         return districtAuthority;
@@ -176,6 +189,7 @@ public class Accidents {
     public void setRoadSurfaceConditions(Integer roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+*/
 
 //    @ManyToOne
 //    @JoinColumn(name = "road_surface_code")
@@ -193,18 +207,18 @@ public class Accidents {
     public String toString() {
         return "Accidents{" +
                 "id='" + id + '\'' +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", policeForce=" + policeForce +
-                ", severity=" + severity +
-                ", numberOfVehicles=" + numberOfVehicles +
-                ", numberOfCasualties=" + numberOfCasualties +
-                ", date=" + date +
-                ", dayOfWeek=" + dayOfWeek +
-                ", time=" + time +
-                ", districtAuthority=" + districtAuthority +
-                ", lightConditions=" + lightConditions +
-                ", weatherConditions=" + weatherConditions +
+//                ", longitude=" + longitude +
+//                ", latitude=" + latitude +
+//                ", policeForce=" + policeForce +
+//                ", severity=" + severity +
+//                ", numberOfVehicles=" + numberOfVehicles +
+//                ", numberOfCasualties=" + numberOfCasualties +
+////                ", date=" + date +
+//                ", dayOfWeek=" + dayOfWeek +
+////                ", time=" + time +
+//                ", districtAuthority=" + districtAuthority +
+//                ", lightConditions=" + lightConditions +
+//                ", weatherConditions=" + weatherConditions +
                 ", roadSurfaceConditions=" + roadSurfaceConditions +
                 '}' + "\n";
     }

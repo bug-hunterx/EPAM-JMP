@@ -1,6 +1,5 @@
 package com.epam.dataservice;
 
-import com.epam.processor.DbPrepare;
 import com.epam.springboot.AccidentsRestApplication;
 import com.epam.springboot.modal.Accidents;
 import com.epam.springboot.modal.RoadConditions;
@@ -17,17 +16,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,9 +33,6 @@ import static org.hamcrest.core.IsEqual.equalTo;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AccidentsRestApplication.class)   //MockServletContext
-//@DatabaseSetup("src/main/resources/tables.xml")
-
-//@ContextConfiguration
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
 //        DirtiesContextTestExecutionListener.class,
 //        TransactionalTestExecutionListener.class,
@@ -51,7 +43,8 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class HomeWork5Test {
     @Autowired
     RoadConditionRepository roadConditionRepository;
-//    AccidentRepository repository;
+    @Autowired
+    AccidentRepository repository;
 
     @Value("${local.server.port}")   // 6
     private int port;
@@ -66,33 +59,29 @@ public class HomeWork5Test {
         this.base = new URL("http://localhost:" + port + "/");
         template = new TestRestTemplate();
 
-//        repository.deleteAll();
-//        repository.save(new Accidents("200901BS70001",-0.201349,51.512273,1,2,2,1,"01/01/2009",5,"15:11",12,1,1,1));
-//        repository.save(new Accidents("200901BS70002",-0.199248,51.514399,2,2,2,11,"05/01/2009",2,"10:59",12,1,1,2));
-//        repository.save(new Accidents("200901BS70003",-0.179599,51.486668,3,3,2,1,"04/01/2009",1,"14:19",12,1,1,2));
-//        repository.save(new Accidents("200901BS70004",-0.20311,51.507804,4,2,2,1,"05/25/2016",3,"8:10",12,1,8,4));
 //        RestAssured.port = port;
     }
+
+    @Test
+    public void AcciedentsTest () {
+        Accidents acciedent = new Accidents("200901BS70001");
+        log.info(acciedent);
+
+    }
+
+    @Test
+    public void AccidentRepositoryTest() {
+        assertThat(repository.count(), equalTo(4L));
+//        List<Accidents> accidentsList = repository.findAll();
+//        log.info(accidentsList);
+//        assertThat(accidentsList.size(), equalTo(4));
+    }
+
     /*
-
-        @Test
-        public void AcciedentsTest () {
-            Accidents acciedent = new Accidents("200901BS70001");
-            System.out.println(acciedent);
-
-        }
-
         @Test
         public void getHello() throws Exception {
             ResponseEntity<String> response = template.getForEntity(base.toString() + "hello/Bill", String.class);
             assertThat(response.getBody(), equalTo("hello, Bill"));
-        }
-
-        @Test
-        public void AccidentRepositoryTest() {
-            List<Accidents> accidentsList = repository.findAll();
-            log.info(accidentsList);
-            assertThat(accidentsList.size(), equalTo(4));
         }
 
         @Test
@@ -122,13 +111,13 @@ public class HomeWork5Test {
             assertThat(accidentsList.get(0).getDate(), equalTo(date));
         }
     */
-@Test
-public void RoadConditionRepositoryTest() {
-    assertThat(roadConditionRepository.count(), equalTo(8L));
-    List<RoadConditions> roadConditionsList = roadConditionRepository.findAll();
-    log.info(roadConditionsList);
-    assertThat(roadConditionsList.size(), equalTo(8));
-}
+    @Test
+    public void RoadConditionRepositoryTest() {
+        assertThat(roadConditionRepository.count(), equalTo(8L));
+        List<RoadConditions> roadConditionsList = roadConditionRepository.findAll();
+        log.info(roadConditionsList);
+        assertThat(roadConditionsList.size(), equalTo(8));
+    }
 
 
 }
