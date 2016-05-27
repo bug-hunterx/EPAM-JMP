@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <road_surface code="1" label="Dry"/>
+  <road_surface code="2" label="Wet or damp"/>
+  <road_surface code="3" label="Snow"/>
+  <road_surface code="4" label="Frost or ice"/>
+  <road_surface code="5" label="Flood over 3cm. deep"/>
+  <road_surface code="6" label="Oil or diesel"/>
+  <road_surface code="7" label="Mud"/>
+  <road_surface code="-1" label="Data missing or out of range"/>
+  <Accidents Accident_Index="200901BS70001" Road_Surface_Conditions="2"/>
+  <Accidents Accident_Index="200901BS70002" Road_Surface_Conditions="3"/>
+  <Accidents Accident_Index="200901BS70003" Road_Surface_Conditions="1"/>
+  <Accidents Accident_Index="200901BS70004" Road_Surface_Conditions="3"/>
+</dataset>

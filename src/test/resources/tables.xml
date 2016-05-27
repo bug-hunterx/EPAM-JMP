@@ -1,0 +1,497 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <accident_severity code="1" label="Fatal"/>
+  <accident_severity code="2" label="Serious"/>
+  <accident_severity code="3" label="Slight"/>
+  <disrict_authority code="1" label="Westminster"/>
+  <disrict_authority code="2" label="Camden"/>
+  <disrict_authority code="3" label="Islington"/>
+  <disrict_authority code="4" label="Hackney"/>
+  <disrict_authority code="5" label="Tower Hamlets"/>
+  <disrict_authority code="6" label="Greenwich"/>
+  <disrict_authority code="7" label="Lewisham"/>
+  <disrict_authority code="8" label="Southwark"/>
+  <disrict_authority code="9" label="Lambeth"/>
+  <disrict_authority code="10" label="Wandsworth"/>
+  <disrict_authority code="11" label="Hammersmith and Fulham"/>
+  <disrict_authority code="12" label="Kensington and Chelsea"/>
+  <disrict_authority code="13" label="Waltham Forest"/>
+  <disrict_authority code="14" label="Redbridge"/>
+  <disrict_authority code="15" label="Havering"/>
+  <disrict_authority code="16" label="Barking and Dagenham"/>
+  <disrict_authority code="17" label="Newham"/>
+  <disrict_authority code="18" label="Bexley"/>
+  <disrict_authority code="19" label="Bromley"/>
+  <disrict_authority code="20" label="Croydon"/>
+  <disrict_authority code="21" label="Sutton"/>
+  <disrict_authority code="22" label="Merton"/>
+  <disrict_authority code="23" label="Kingston upon Thames"/>
+  <disrict_authority code="24" label="Richmond upon Thames"/>
+  <disrict_authority code="25" label="Hounslow"/>
+  <disrict_authority code="26" label="Hillingdon"/>
+  <disrict_authority code="27" label="Ealing"/>
+  <disrict_authority code="28" label="Brent"/>
+  <disrict_authority code="29" label="Harrow"/>
+  <disrict_authority code="30" label="Barnet"/>
+  <disrict_authority code="31" label="Haringey"/>
+  <disrict_authority code="32" label="Enfield"/>
+  <disrict_authority code="33" label="Hertsmere"/>
+  <disrict_authority code="38" label="Epsom and Ewell"/>
+  <disrict_authority code="40" label="Spelthorne"/>
+  <disrict_authority code="57" label="London Airport (Heathrow)"/>
+  <disrict_authority code="60" label="Allerdale"/>
+  <disrict_authority code="61" label="Barrow-in-Furness"/>
+  <disrict_authority code="62" label="Carlisle"/>
+  <disrict_authority code="63" label="Copeland"/>
+  <disrict_authority code="64" label="Eden"/>
+  <disrict_authority code="65" label="South Lakeland"/>
+  <disrict_authority code="70" label="Blackburn with Darwen"/>
+  <disrict_authority code="71" label="Blackpool"/>
+  <disrict_authority code="72" label="Burnley"/>
+  <disrict_authority code="73" label="Chorley"/>
+  <disrict_authority code="74" label="Fylde"/>
+  <disrict_authority code="75" label="Hyndburn"/>
+  <disrict_authority code="76" label="Lancaster"/>
+  <disrict_authority code="77" label="Pendle"/>
+  <disrict_authority code="79" label="Preston"/>
+  <disrict_authority code="80" label="Ribble Valley"/>
+  <disrict_authority code="82" label="Rossendale"/>
+  <disrict_authority code="83" label="South Ribble"/>
+  <disrict_authority code="84" label="West Lancashire"/>
+  <disrict_authority code="85" label="Wyre"/>
+  <disrict_authority code="90" label="Knowsley"/>
+  <disrict_authority code="91" label="Liverpool"/>
+  <disrict_authority code="92" label="St. Helens"/>
+  <disrict_authority code="93" label="Sefton"/>
+  <disrict_authority code="95" label="Wirral"/>
+  <disrict_authority code="100" label="Bolton"/>
+  <disrict_authority code="101" label="Bury"/>
+  <disrict_authority code="102" label="Manchester"/>
+  <disrict_authority code="104" label="Oldham"/>
+  <disrict_authority code="106" label="Rochdale"/>
+  <disrict_authority code="107" label="Salford"/>
+  <disrict_authority code="109" label="Stockport"/>
+  <disrict_authority code="110" label="Tameside"/>
+  <disrict_authority code="112" label="Trafford"/>
+  <disrict_authority code="114" label="Wigan"/>
+  <disrict_authority code="120" label="Chester"/>
+  <disrict_authority code="121" label="Congleton"/>
+  <disrict_authority code="122" label="Crewe and Nantwich"/>
+  <disrict_authority code="123" label="Ellesmere Port and Neston"/>
+  <disrict_authority code="124" label="Halton"/>
+  <disrict_authority code="126" label="Macclesfield"/>
+  <disrict_authority code="127" label="Vale Royal"/>
+  <disrict_authority code="128" label="Warrington"/>
+  <disrict_authority code="129" label="Cheshire East"/>
+  <disrict_authority code="130" label="Cheshire West and Chester"/>
+  <disrict_authority code="139" label="Northumberland"/>
+  <disrict_authority code="140" label="Alnwick"/>
+  <disrict_authority code="141" label="Berwick-upon-Tweed"/>
+  <disrict_authority code="142" label="Blyth Valley"/>
+  <disrict_authority code="143" label="Castle Morpeth"/>
+  <disrict_authority code="144" label="Tynedale"/>
+  <disrict_authority code="145" label="Wansbeck"/>
+  <disrict_authority code="146" label="Gateshead"/>
+  <disrict_authority code="147" label="Newcastle upon Tyne"/>
+  <disrict_authority code="148" label="North Tyneside"/>
+  <disrict_authority code="149" label="South Tyneside"/>
+  <disrict_authority code="150" label="Sunderland"/>
+  <disrict_authority code="160" label="Chester-le-Street"/>
+  <disrict_authority code="161" label="Darlington"/>
+  <disrict_authority code="162" label="Derwentside"/>
+  <disrict_authority code="163" label="Durham"/>
+  <disrict_authority code="164" label="Easington"/>
+  <disrict_authority code="165" label="Sedgefield"/>
+  <disrict_authority code="166" label="Teesdale"/>
+  <disrict_authority code="168" label="Wear Valley"/>
+  <disrict_authority code="169" label="County Durham"/>
+  <disrict_authority code="180" label="Craven"/>
+  <disrict_authority code="181" label="Hambleton"/>
+  <disrict_authority code="182" label="Harrogate"/>
+  <disrict_authority code="184" label="Richmondshire"/>
+  <disrict_authority code="185" label="Ryedale"/>
+  <disrict_authority code="186" label="Scarborough"/>
+  <disrict_authority code="187" label="Selby"/>
+  <disrict_authority code="189" label="York"/>
+  <disrict_authority code="200" label="Bradford"/>
+  <disrict_authority code="202" label="Calderdale"/>
+  <disrict_authority code="203" label="Kirklees"/>
+  <disrict_authority code="204" label="Leeds"/>
+  <disrict_authority code="206" label="Wakefield"/>
+  <disrict_authority code="210" label="Barnsley"/>
+  <disrict_authority code="211" label="Doncaster"/>
+  <disrict_authority code="213" label="Rotherham"/>
+  <disrict_authority code="215" label="Sheffield"/>
+  <disrict_authority code="228" label="Kingston upon Hull, City of"/>
+  <disrict_authority code="231" label="East Riding of Yorkshire"/>
+  <disrict_authority code="232" label="North Lincolnshire"/>
+  <disrict_authority code="233" label="North East Lincolnshire"/>
+  <disrict_authority code="240" label="Hartlepool"/>
+  <disrict_authority code="241" label="Redcar and Cleveland"/>
+  <disrict_authority code="243" label="Middlesbrough"/>
+  <disrict_authority code="245" label="Stockton-on-Tees"/>
+  <disrict_authority code="250" label="Cannock Chase"/>
+  <disrict_authority code="251" label="East Staffordshire"/>
+  <disrict_authority code="252" label="Lichfield"/>
+  <disrict_authority code="253" label="Newcastle-under-Lyme"/>
+  <disrict_authority code="254" label="South Staffordshire"/>
+  <disrict_authority code="255" label="Stafford"/>
+  <disrict_authority code="256" label="Staffordshire Moorlands"/>
+  <disrict_authority code="257" label="Stoke-on-Trent"/>
+  <disrict_authority code="258" label="Tamworth"/>
+  <disrict_authority code="270" label="Bromsgrove"/>
+  <disrict_authority code="273" label="Malvern Hills"/>
+  <disrict_authority code="274" label="Redditch"/>
+  <disrict_authority code="276" label="Worcester"/>
+  <disrict_authority code="277" label="Wychavon"/>
+  <disrict_authority code="278" label="Wyre Forest"/>
+  <disrict_authority code="279" label="Bridgnorth"/>
+  <disrict_authority code="280" label="North Shropshire"/>
+  <disrict_authority code="281" label="Oswestry"/>
+  <disrict_authority code="282" label="Shrewsbury and Atcham"/>
+  <disrict_authority code="283" label="South Shropshire"/>
+  <disrict_authority code="284" label="Telford and Wrekin"/>
+  <disrict_authority code="285" label="Herefordshire, County of "/>
+  <disrict_authority code="286" label="Shropshire"/>
+  <disrict_authority code="290" label="North Warwickshire"/>
+  <disrict_authority code="291" label="Nuneaton and Bedworth"/>
+  <disrict_authority code="292" label="Rugby "/>
+  <disrict_authority code="293" label="Stratford-upon-Avon"/>
+  <disrict_authority code="294" label="Warwick"/>
+  <disrict_authority code="300" label="Birmingham"/>
+  <disrict_authority code="302" label="Coventry"/>
+  <disrict_authority code="303" label="Dudley"/>
+  <disrict_authority code="305" label="Sandwell"/>
+  <disrict_authority code="306" label="Solihull"/>
+  <disrict_authority code="307" label="Walsall"/>
+  <disrict_authority code="309" label="Wolverhampton"/>
+  <disrict_authority code="320" label="Amber Valley"/>
+  <disrict_authority code="321" label="Bolsover"/>
+  <disrict_authority code="322" label="Chesterfield"/>
+  <disrict_authority code="323" label="Derby"/>
+  <disrict_authority code="324" label="Erewash"/>
+  <disrict_authority code="325" label="High Peak"/>
+  <disrict_authority code="327" label="North East Derbyshire"/>
+  <disrict_authority code="328" label="South Derbyshire"/>
+  <disrict_authority code="329" label="Derbyshire Dales"/>
+  <disrict_authority code="340" label="Ashfield"/>
+  <disrict_authority code="341" label="Bassetlaw"/>
+  <disrict_authority code="342" label="Broxtowe"/>
+  <disrict_authority code="343" label="Gedling"/>
+  <disrict_authority code="344" label="Mansfield"/>
+  <disrict_authority code="345" label="Newark and Sherwood"/>
+  <disrict_authority code="346" label="Nottingham"/>
+  <disrict_authority code="347" label="Rushcliffe"/>
+  <disrict_authority code="350" label="Boston"/>
+  <disrict_authority code="351" label="East Lindsey"/>
+  <disrict_authority code="352" label="Lincoln"/>
+  <disrict_authority code="353" label="North Kesteven"/>
+  <disrict_authority code="354" label="South Holland"/>
+  <disrict_authority code="355" label="South Kesteven"/>
+  <disrict_authority code="356" label="West Lindsey"/>
+  <disrict_authority code="360" label="Blaby"/>
+  <disrict_authority code="361" label="Hinckley and Bosworth"/>
+  <disrict_authority code="362" label="Charnwood"/>
+  <disrict_authority code="363" label="Harborough"/>
+  <disrict_authority code="364" label="Leicester"/>
+  <disrict_authority code="365" label="Melton"/>
+  <disrict_authority code="366" label="North West Leicestershire"/>
+  <disrict_authority code="367" label="Oadby and Wigston"/>
+  <disrict_authority code="368" label="Rutland"/>
+  <disrict_authority code="380" label="Corby"/>
+  <disrict_authority code="381" label="Daventry"/>
+  <disrict_authority code="382" label="East Northamptonshire"/>
+  <disrict_authority code="383" label="Kettering"/>
+  <disrict_authority code="384" label="Northampton"/>
+  <disrict_authority code="385" label="South Northamptonshire"/>
+  <disrict_authority code="386" label="Wellingborough"/>
+  <disrict_authority code="390" label="Cambridge"/>
+  <disrict_authority code="391" label="East Cambridgeshire"/>
+  <disrict_authority code="392" label="Fenland"/>
+  <disrict_authority code="393" label="Huntingdonshire"/>
+  <disrict_authority code="394" label="Peterborough"/>
+  <disrict_authority code="395" label="South Cambridgeshire"/>
+  <disrict_authority code="400" label="Breckland"/>
+  <disrict_authority code="401" label="Broadland"/>
+  <disrict_authority code="402" label="Great Yarmouth"/>
+  <disrict_authority code="404" label="Norwich"/>
+  <disrict_authority code="405" label="North Norfolk"/>
+  <disrict_authority code="406" label="South Norfolk"/>
+  <disrict_authority code="407" label="King&apos;s Lynn and West Norfolk"/>
+  <disrict_authority code="410" label="Babergh"/>
+  <disrict_authority code="411" label="Forest Heath"/>
+  <disrict_authority code="412" label="Ipswich"/>
+  <disrict_authority code="413" label="Mid Suffolk"/>
+  <disrict_authority code="414" label="St. Edmundsbury"/>
+  <disrict_authority code="415" label="Suffolk Coastal"/>
+  <disrict_authority code="416" label="Waveney"/>
+  <disrict_authority code="420" label="Bedford"/>
+  <disrict_authority code="421" label="Luton"/>
+  <disrict_authority code="422" label="Mid Bedfordshire"/>
+  <disrict_authority code="423" label="South Bedfordshire"/>
+  <disrict_authority code="424" label="Central Bedfordshire"/>
+  <disrict_authority code="430" label="Broxbourne"/>
+  <disrict_authority code="431" label="Dacorum"/>
+  <disrict_authority code="432" label="East Hertfordshire"/>
+  <disrict_authority code="433" label="North Hertfordshire"/>
+  <disrict_authority code="434" label="St. Albans"/>
+  <disrict_authority code="435" label="Stevenage"/>
+  <disrict_authority code="436" label="Three Rivers"/>
+  <disrict_authority code="437" label="Watford"/>
+  <disrict_authority code="438" label="Welwyn Hatfield"/>
+  <disrict_authority code="450" label="Basildon"/>
+  <disrict_authority code="451" label="Braintree"/>
+  <disrict_authority code="452" label="Brentwood"/>
+  <disrict_authority code="453" label="Castle Point"/>
+  <disrict_authority code="454" label="Chelmsford"/>
+  <disrict_authority code="455" label="Colchester"/>
+  <disrict_authority code="456" label="Epping Forest"/>
+  <disrict_authority code="457" label="Harlow"/>
+  <disrict_authority code="458" label="Maldon"/>
+  <disrict_authority code="459" label="Rochford"/>
+  <disrict_authority code="460" label="Southend-on-Sea"/>
+  <disrict_authority code="461" label="Tendring"/>
+  <disrict_authority code="462" label="Thurrock"/>
+  <disrict_authority code="463" label="Uttlesford"/>
+  <disrict_authority code="470" label="Bracknell Forest"/>
+  <disrict_authority code="471" label="West Berkshire"/>
+  <disrict_authority code="472" label="Reading"/>
+  <disrict_authority code="473" label="Slough"/>
+  <disrict_authority code="474" label="Windsor and Maidenhead"/>
+  <disrict_authority code="475" label="Wokingham"/>
+  <disrict_authority code="476" label="Aylesbury Vale"/>
+  <disrict_authority code="477" label="South Bucks"/>
+  <disrict_authority code="478" label="Chiltern"/>
+  <disrict_authority code="479" label="Milton Keynes"/>
+  <disrict_authority code="480" label="Wycombe"/>
+  <disrict_authority code="481" label="Cherwell"/>
+  <disrict_authority code="482" label="Oxford"/>
+  <disrict_authority code="483" label="Vale of White Horse"/>
+  <disrict_authority code="484" label="South Oxfordshire"/>
+  <disrict_authority code="485" label="West Oxfordshire"/>
+  <disrict_authority code="490" label="Basingstoke and Deane"/>
+  <disrict_authority code="491" label="Eastleigh"/>
+  <disrict_authority code="492" label="Fareham"/>
+  <disrict_authority code="493" label="Gosport"/>
+  <disrict_authority code="494" label="Hart"/>
+  <disrict_authority code="495" label="Havant"/>
+  <disrict_authority code="496" label="New Forest"/>
+  <disrict_authority code="497" label="East Hampshire"/>
+  <disrict_authority code="498" label="Portsmouth"/>
+  <disrict_authority code="499" label="Rushmoor"/>
+  <disrict_authority code="500" label="Southampton "/>
+  <disrict_authority code="501" label="Test Valley"/>
+  <disrict_authority code="502" label="Winchester"/>
+  <disrict_authority code="505" label="Isle of Wight"/>
+  <disrict_authority code="510" label="Elmbridge"/>
+  <disrict_authority code="511" label="Guildford"/>
+  <disrict_authority code="512" label="Mole Valley"/>
+  <disrict_authority code="513" label="Reigate and Banstead"/>
+  <disrict_authority code="514" label="Runnymede"/>
+  <disrict_authority code="515" label="Surrey Heath"/>
+  <disrict_authority code="516" label="Tandridge"/>
+  <disrict_authority code="517" label="Waverley"/>
+  <disrict_authority code="518" label="Woking"/>
+  <disrict_authority code="530" label="Ashford"/>
+  <disrict_authority code="531" label="Canterbury"/>
+  <disrict_authority code="532" label="Dartford"/>
+  <disrict_authority code="533" label="Dover"/>
+  <disrict_authority code="535" label="Gravesham"/>
+  <disrict_authority code="536" label="Maidstone"/>
+  <disrict_authority code="538" label="Sevenoaks"/>
+  <disrict_authority code="539" label="Shepway"/>
+  <disrict_authority code="540" label="Swale"/>
+  <disrict_authority code="541" label="Thanet"/>
+  <disrict_authority code="542" label="Tonbridge and Malling"/>
+  <disrict_authority code="543" label="Tunbridge Wells"/>
+  <disrict_authority code="544" label="Medway"/>
+  <disrict_authority code="551" label="Eastbourne"/>
+  <disrict_authority code="552" label="Hastings"/>
+  <disrict_authority code="554" label="Lewes"/>
+  <disrict_authority code="555" label="Rother"/>
+  <disrict_authority code="556" label="Wealden"/>
+  <disrict_authority code="557" label="Adur"/>
+  <disrict_authority code="558" label="Arun"/>
+  <disrict_authority code="559" label="Chichester"/>
+  <disrict_authority code="560" label="Crawley"/>
+  <disrict_authority code="562" label="Horsham"/>
+  <disrict_authority code="563" label="Mid Sussex"/>
+  <disrict_authority code="564" label="Worthing"/>
+  <disrict_authority code="565" label="Brighton and Hove"/>
+  <disrict_authority code="570" label="City of London"/>
+  <disrict_authority code="580" label="East Devon"/>
+  <disrict_authority code="581" label="Exeter"/>
+  <disrict_authority code="582" label="North Devon"/>
+  <disrict_authority code="583" label="Plymouth"/>
+  <disrict_authority code="584" label="South Hams"/>
+  <disrict_authority code="585" label="Teignbridge"/>
+  <disrict_authority code="586" label="Mid Devon"/>
+  <disrict_authority code="587" label="Torbay"/>
+  <disrict_authority code="588" label="Torridge"/>
+  <disrict_authority code="589" label="West Devon"/>
+  <disrict_authority code="590" label="Caradon"/>
+  <disrict_authority code="591" label="Carrick"/>
+  <disrict_authority code="592" label="Kerrier"/>
+  <disrict_authority code="593" label="North Cornwall"/>
+  <disrict_authority code="594" label="Penwith"/>
+  <disrict_authority code="595" label="Restormel"/>
+  <disrict_authority code="596" label="Cornwall"/>
+  <disrict_authority code="601" label="Bristol, City of"/>
+  <disrict_authority code="605" label="North Somerset"/>
+  <disrict_authority code="606" label="Mendip"/>
+  <disrict_authority code="607" label="Sedgemoor"/>
+  <disrict_authority code="608" label="Taunton Deane"/>
+  <disrict_authority code="609" label="West Somerset"/>
+  <disrict_authority code="610" label="South Somerset"/>
+  <disrict_authority code="611" label="Bath and North East Somerset"/>
+  <disrict_authority code="612" label="South Gloucestershire"/>
+  <disrict_authority code="620" label="Cheltenham"/>
+  <disrict_authority code="621" label="Cotswold"/>
+  <disrict_authority code="622" label="Forest of Dean"/>
+  <disrict_authority code="623" label="Gloucester"/>
+  <disrict_authority code="624" label="Stroud"/>
+  <disrict_authority code="625" label="Tewkesbury"/>
+  <disrict_authority code="630" label="Kennet"/>
+  <disrict_authority code="631" label="North Wiltshire"/>
+  <disrict_authority code="632" label="Salisbury"/>
+  <disrict_authority code="633" label="Swindon"/>
+  <disrict_authority code="634" label="West Wiltshire"/>
+  <disrict_authority code="635" label="Wiltshire"/>
+  <disrict_authority code="640" label="Bournemouth"/>
+  <disrict_authority code="641" label="Christchurch"/>
+  <disrict_authority code="642" label="North Dorset"/>
+  <disrict_authority code="643" label="Poole"/>
+  <disrict_authority code="644" label="Purbeck"/>
+  <disrict_authority code="645" label="West Dorset"/>
+  <disrict_authority code="646" label="Weymouth and Portland"/>
+  <disrict_authority code="647" label="East Dorset"/>
+  <disrict_authority code="720" label="Isle of Anglesey"/>
+  <disrict_authority code="721" label="Conwy"/>
+  <disrict_authority code="722" label="Gwynedd"/>
+  <disrict_authority code="723" label="Denbighshire"/>
+  <disrict_authority code="724" label="Flintshire"/>
+  <disrict_authority code="725" label="Wrexham"/>
+  <disrict_authority code="730" label="Blaenau Gwent"/>
+  <disrict_authority code="731" label="Caerphilly"/>
+  <disrict_authority code="732" label="Monmouthshire"/>
+  <disrict_authority code="733" label="Newport"/>
+  <disrict_authority code="734" label="Torfaen"/>
+  <disrict_authority code="740" label="Bridgend"/>
+  <disrict_authority code="741" label="Cardiff"/>
+  <disrict_authority code="742" label="Merthyr Tydfil"/>
+  <disrict_authority code="743" label="Neath Port Talbot"/>
+  <disrict_authority code="744" label="Rhondda, Cynon, Taff"/>
+  <disrict_authority code="745" label="Swansea"/>
+  <disrict_authority code="746" label="The Vale of Glamorgan"/>
+  <disrict_authority code="750" label="Ceredigion"/>
+  <disrict_authority code="751" label="Carmarthenshire"/>
+  <disrict_authority code="752" label="Pembrokeshire"/>
+  <disrict_authority code="753" label="Powys"/>
+  <disrict_authority code="910" label="Aberdeen City"/>
+  <disrict_authority code="911" label="Aberdeenshire"/>
+  <disrict_authority code="912" label="Angus"/>
+  <disrict_authority code="913" label="Argyll and Bute"/>
+  <disrict_authority code="914" label="Scottish Borders"/>
+  <disrict_authority code="915" label="Clackmannanshire"/>
+  <disrict_authority code="916" label="West Dunbartonshire"/>
+  <disrict_authority code="917" label="Dumfries and Galloway"/>
+  <disrict_authority code="918" label="Dundee City"/>
+  <disrict_authority code="919" label="East Ayrshire"/>
+  <disrict_authority code="920" label="East Dunbartonshire"/>
+  <disrict_authority code="921" label="East Lothian"/>
+  <disrict_authority code="922" label="East Renfrewshire"/>
+  <disrict_authority code="923" label="Edinburgh, City of"/>
+  <disrict_authority code="924" label="Falkirk"/>
+  <disrict_authority code="925" label="Fife"/>
+  <disrict_authority code="926" label="Glasgow City"/>
+  <disrict_authority code="927" label="Highland"/>
+  <disrict_authority code="928" label="Inverclyde"/>
+  <disrict_authority code="929" label="Midlothian"/>
+  <disrict_authority code="930" label="Moray"/>
+  <disrict_authority code="931" label="North Ayrshire"/>
+  <disrict_authority code="932" label="North Lanarkshire"/>
+  <disrict_authority code="933" label="Orkney Islands"/>
+  <disrict_authority code="934" label="Perth and Kinross"/>
+  <disrict_authority code="935" label="Renfrewshire"/>
+  <disrict_authority code="936" label="Shetland Islands"/>
+  <disrict_authority code="937" label="South Ayrshire"/>
+  <disrict_authority code="938" label="South Lanarkshire"/>
+  <disrict_authority code="939" label="Stirling"/>
+  <disrict_authority code="940" label="West Lothian"/>
+  <disrict_authority code="941" label="Western Isles"/>
+  <light_conditions code="1" label="Daylight"/>
+  <light_conditions code="4" label="Darkness - lights lit"/>
+  <light_conditions code="5" label="Darkness - lights unlit"/>
+  <light_conditions code="6" label="Darkness - no lighting"/>
+  <light_conditions code="7" label="Darkness - lighting unknown"/>
+  <light_conditions code="-1" label="Data missing or out of range"/>
+  <police_force code="1" label="Metropolitan Police"/>
+  <police_force code="3" label="Cumbria"/>
+  <police_force code="4" label="Lancashire"/>
+  <police_force code="5" label="Merseyside"/>
+  <police_force code="6" label="Greater Manchester"/>
+  <police_force code="7" label="Cheshire"/>
+  <police_force code="10" label="Northumbria"/>
+  <police_force code="11" label="Durham"/>
+  <police_force code="12" label="North Yorkshire"/>
+  <police_force code="13" label="West Yorkshire"/>
+  <police_force code="14" label="South Yorkshire"/>
+  <police_force code="16" label="Humberside"/>
+  <police_force code="17" label="Cleveland"/>
+  <police_force code="20" label="West Midlands"/>
+  <police_force code="21" label="Staffordshire"/>
+  <police_force code="22" label="West Mercia"/>
+  <police_force code="23" label="Warwickshire"/>
+  <police_force code="30" label="Derbyshire"/>
+  <police_force code="31" label="Nottinghamshire"/>
+  <police_force code="32" label="Lincolnshire"/>
+  <police_force code="33" label="Leicestershire"/>
+  <police_force code="34" label="Northamptonshire"/>
+  <police_force code="35" label="Cambridgeshire"/>
+  <police_force code="36" label="Norfolk"/>
+  <police_force code="37" label="Suffolk"/>
+  <police_force code="40" label="Bedfordshire"/>
+  <police_force code="41" label="Hertfordshire"/>
+  <police_force code="42" label="Essex"/>
+  <police_force code="43" label="Thames Valley"/>
+  <police_force code="44" label="Hampshire"/>
+  <police_force code="45" label="Surrey"/>
+  <police_force code="46" label="Kent"/>
+  <police_force code="47" label="Sussex"/>
+  <police_force code="48" label="City of London"/>
+  <police_force code="50" label="Devon and Cornwall"/>
+  <police_force code="52" label="Avon and Somerset"/>
+  <police_force code="53" label="Gloucestershire"/>
+  <police_force code="54" label="Wiltshire"/>
+  <police_force code="55" label="Dorset"/>
+  <police_force code="60" label="North Wales"/>
+  <police_force code="61" label="Gwent"/>
+  <police_force code="62" label="South Wales"/>
+  <police_force code="63" label="Dyfed-Powys"/>
+  <police_force code="91" label="Northern"/>
+  <police_force code="92" label="Grampian"/>
+  <police_force code="93" label="Tayside"/>
+  <police_force code="94" label="Fife"/>
+  <police_force code="95" label="Lothian and Borders"/>
+  <police_force code="96" label="Central"/>
+  <police_force code="97" label="Strathclyde"/>
+  <police_force code="98" label="Dumfries and Galloway"/>
+  <road_surface code="1" label="Dry"/>
+  <road_surface code="2" label="Wet or damp"/>
+  <road_surface code="3" label="Snow"/>
+  <road_surface code="4" label="Frost or ice"/>
+  <road_surface code="5" label="Flood over 3cm. deep"/>
+  <road_surface code="6" label="Oil or diesel"/>
+  <road_surface code="7" label="Mud"/>
+  <road_surface code="-1" label="Data missing or out of range"/>
+  <weather_conditions code="1" label="Fine no high winds"/>
+  <weather_conditions code="2" label="Raining no high winds"/>
+  <weather_conditions code="3" label="Snowing no high winds"/>
+  <weather_conditions code="4" label="Fine + high winds"/>
+  <weather_conditions code="5" label="Raining + high winds"/>
+  <weather_conditions code="6" label="Snowing + high winds"/>
+  <weather_conditions code="7" label="Fog or mist"/>
+  <weather_conditions code="8" label="Other"/>
+  <weather_conditions code="9" label="Unknown"/>
+  <weather_conditions code="-1" label="Data missing or out of range"/>
+</dataset>

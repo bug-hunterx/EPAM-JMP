@@ -1,0 +1,6 @@
+accident_severity
+disrict_authority
+light_conditions
+police_force
+road_surface
+weather_conditions
