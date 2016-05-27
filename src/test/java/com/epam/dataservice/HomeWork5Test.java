@@ -71,10 +71,11 @@ public class HomeWork5Test {
 
     @Test
     public void AccidentRepositoryTest() {
+        String testId = "200901BS70002";
         assertThat(repository.count(), equalTo(4L));
-//        List<Accidents> accidentsList = repository.findAll();
-//        log.info(accidentsList);
-//        assertThat(accidentsList.size(), equalTo(4));
+        Accidents accidents = repository.findOne(testId);
+        log.info(accidents);
+        assertThat(accidents.getId(), equalTo(testId));
     }
 
     /*

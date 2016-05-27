@@ -17,7 +17,7 @@ public class AccidentController {
     @Autowired
     private AccidentRepository repository;
 
-    @RequestMapping(method= RequestMethod.GET, value= "/accidents", headers="Accept=application/xml")
+    @RequestMapping(method= RequestMethod.GET, value= "/accidents", headers="Accept=application/json")
 //    @RequestMapping("/accidents")
     List<Accidents> accidents() {
         return repository.findAll();
@@ -52,7 +52,7 @@ public class AccidentController {
     @RequestMapping(method= RequestMethod.PUT, value= "/accidents/{id}", headers="Accept=application/json")
     public @ResponseBody void update(@RequestBody Accidents accidents, @PathVariable String id){
         LOG.info("Update Accidents with ID: " + id);
-        if(accidents.getId()!= id)
+        if(!accidents.getId().equals(id))
             LOG.error("Expect " + id + " , but get " + accidents.getId());
 //            throw new BadRequestError("id is not match");
         repository.save(accidents);

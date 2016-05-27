@@ -2,6 +2,7 @@ package com.epam.springboot.modal;
 
 import com.epam.springboot.modal.Accidents;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -9,7 +10,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name="road_surface")
-public class RoadConditions {
+public class RoadConditions  implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name="code")
     private Integer code;

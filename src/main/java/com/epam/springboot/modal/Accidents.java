@@ -1,6 +1,7 @@
 package com.epam.springboot.modal;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,7 +12,9 @@ import java.time.format.DateTimeFormatter;
  */
 @Entity
 @Table(name="Accidents")
-public class Accidents {
+public class Accidents  implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
 //    @GeneratedValue
     @Column(name="Accident_Index")
@@ -181,6 +184,7 @@ public class Accidents {
     public void setWeatherConditions(Integer weatherConditions) {
         this.weatherConditions = weatherConditions;
     }
+*/
 
     public Integer getRoadSurfaceConditions() {
         return roadSurfaceConditions;
@@ -189,7 +193,6 @@ public class Accidents {
     public void setRoadSurfaceConditions(Integer roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
-*/
 
 //    @ManyToOne
 //    @JoinColumn(name = "road_surface_code")
