@@ -10,12 +10,12 @@ import org.hamcrest.core.StringStartsWith;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 
 import static org.hamcrest.core.Is.is;
@@ -126,6 +126,18 @@ public class HomeWork3Test {
 //        assertThat(policeForceService.getContactNo("London"), IsNull.nullValue());
     }
 
+    @Test
+    public void sqlDateTimeTest() throws ParseException {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String csvDate = "28/05/2016";
+        Date date = inputFormat.parse(csvDate);
+        System.out.println("Date is: " + date + " year=" + outputFormat.format(date));
+//        LocalDate localDate = new LocalDate(date);
+        SimpleDateFormat shortFormat = new SimpleDateFormat("yyyy");
+        System.out.println("short date: " + shortFormat.parse("2016"));
+
+    }
 }
 /*
     Read accident files for different years and then we need to populate following 2 fields for each record.

@@ -17,26 +17,18 @@ import java.util.List;
  */
 @Repository
 public interface AccidentRepository extends JpaRepository<Accidents, String> {
-    // scenario 1
-//    Accidents findOne(String accidentId);
 
-    // scenario 2
 //    @Query(value="select * from Accidents r where r.Police_Force=?1",nativeQuery=true)
     List<Accidents> findByRoadSurfaceConditions(RoadConditions roadCondition);
 
     Integer countByRoadSurfaceConditions(RoadConditions roadCondition);
 
-    // scenario 3
-//    @Query("select * from Accidents r where r.weatherConditions=?1 and YEAR(date)"
-//    List<Accidents> findByWeatherConditionsAndYear(String weatherConditions,String year);
+    List<Accidents> findByDate(Date date);
+    List<Accidents> findByDateBetween(Date date1, Date date2);
 
-    // scenario 4
-    // Todo
-//    @Query("select * from Accidents r where r.date=?1")
-//    List<Accidents> findByDate(LocalDate date);
+    List<Accidents>  findByRoadSurfaceConditionsAndDateBetween(RoadConditions roadCondition, Date date1, Date date2);
+    Integer countByRoadSurfaceConditionsAndDateBetween(RoadConditions roadCondition, Date date1, Date date2);
 /*
-    // scenario 3
-    List<Accidents> getAllAccidentsByWeatherConditionAndYear(String weatherCondition,String year);
 
     // scenario 4
     List<Accidents> getAllAccidentsByDate(Date date);

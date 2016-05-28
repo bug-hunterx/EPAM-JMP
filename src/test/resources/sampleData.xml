@@ -8,8 +8,8 @@
   <road_surface code="6" label="Oil or diesel"/>
   <road_surface code="7" label="Mud"/>
   <road_surface code="-1" label="Data missing or out of range"/>
-  <Accidents Accident_Index="200901BS70001" Road_Surface_Conditions="2"/>
-  <Accidents Accident_Index="200901BS70002" Road_Surface_Conditions="3"/>
-  <Accidents Accident_Index="200901BS70003" Road_Surface_Conditions="1"/>
-  <Accidents Accident_Index="200901BS70004" Road_Surface_Conditions="3"/>
+  <Accidents Accident_Index="200901BS70001" Road_Surface_Conditions="2" Date="2016-05-28"/>
+  <Accidents Accident_Index="200901BS70002" Road_Surface_Conditions="3" Date="2009-05-28"/>
+  <Accidents Accident_Index="200901BS70003" Road_Surface_Conditions="1" Date="2016-05-26"/>
+  <Accidents Accident_Index="200901BS70004" Road_Surface_Conditions="3" Date="2016-05-27"/>
 </dataset>

@@ -26,6 +26,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -121,25 +123,27 @@ public class HomeWork5Test {
         assertThat(roadConditionsList.get("Snow"), equalTo(2));
     }
 
-    /*
-        @Test
-        public void getAllAccidentsByDateTest() {
-            LocalDate date = LocalDate.parse("05/01/2009", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            List<Accidents> accidentsList = repository.findAll(); //findByDate(date);
-            log.info(accidentsList);
-            assertThat(accidentsList.size(), equalTo(2));
-            assertThat(accidentsList.get(0).getDate(), equalTo(date));
-        }
+    @Test
+    public void getAllAccidentsByDateTest() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        RoadConditions roadCondition = roadConditionRepository.findOne(3);
+        List<Accidents> accidentsList = repository.findByRoadSurfaceConditionsAndDateBetween(
+                roadCondition,
+                simpleDateFormat.parse("2008-01-01"),
+                simpleDateFormat.parse("2016-12-31") );
+        log.info(accidentsList);
+        assertThat(accidentsList.size(), equalTo(2));
 
-        @Test
-        public void getAllAccidentsByWeatherConditionAndYearTest() {
-            LocalDate date = LocalDate.parse("05/01/2009", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            List<Accidents> accidentsList = repository.findAll(); //findByDate(date);
-            log.info(accidentsList);
-            assertThat(accidentsList.size(), equalTo(2));
-            assertThat(accidentsList.get(0).getDate(), equalTo(date));
-        }
-    */
+//            assertThat(accidentsList.get(0).getDate(), equalTo(date));
+    }
+
+    @Test
+    public void getAllAccidentsByWeatherConditionAndYearTest() {
+        Map<String, Integer> roadConditionsList = accidentService.getAccidentCountGroupByWeatherConditionAndYear("2009");
+        roadConditionsList.forEach((k,v)->log.info("Weather Condition: " + k + ", Count=" + v));
+        assertThat(roadConditionsList.get("Snow"), equalTo(1));
+    }
+
     @Test
     public void RoadConditionRepositoryTest() {
         assertThat(roadConditionRepository.count(), equalTo(8L));

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Created by bill on 16-5-22.
@@ -24,6 +25,9 @@ public class Accidents {
     @JoinColumn(name = "Road_Surface_Conditions")  // Column name ins table Accidents
     private RoadConditions roadSurfaceConditions;
 
+    @Column(name="Date")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date date;
 /*
     private double longitude = 0.0;
     private double latitude = 0.0;
@@ -33,7 +37,7 @@ public class Accidents {
     private Integer severity = 1;
     private int numberOfVehicles = 0;
     private int numberOfCasualties = 0;
-//    private LocalDate date;
+    private LocalDate date;
     private Integer dayOfWeek;
     @Temporal(TemporalType.TIME)
     private java.util.Date time;
@@ -47,9 +51,10 @@ public class Accidents {
     protected Accidents() {
     }
 
-    public Accidents(String id, RoadConditions roadSurfaceConditions) {
+    public Accidents(String id, RoadConditions roadSurfaceConditions, Date date) {
         this.id = id;
         this.roadSurfaceConditions = roadSurfaceConditions;
+        this.date = date;
     }
 
     public void setRoadSurfaceConditions(RoadConditions roadSurfaceConditions) {
@@ -142,15 +147,14 @@ public class Accidents {
 //        this.numberOfCasualties = numberOfCasualties;
 //    }
 
-/*
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
     }
-*/
+
 
 /*
     public Integer getDayOfWeek() {
@@ -208,7 +212,7 @@ public class Accidents {
 //                ", severity=" + severity +
 //                ", numberOfVehicles=" + numberOfVehicles +
 //                ", numberOfCasualties=" + numberOfCasualties +
-////                ", date=" + date +
+                ", date=" + date +
 //                ", dayOfWeek=" + dayOfWeek +
 ////                ", time=" + time +
 //                ", districtAuthority=" + districtAuthority +
