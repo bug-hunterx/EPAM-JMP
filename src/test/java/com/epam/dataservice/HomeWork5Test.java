@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -24,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -40,6 +42,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @WebAppConfiguration   // 3
 @IntegrationTest("server.port:0")   // 4
 @DatabaseSetup("/sampleData.xml")
+//@DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = { ItemRepositoryIT.DATASET })
 public class HomeWork5Test {
     @Autowired
     RoadConditionRepository roadConditionRepository;
@@ -78,22 +81,32 @@ public class HomeWork5Test {
         assertThat(accidents.getId(), equalTo(testId));
     }
 
+    @Test
+    public void getHello() throws Exception {
+        ResponseEntity<String> response = template.getForEntity(base.toString() + "hello/Bill", String.class);
+        assertThat(response.getBody(), equalTo("hello, Bill"));
+    }
+
+    @Test
+    public void getAllAccidentsByRoadConditionTest() {
+        RoadConditions roadCondition = roadConditionRepository.findOne(3);
+        List<Accidents> accidentsList = repository.findByRoadSurfaceConditions(roadCondition);
+        log.info(accidentsList);
+        assertThat(accidentsList.size(), equalTo(2));
+        assertThat(accidentsList.get(0).getRoadSurfaceConditions().getCode(), equalTo(roadCondition.getCode()));
+    }
+
+    @Test
+    // Use default countBy query
+    public void getAllAccidentsGroupByRoadConditionTest() {
+        List<RoadConditions> roadConditionsList = roadConditionRepository.findAll();
+        for (RoadConditions roadCondition : roadConditionsList ) {
+            log.info(roadCondition.getCode() + " , " + roadCondition.getLabel() + " , Count="
+                    + repository.countByRoadSurfaceConditions(roadCondition));
+        }
+    }
+
     /*
-        @Test
-        public void getHello() throws Exception {
-            ResponseEntity<String> response = template.getForEntity(base.toString() + "hello/Bill", String.class);
-            assertThat(response.getBody(), equalTo("hello, Bill"));
-        }
-
-        @Test
-        public void getAllAccidentsByRoadConditionTest() {
-            Integer roadCondition = 2;
-            List<Accidents> accidentsList = repository.findByRoadSurfaceConditions(roadCondition);
-            log.info(accidentsList);
-    //        assertThat(accidentsList.size(), equalTo(2));
-            assertThat(accidentsList.get(0).getRoadSurfaceConditions(), equalTo(roadCondition));
-        }
-
         @Test
         public void getAllAccidentsByDateTest() {
             LocalDate date = LocalDate.parse("05/01/2009", DateTimeFormatter.ofPattern("dd/MM/yyyy"));

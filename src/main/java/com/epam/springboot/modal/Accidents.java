@@ -19,8 +19,10 @@ public class Accidents  implements Serializable {
 //    @GeneratedValue
     @Column(name="Accident_Index")
     private String id;
-    @Column(name="Road_Surface_Conditions")
-    private Integer roadSurfaceConditions = -1;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "Road_Surface_Conditions")  // Column name ins table Accidents
+    private RoadConditions roadSurfaceConditions;
 
 /*
     private double longitude = 0.0;
@@ -33,6 +35,8 @@ public class Accidents  implements Serializable {
     private int numberOfCasualties = 0;
 //    private LocalDate date;
     private Integer dayOfWeek;
+    @Temporal(TemporalType.TIME)
+    private java.util.Date time;
 //    private LocalTime time;
     private Integer districtAuthority = 1;
     private Integer lightConditions = -1;
@@ -43,9 +47,17 @@ public class Accidents  implements Serializable {
     protected Accidents() {
     }
 
-    public Accidents(String id, Integer roadSurfaceConditions) {
+    public Accidents(String id, RoadConditions roadSurfaceConditions) {
         this.id = id;
         this.roadSurfaceConditions = roadSurfaceConditions;
+    }
+
+    public void setRoadSurfaceConditions(RoadConditions roadSurfaceConditions) {
+        this.roadSurfaceConditions = roadSurfaceConditions;
+    }
+
+    public RoadConditions getRoadSurfaceConditions() {
+        return roadSurfaceConditions;
     }
 /*
     public Accidents(String id, double longitude, double latitude, Integer policeForce, Integer severity, int numberOfVehicles, int numberOfCasualties, String date, Integer dayOfWeek, String time, Integer districtAuthority, Integer lightConditions, Integer weatherConditions, Integer roadSurfaceConditions) {
@@ -186,6 +198,7 @@ public class Accidents  implements Serializable {
     }
 */
 
+/*
     public Integer getRoadSurfaceConditions() {
         return roadSurfaceConditions;
     }
@@ -193,6 +206,7 @@ public class Accidents  implements Serializable {
     public void setRoadSurfaceConditions(Integer roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
+*/
 
 //    @ManyToOne
 //    @JoinColumn(name = "road_surface_code")

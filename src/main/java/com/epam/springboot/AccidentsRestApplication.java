@@ -30,8 +30,8 @@ public class AccidentsRestApplication {
 
     private static void initDB(ApplicationContext ctx){
         AccidentRepository accidentRepository= ctx.getBean(AccidentRepository.class);
-        accidentRepository.save(new Accidents("200901BS70001",1));
-        accidentRepository.save(new Accidents("200901BS70002",3));
+//        accidentRepository.save(new Accidents("200901BS70001",1));
+//        accidentRepository.save(new Accidents("200901BS70002",3));
 //        List<Accidents> accidentsList = accidentRepository.findAll();
 //        System.out.println(accidentsList);
     }

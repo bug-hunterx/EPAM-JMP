@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Created by Bill on 2016/5/26.
  */
 @Repository
-public interface RoadConditionRepository extends JpaRepository<RoadConditions, String> {
+public interface RoadConditionRepository extends JpaRepository<RoadConditions, Integer> {
 }

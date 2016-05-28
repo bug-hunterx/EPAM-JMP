@@ -2,6 +2,7 @@ package com.epam.springboot.repository;
 
 import com.epam.data.RoadAccident;
 import com.epam.springboot.modal.Accidents;
+import com.epam.springboot.modal.RoadConditions;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +22,9 @@ public interface AccidentRepository extends JpaRepository<Accidents, String> {
 
     // scenario 2
 //    @Query(value="select * from Accidents r where r.Police_Force=?1",nativeQuery=true)
-//    List<Accidents> findByRoadSurfaceConditions(Integer RoadCondition);
+    List<Accidents> findByRoadSurfaceConditions(RoadConditions roadCondition);
+
+    Integer countByRoadSurfaceConditions(RoadConditions roadCondition);
 
     // scenario 3
 //    @Query("select * from Accidents r where r.weatherConditions=?1 and YEAR(date)"

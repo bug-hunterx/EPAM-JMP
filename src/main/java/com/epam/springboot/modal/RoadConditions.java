@@ -18,19 +18,34 @@ public class RoadConditions  implements Serializable {
     private Integer code;
     @Column(name="label")
     private String label;
-/*
-    private Set<Accidents> accidents;
 
-//    @OneToMany(mappedBy = "roadSurfaceConditions", cascade = CascadeType.ALL)
-    public Set<Accidents> getAccidents() {
-        return accidents;
-    }
-*/
+//    @OneToMany(mappedBy = "roadSurfaceConditions", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+//    private Set<Accidents> accidents;
 
     public RoadConditions() {}
 
+    public RoadConditions(Integer code) {
+        this.code = code;
+    }
+
     public RoadConditions(Integer code, String label) {
         this.code = code;
+        this.label = label;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
         this.label = label;
     }
 
