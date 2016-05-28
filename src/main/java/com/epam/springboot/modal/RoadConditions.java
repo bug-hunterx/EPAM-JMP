@@ -22,7 +22,7 @@ public class RoadConditions  implements Serializable {
 //    @OneToMany(mappedBy = "roadSurfaceConditions", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 //    private Set<Accidents> accidents;
 
-    public RoadConditions() {}
+    protected RoadConditions() {}
 
     public RoadConditions(Integer code) {
         this.code = code;

@@ -81,8 +81,8 @@ public class HomeWork5Test {
 
     @Test
     public void AccidentRepositoryTest() {
-        String testId = "200901BS70002";
-        assertThat(repository.count(), equalTo(4L));
+        String testId = "200901BS70004";
+        assertThat(repository.count(), equalTo(9L));
         Accidents accidents = repository.findOne(testId);
         log.info(accidents);
         assertThat(accidents.getId(), equalTo(testId));
@@ -139,9 +139,9 @@ public class HomeWork5Test {
 
     @Test
     public void getAllAccidentsByWeatherConditionAndYearTest() {
-        Map<String, Integer> roadConditionsList = accidentService.getAccidentCountGroupByWeatherConditionAndYear("2009");
-        roadConditionsList.forEach((k,v)->log.info("Weather Condition: " + k + ", Count=" + v));
-        assertThat(roadConditionsList.get("Snow"), equalTo(1));
+        Map<String, Integer> weatherConditionsList = accidentService.getAccidentCountGroupByWeatherConditionAndYear("2009");
+        weatherConditionsList.forEach((k,v)->log.info("Weather Condition: " + k + ", Count=" + v));
+        assertThat(weatherConditionsList.get("Fine no high winds"), equalTo(8));
     }
 
     @Test

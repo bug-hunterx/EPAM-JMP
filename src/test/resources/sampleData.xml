@@ -1,5 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
+  <weather_conditions code="1" label="Fine no high winds"/>
+  <weather_conditions code="2" label="Raining no high winds"/>
+  <weather_conditions code="3" label="Snowing no high winds"/>
+  <weather_conditions code="4" label="Fine + high winds"/>
+  <weather_conditions code="5" label="Raining + high winds"/>
+  <weather_conditions code="6" label="Snowing + high winds"/>
+  <weather_conditions code="7" label="Fog or mist"/>
+  <weather_conditions code="8" label="Other"/>
+  <weather_conditions code="9" label="Unknown"/>
+  <weather_conditions code="-1" label="Data missing or out of range"/>
   <road_surface code="1" label="Dry"/>
   <road_surface code="2" label="Wet or damp"/>
   <road_surface code="3" label="Snow"/>
@@ -8,8 +18,13 @@
   <road_surface code="6" label="Oil or diesel"/>
   <road_surface code="7" label="Mud"/>
   <road_surface code="-1" label="Data missing or out of range"/>
-  <Accidents Accident_Index="200901BS70001" Road_Surface_Conditions="2" Date="2016-05-28"/>
-  <Accidents Accident_Index="200901BS70002" Road_Surface_Conditions="3" Date="2009-05-28"/>
-  <Accidents Accident_Index="200901BS70003" Road_Surface_Conditions="1" Date="2016-05-26"/>
-  <Accidents Accident_Index="200901BS70004" Road_Surface_Conditions="3" Date="2016-05-27"/>
+  <Accidents Accident_Index="200901BS70001" Date="2009-01-01" Time="15:11" Weather_Conditions="1" Road_Surface_Conditions="1"/>
+  <Accidents Accident_Index="200901BS70002" Date="2009-01-05" Time="10:59" Weather_Conditions="1" Road_Surface_Conditions="2"/>
+  <Accidents Accident_Index="200901BS70003" Date="2009-01-04" Time="14:19" Weather_Conditions="1" Road_Surface_Conditions="1"/>
+  <Accidents Accident_Index="200901BS70004" Date="2009-01-05" Time="8:10" Weather_Conditions="8" Road_Surface_Conditions="4"/>
+  <Accidents Accident_Index="200901BS70005" Date="2009-01-06" Time="17:25" Weather_Conditions="1" Road_Surface_Conditions="1"/>
+  <Accidents Accident_Index="200901BS70006" Date="2009-01-01" Time="11:48" Weather_Conditions="1" Road_Surface_Conditions="1"/>
+  <Accidents Accident_Index="200901BS70007" Date="2009-01-08" Time="13:58" Weather_Conditions="1" Road_Surface_Conditions="1"/>
+  <Accidents Accident_Index="200901BS70008" Date="2009-01-02" Time="13:18" Weather_Conditions="1" Road_Surface_Conditions="1"/>
+  <Accidents Accident_Index="200901BS70009" Date="2009-01-07" Time="12:15" Weather_Conditions="1" Road_Surface_Conditions="1"/>
 </dataset>

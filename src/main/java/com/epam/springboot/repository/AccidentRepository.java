@@ -3,6 +3,7 @@ package com.epam.springboot.repository;
 import com.epam.data.RoadAccident;
 import com.epam.springboot.modal.Accidents;
 import com.epam.springboot.modal.RoadConditions;
+import com.epam.springboot.modal.WeatherConditions;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,7 +28,7 @@ public interface AccidentRepository extends JpaRepository<Accidents, String> {
     List<Accidents> findByDateBetween(Date date1, Date date2);
 
     List<Accidents>  findByRoadSurfaceConditionsAndDateBetween(RoadConditions roadCondition, Date date1, Date date2);
-    Integer countByRoadSurfaceConditionsAndDateBetween(RoadConditions roadCondition, Date date1, Date date2);
+    Integer countByWeatherConditionsAndDateBetween(WeatherConditions weatherConditions, Date date1, Date date2);
 /*
 
     // scenario 4

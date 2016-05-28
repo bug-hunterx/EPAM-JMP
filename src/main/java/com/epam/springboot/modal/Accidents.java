@@ -22,12 +22,20 @@ public class Accidents {
     private String id;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "Road_Surface_Conditions")  // Column name ins table Accidents
+    @JoinColumn(name = "Weather_Conditions")  // Column name in table Accidents
+    private WeatherConditions weatherConditions;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "Road_Surface_Conditions")  // Column name in table Accidents
     private RoadConditions roadSurfaceConditions;
 
     @Column(name="Date")
     @Temporal(TemporalType.DATE)
     private java.util.Date date;
+
+    @Column(name="Time")
+//    @Temporal(TemporalType.DATE)
+    private String time;
 /*
     private double longitude = 0.0;
     private double latitude = 0.0;
@@ -51,10 +59,15 @@ public class Accidents {
     protected Accidents() {
     }
 
-    public Accidents(String id, RoadConditions roadSurfaceConditions, Date date) {
+    public Accidents(String id, WeatherConditions weatherConditions, RoadConditions roadSurfaceConditions, Date date) {
         this.id = id;
+        this.weatherConditions = weatherConditions;
         this.roadSurfaceConditions = roadSurfaceConditions;
         this.date = date;
+    }
+
+    public WeatherConditions getWeatherConditions() {
+        return weatherConditions;
     }
 
     public void setRoadSurfaceConditions(RoadConditions roadSurfaceConditions) {
@@ -214,10 +227,10 @@ public class Accidents {
 //                ", numberOfCasualties=" + numberOfCasualties +
                 ", date=" + date +
 //                ", dayOfWeek=" + dayOfWeek +
-////                ", time=" + time +
+                ", time=" + time +
 //                ", districtAuthority=" + districtAuthority +
 //                ", lightConditions=" + lightConditions +
-//                ", weatherConditions=" + weatherConditions +
+                ", weatherConditions=" + weatherConditions +
                 ", roadSurfaceConditions=" + roadSurfaceConditions +
                 '}' + "\n";
     }
