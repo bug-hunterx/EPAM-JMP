@@ -14,10 +14,8 @@ import java.util.Date;
 @Entity
 @Table(name="Accidents")
 public class Accidents {
-//    private static final long serialVersionUID = 1L;
 
     @Id
-//    @GeneratedValue
     @Column(name="Accident_Index")
     private String id;
 
@@ -34,27 +32,25 @@ public class Accidents {
     private java.util.Date date;
 
     @Column(name="Time")
-//    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.TIME)
     private String time;
-/*
+
     private double longitude = 0.0;
     private double latitude = 0.0;
     @Column(name="Police_Force")
     private Integer policeForce = 1;
-    @Column(name="Severity")
+    @Column(name="Accident_Severity")
     private Integer severity = 1;
-    private int numberOfVehicles = 0;
-    private int numberOfCasualties = 0;
-    private LocalDate date;
+    @Column(name="Number_of_Vehicles")
+    private Integer numberOfVehicles = 0;
+    @Column(name="Number_of_Casualties")
+    private Integer numberOfCasualties = 0;
+    @Column(name="Day_of_Week")
     private Integer dayOfWeek;
-    @Temporal(TemporalType.TIME)
-    private java.util.Date time;
-//    private LocalTime time;
+    @Column(name="Local_Authority")
     private Integer districtAuthority = 1;
+    @Column(name="Light_Conditions")
     private Integer lightConditions = -1;
-    private Integer weatherConditions = -1;
-//    private RoadConditions roadConditions;
-*/
 
     protected Accidents() {
     }
@@ -77,31 +73,9 @@ public class Accidents {
     public RoadConditions getRoadSurfaceConditions() {
         return roadSurfaceConditions;
     }
-/*
-    public Accidents(String id, double longitude, double latitude, Integer policeForce, Integer severity, int numberOfVehicles, int numberOfCasualties, String date, Integer dayOfWeek, String time, Integer districtAuthority, Integer lightConditions, Integer weatherConditions, Integer roadSurfaceConditions) {
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.id = id;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.policeForce = policeForce;
-        this.severity = severity;
-        this.numberOfVehicles = numberOfVehicles;
-        this.numberOfCasualties = numberOfCasualties;
-//        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        this.dayOfWeek = dayOfWeek;
-//        this.time = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
-        this.districtAuthority = districtAuthority;
-        this.lightConditions = lightConditions;
-        this.weatherConditions = weatherConditions;
-        this.roadSurfaceConditions = roadSurfaceConditions;
-    }
-*/
 
     public Accidents(String id) {
         this.id = id;
-//        this.date = LocalDate.now();
-//        this.time = LocalTime.now();
-//        this.dayOfWeek = 1; //Todo this.date.getDayOfWeek();
     }
 
     public String getId() {
@@ -112,53 +86,6 @@ public class Accidents {
         this.id = id;
     }
 
-//    public Integer getPoliceForce() {
-//        return policeForce;
-//    }
-//
-//    public void setPoliceForce(Integer policeForce) {
-//        this.policeForce = policeForce;
-//    }
-//
-//    public Integer getSeverity() {
-//        return severity;
-//    }
-//
-//    public void setSeverity(Integer severity) {
-//        this.severity = severity;
-//    }
-//
-//    public double getLongitude() {
-//        return longitude;
-//    }
-//
-//    public void setLongitude(double longitude) {
-//        this.longitude = longitude;
-//    }
-//
-//    public double getLatitude() {
-//        return latitude;
-//    }
-//
-//    public void setLatitude(double latitude) {
-//        this.latitude = latitude;
-//    }
-//
-//    public int getNumberOfVehicles() {
-//        return numberOfVehicles;
-//    }
-//
-//    public void setNumberOfVehicles(int numberOfVehicles) {
-//        this.numberOfVehicles = numberOfVehicles;
-//    }
-//
-//    public int getNumberOfCasualties() {
-//        return numberOfCasualties;
-//    }
-//
-//    public void setNumberOfCasualties(int numberOfCasualties) {
-//        this.numberOfCasualties = numberOfCasualties;
-//    }
 
     public Date getDate() {
         return date;
@@ -168,85 +95,34 @@ public class Accidents {
         this.date = date;
     }
 
-
-/*
-    public Integer getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(Integer dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-*/
-
-/*
-    public LocalTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
-*/
-/*
-
-    public Integer getDistrictAuthority() {
-        return districtAuthority;
+    public LocalTime getLocalTime() {
+        LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm"));
+        return localTime;
     }
 
-    public void setDistrictAuthority(Integer districtAuthority) {
-        this.districtAuthority = districtAuthority;
-    }
-
-    public Integer getLightConditions() {
-        return lightConditions;
-    }
-
-    public void setLightConditions(Integer lightConditions) {
-        this.lightConditions = lightConditions;
-    }
-
-    public Integer getWeatherConditions() {
-        return weatherConditions;
-    }
-
-    public void setWeatherConditions(Integer weatherConditions) {
-        this.weatherConditions = weatherConditions;
-    }
-*/
 
     @Override
     public String toString() {
         return "Accidents{" +
                 "id='" + id + '\'' +
-//                ", longitude=" + longitude +
-//                ", latitude=" + latitude +
-//                ", policeForce=" + policeForce +
-//                ", severity=" + severity +
-//                ", numberOfVehicles=" + numberOfVehicles +
-//                ", numberOfCasualties=" + numberOfCasualties +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", policeForce=" + policeForce +
+                ", severity=" + severity +
+                ", numberOfVehicles=" + numberOfVehicles +
+                ", numberOfCasualties=" + numberOfCasualties +
                 ", date=" + date +
-//                ", dayOfWeek=" + dayOfWeek +
+                ", dayOfWeek=" + dayOfWeek +
                 ", time=" + time +
-//                ", districtAuthority=" + districtAuthority +
-//                ", lightConditions=" + lightConditions +
+                ", districtAuthority=" + districtAuthority +
+                ", lightConditions=" + lightConditions +
                 ", weatherConditions=" + weatherConditions +
                 ", roadSurfaceConditions=" + roadSurfaceConditions +
                 '}' + "\n";
     }
 
-    /*public static void main(String[] args) {
-        Date date=new Date("2/05/2016");
-        Date date=new Date("20/05/2016");
-        System.out.println(date);
-//        DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String ss = null;
-        try {
-            ss = sdf.parse("20/05/2016").toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println(ss);
-    }*/
 }

@@ -9,4 +9,5 @@ import java.util.Map;
 public interface AccidentService {
     Map<String, Integer> getAccidentCountGroupByRoadCondition();
     Map<String, Integer> getAccidentCountGroupByWeatherConditionAndYear(String year);
+    int updateAccidentTimeByDate(String strDate);
 }

@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,12 +41,12 @@ import static org.hamcrest.core.IsEqual.equalTo;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AccidentsRestApplication.class)   //MockServletContext
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
 //        DirtiesContextTestExecutionListener.class,
 //        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class })
-@WebAppConfiguration   // 3
-@IntegrationTest("server.port:0")   // 4
+        DbUnitTestExecutionListener.class})
+@WebAppConfiguration
+@IntegrationTest("server.port:0")
 @DatabaseSetup("/sampleData.xml")
 //@DatabaseTearDown(type = DatabaseOperation.DELETE_ALL, value = { ItemRepositoryIT.DATASET })
 public class HomeWork5Test {
@@ -57,23 +58,24 @@ public class HomeWork5Test {
     @Autowired
     AccidentService accidentService;
 
-    @Value("${local.server.port}")   // 6
+    @Value("${local.server.port}")
     private int port;
 
     private URL base;
     private RestTemplate template;
 
     static Logger log = Logger.getLogger(HomeWork5Test.class.getName());
-//    private static ApplicationContext context;
+    public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     @Before
-    public void init ()  throws Exception {
+    public void init() throws Exception {
         this.base = new URL("http://localhost:" + port + "/");
         template = new TestRestTemplate();
 //        RestAssured.port = port;
     }
 
     @Test
-    public void AcciedentsTest () {
+    public void AcciedentsTest() {
         Accidents acciedent = new Accidents("200901BS70001");
         log.info(acciedent);
 
@@ -82,7 +84,7 @@ public class HomeWork5Test {
     @Test
     public void AccidentRepositoryTest() {
         String testId = "200901BS70004";
-        assertThat(repository.count(), equalTo(9L));
+        assertThat(repository.count(), equalTo(16L));
         Accidents accidents = repository.findOne(testId);
         log.info(accidents);
         assertThat(accidents.getId(), equalTo(testId));
@@ -96,10 +98,10 @@ public class HomeWork5Test {
 
     @Test
     public void getAllAccidentsByRoadConditionTest() {
-        RoadConditions roadCondition = roadConditionRepository.findOne(3);
+        RoadConditions roadCondition = roadConditionRepository.findOne(2);
         List<Accidents> accidentsList = repository.findByRoadSurfaceConditions(roadCondition);
         log.info(accidentsList);
-        assertThat(accidentsList.size(), equalTo(2));
+        assertThat(accidentsList.size(), equalTo(4));
         assertThat(accidentsList.get(0).getRoadSurfaceConditions().getCode(), equalTo(roadCondition.getCode()));
     }
 
@@ -107,7 +109,7 @@ public class HomeWork5Test {
     // Use default countBy query
     public void getAllAccidentsGroupByRoadCondition1Test() {
         List<RoadConditions> roadConditionsList = roadConditionRepository.findAll();
-        for (RoadConditions roadCondition : roadConditionsList ) {
+        for (RoadConditions roadCondition : roadConditionsList) {
             log.info(roadCondition.getCode() + " , " + roadCondition.getLabel() + " , Count="
                     + repository.countByRoadSurfaceConditions(roadCondition));
         }
@@ -119,29 +121,37 @@ public class HomeWork5Test {
     public void getAllAccidentsGroupByRoadCondition2Test() {
         Map<String, Integer> roadConditionsList = accidentService.getAccidentCountGroupByRoadCondition();
         // Java8
-        roadConditionsList.forEach((k,v)->log.info("Road Condition: " + k + ", Count=" + v));
-        assertThat(roadConditionsList.get("Snow"), equalTo(2));
+        roadConditionsList.forEach((k, v) -> log.info("Road Condition: " + k + ", Count=" + v));
+        assertThat(roadConditionsList.get("Dry"), equalTo(11));
     }
 
     @Test
     public void getAllAccidentsByDateTest() throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        RoadConditions roadCondition = roadConditionRepository.findOne(3);
+        RoadConditions roadCondition = roadConditionRepository.findOne(1);
         List<Accidents> accidentsList = repository.findByRoadSurfaceConditionsAndDateBetween(
                 roadCondition,
-                simpleDateFormat.parse("2008-01-01"),
-                simpleDateFormat.parse("2016-12-31") );
+                simpleDateFormat.parse("2009-01-01"),
+                simpleDateFormat.parse("2009-01-10"));
         log.info(accidentsList);
-        assertThat(accidentsList.size(), equalTo(2));
-
-//            assertThat(accidentsList.get(0).getDate(), equalTo(date));
+        assertThat(accidentsList.size(), equalTo(8));
     }
 
     @Test
     public void getAllAccidentsByWeatherConditionAndYearTest() {
         Map<String, Integer> weatherConditionsList = accidentService.getAccidentCountGroupByWeatherConditionAndYear("2009");
-        weatherConditionsList.forEach((k,v)->log.info("Weather Condition: " + k + ", Count=" + v));
-        assertThat(weatherConditionsList.get("Fine no high winds"), equalTo(8));
+        weatherConditionsList.forEach((k, v) -> log.info("Weather Condition: " + k + ", Count=" + v));
+        assertThat(weatherConditionsList.get("Fine no high winds"), equalTo(12));
+    }
+
+    @Test
+    public void updateAccidentByDate() throws ParseException {
+        String testDate = "2009-01-07";
+        int count = accidentService.updateAccidentTimeByDate(testDate);
+        assertThat(count, equalTo(2));
+        List<Accidents> accidentsList = repository.findByDate(simpleDateFormat.parse(testDate));
+        log.info(accidentsList);
+        assertThat(accidentsList.get(0).getTime(), equalTo("AFTERNOON"));
+        assertThat(accidentsList.get(1).getTime(), equalTo("NIGHT"));
     }
 
     @Test
@@ -151,7 +161,6 @@ public class HomeWork5Test {
         log.info(roadConditionsList);
         assertThat(roadConditionsList.size(), equalTo(8));
     }
-
 
 }
 /*

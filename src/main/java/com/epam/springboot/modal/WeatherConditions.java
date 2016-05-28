@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="weather_conditions")
 public class WeatherConditions {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name="code")
