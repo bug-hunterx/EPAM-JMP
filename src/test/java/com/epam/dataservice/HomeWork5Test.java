@@ -4,6 +4,8 @@ import com.epam.springboot.AccidentsRestApplication;
 import com.epam.springboot.modal.Accidents;
 import com.epam.springboot.modal.RoadConditions;
 import com.epam.springboot.repository.AccidentRepository;
+import com.epam.springboot.repository.AccidentService;
+import com.epam.springboot.repository.AccidentServiceImpl;
 import com.epam.springboot.repository.RoadConditionRepository;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -25,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -49,6 +52,9 @@ public class HomeWork5Test {
     @Autowired
     AccidentRepository repository;
 
+    @Autowired
+    AccidentService accidentService;
+
     @Value("${local.server.port}")   // 6
     private int port;
 
@@ -61,7 +67,6 @@ public class HomeWork5Test {
     public void init ()  throws Exception {
         this.base = new URL("http://localhost:" + port + "/");
         template = new TestRestTemplate();
-
 //        RestAssured.port = port;
     }
 
@@ -98,12 +103,22 @@ public class HomeWork5Test {
 
     @Test
     // Use default countBy query
-    public void getAllAccidentsGroupByRoadConditionTest() {
+    public void getAllAccidentsGroupByRoadCondition1Test() {
         List<RoadConditions> roadConditionsList = roadConditionRepository.findAll();
         for (RoadConditions roadCondition : roadConditionsList ) {
             log.info(roadCondition.getCode() + " , " + roadCondition.getLabel() + " , Count="
                     + repository.countByRoadSurfaceConditions(roadCondition));
         }
+        assertThat(roadConditionsList.size(), equalTo(8));
+    }
+
+    @Test
+    // Use accident service
+    public void getAllAccidentsGroupByRoadCondition2Test() {
+        Map<String, Integer> roadConditionsList = accidentService.getAccidentCountGroupByRoadCondition();
+        // Java8
+        roadConditionsList.forEach((k,v)->log.info("Road Condition: " + k + ", Count=" + v));
+        assertThat(roadConditionsList.get("Snow"), equalTo(2));
     }
 
     /*

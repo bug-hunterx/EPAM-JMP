@@ -12,8 +12,8 @@ import java.time.format.DateTimeFormatter;
  */
 @Entity
 @Table(name="Accidents")
-public class Accidents  implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Accidents {
+//    private static final long serialVersionUID = 1L;
 
     @Id
 //    @GeneratedValue
@@ -195,28 +195,6 @@ public class Accidents  implements Serializable {
 
     public void setWeatherConditions(Integer weatherConditions) {
         this.weatherConditions = weatherConditions;
-    }
-*/
-
-/*
-    public Integer getRoadSurfaceConditions() {
-        return roadSurfaceConditions;
-    }
-
-    public void setRoadSurfaceConditions(Integer roadSurfaceConditions) {
-        this.roadSurfaceConditions = roadSurfaceConditions;
-    }
-*/
-
-//    @ManyToOne
-//    @JoinColumn(name = "road_surface_code")
-/*
-    public RoadConditions getRoadConditions() {
-        return roadConditions;
-    }
-
-    public void setRoadConditions(RoadConditions roadConditions) {
-        this.roadConditions = roadConditions;
     }
 */
 
