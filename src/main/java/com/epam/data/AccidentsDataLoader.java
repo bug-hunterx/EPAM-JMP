@@ -103,4 +103,9 @@ public class AccidentsDataLoader {
         }
     }
 
+
+	public Map<Integer, String> getWeatherConditions() {
+		return weatherConditions;
+	}
+
 }
