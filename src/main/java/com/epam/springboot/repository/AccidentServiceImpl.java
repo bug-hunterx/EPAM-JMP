@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +77,7 @@ public class AccidentServiceImpl implements AccidentService {
             List<Accidents> accidentsList = repository.findByDate(date);
             for (Accidents accidents : accidentsList) {
                 String id = accidents.getId();
-                LocalTime localTime = accidents.getLocalTime();
+                LocalTime localTime = accidents.convertLocalTime();
                 String timeOfDay = TimeOfDay.getTimeOfDay(localTime).toString();
 //                System.out.println(id + " => Covert " + localTime + " to " + timeOfDay);
                 repository.updateTime(id,timeOfDay);

@@ -30,11 +30,12 @@ public class AccidentsRestApplication {
     }
 
     private static void initDB(ApplicationContext ctx){
-        AccidentRepository accidentRepository= ctx.getBean(AccidentRepository.class);
-        RoadConditionRepository roadConditionRepository= context.getBean(RoadConditionRepository.class);
+//        AccidentRepository accidentRepository= ctx.getBean(AccidentRepository.class);
+//        RoadConditionRepository roadConditionRepository= context.getBean(RoadConditionRepository.class);
+//        roadConditionRepository.save(new RoadConditions(12,"Test Sample"));
 //        AccidentServiceImpl accidentService = (AccidentServiceImpl)context.getBean("accidentService");
 //        AccidentServiceImpl accidentServiceImpl = context.getBean(AccidentServiceImpl.class);
-//        accidentRepository.save(new Accidents("200901BS70001",1));
+//        accidentRepository.save(new Accidents("200901BS70001"));
 //        accidentRepository.save(new Accidents("200901BS70002",3));
 //        List<Accidents> accidentsList = accidentRepository.findAll();
 //        System.out.println(accidentsList);
