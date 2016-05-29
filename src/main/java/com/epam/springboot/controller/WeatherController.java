@@ -11,7 +11,7 @@ import java.util.List;
  * Created by bill on 16-5-29.
  */
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/weather")
 public class WeatherController {
     private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(WeatherController.class);
     @Autowired
@@ -31,7 +31,7 @@ public class WeatherController {
         return new WeatherConditions(20,"Test20");
     }
 
-    @RequestMapping(method= RequestMethod.GET, value= "/weather", headers="Accept=application/json")
+    @RequestMapping(method= RequestMethod.GET, headers="Accept=application/json")
     public @ResponseBody
     List<WeatherConditions> getWeatherConditions() {
         List<WeatherConditions> result = weatherConditionRepository.findAll();
@@ -39,7 +39,7 @@ public class WeatherController {
         return result;
     }
 
-    @RequestMapping(method= RequestMethod.GET, value= "/weather/{id}", headers="Accept=application/json")
+    @RequestMapping(method= RequestMethod.GET, value= "/{id}", headers="Accept=application/json")
     public @ResponseBody
     WeatherConditions getWeatherCondition(@PathVariable Integer id){
         WeatherConditions weatherConditions = new WeatherConditions(20,"Test20");
@@ -50,4 +50,12 @@ public class WeatherController {
         logger.info(weatherConditions);
         return weatherConditions;
     }
+
+    @RequestMapping(method= RequestMethod.POST, headers="Accept=application/json")
+    public @ResponseBody
+    WeatherConditions create (@RequestBody WeatherConditions weatherConditions) {
+        logger.info("Create " + weatherConditions);
+        return weatherConditionRepository.save(weatherConditions);
+    }
+
 }
