@@ -82,7 +82,7 @@ public class WeatherUnitTest {
     }
 
     @Test
-    // curl -X PATCH -H "Content-Type:application/json" -d '{ "code": "20", "label":"Test20" }' http://localhost:8080/weather
+    // curl -X POST -H "Content-Type:application/json" -d '{ "code": "20", "label":"Test20" }' http://localhost:8080/weather
     public void weatherCreateTest() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post("/weather")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -90,6 +90,19 @@ public class WeatherUnitTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(sampleWatherConditions.getLabel())));
+    }
+
+    @Test
+    // curl -X PUT -H "Content-Type:application/json" -d '{ "code": "21" }' http://localhost:8080/weather
+    public void weatherPutTest() throws Exception {
+        WeatherConditions weatherConditions = new WeatherConditions(8,"Updated info");
+        log.info("Update /weather/"+weatherConditions.getCode());
+        mvc.perform(MockMvcRequestBuilders.put("/weather/"+weatherConditions.getCode())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJsonBytes(weatherConditions))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(weatherConditions.getLabel())));
     }
 
     public static byte[] toJsonBytes(Object obj) {

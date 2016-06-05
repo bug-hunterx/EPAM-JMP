@@ -58,4 +58,18 @@ public class WeatherController {
         return weatherConditionRepository.save(weatherConditions);
     }
 
+    @RequestMapping(method= RequestMethod.PUT, value= "/{id}", headers="Accept=application/json")
+    public @ResponseBody
+    WeatherConditions put (@PathVariable Integer id, @RequestBody WeatherConditions weatherConditions) {
+        WeatherConditions target = weatherConditionRepository.findOne(id);
+        if (weatherConditions.getCode().equals(target.getCode())) {
+            logger.info("Put: Update " + target + " With " + weatherConditions);
+            target.setLabel(weatherConditions.getLabel());
+            return weatherConditionRepository.save(target);
+        } else {
+            logger.error("Try to update id=" + id + " With " + weatherConditions );
+            return null;
+        }
+    }
+
 }

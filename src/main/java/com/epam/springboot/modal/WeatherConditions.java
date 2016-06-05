@@ -26,12 +26,20 @@ public class WeatherConditions {
         this.label = label;
     }
 
+    public WeatherConditions(Integer code) {
+        this.code = code;
+    }
+
     public Integer getCode() {
         return code;
     }
 
     public String getLabel() {
         return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     @Override
