@@ -63,7 +63,7 @@ public class WeatherUnitTest {
 
     @Test
     public void simpleWeatherTest() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/test").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/weather/test").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Test20")));
     }
@@ -93,7 +93,7 @@ public class WeatherUnitTest {
     }
 
     @Test
-    // curl -X PUT -H "Content-Type:application/json" -d '{ "code": "21" }' http://localhost:8080/weather
+    // curl -X PUT -H "Content-Type:application/json" -d '{ "code": "8" }' http://localhost:8080/weather/8
     public void weatherPutTest() throws Exception {
         WeatherConditions weatherConditions = new WeatherConditions(8,"Updated info");
         log.info("Update /weather/"+weatherConditions.getCode());
@@ -104,6 +104,25 @@ public class WeatherUnitTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(weatherConditions.getLabel())));
     }
+
+    @Test
+    // curl -X DELETE http://localhost:8080/weather/3
+    public void weatherDeleteTest() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.delete("/weather/3").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Snowing")));
+    }
+
+    @Test
+    // curl -X PUT -H "Content-Type:application/json" -d '{ "code": "20" }' http://localhost:8080/weather/20
+    public void weatherPutExceptionTest() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.put("/weather/"+sampleWatherConditions.getCode())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJsonBytes(sampleWatherConditions))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
 
     public static byte[] toJsonBytes(Object obj) {
         ObjectMapper mapper = new ObjectMapper();

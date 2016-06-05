@@ -3,8 +3,11 @@ package com.epam.springboot.controller;
 import com.epam.springboot.modal.WeatherConditions;
 import com.epam.springboot.repository.WeatherConditionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,6 +19,12 @@ public class WeatherController {
     private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(WeatherController.class);
     @Autowired
     private WeatherConditionRepository weatherConditionRepository;
+
+    @ExceptionHandler
+    void handleIllegalArgumentException(IllegalArgumentException e,
+                                        HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value());
+    }
 
     @RequestMapping(method= RequestMethod.GET, value= "/init", headers="Accept=application/json")
     public @ResponseBody String init() {
@@ -62,14 +71,24 @@ public class WeatherController {
     public @ResponseBody
     WeatherConditions put (@PathVariable Integer id, @RequestBody WeatherConditions weatherConditions) {
         WeatherConditions target = weatherConditionRepository.findOne(id);
-        if (weatherConditions.getCode().equals(target.getCode())) {
+        if ((target != null) && (weatherConditions.getCode().equals(target.getCode()))) {
             logger.info("Put: Update " + target + " With " + weatherConditions);
             target.setLabel(weatherConditions.getLabel());
             return weatherConditionRepository.save(target);
         } else {
             logger.error("Try to update id=" + id + " With " + weatherConditions );
-            return null;
+            throw new IllegalArgumentException();
+//            return null;
         }
+    }
+
+    @RequestMapping(method= RequestMethod.DELETE, value= "/{id}", headers="Accept=application/json")
+    public @ResponseBody
+    WeatherConditions delete (@PathVariable Integer id) {
+        WeatherConditions weatherConditions = weatherConditionRepository.findOne(id);
+        weatherConditionRepository.delete(id);
+        logger.info("Delete " + weatherConditions);
+        return weatherConditions;
     }
 
 }
