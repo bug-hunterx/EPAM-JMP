@@ -19,11 +19,11 @@ public class Accidents {
     @Column(name="Accident_Index")
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "Weather_Conditions")  // Column name in table Accidents
     private WeatherConditions weatherConditions;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "Road_Surface_Conditions")  // Column name in table Accidents
     private RoadConditions roadSurfaceConditions;
 

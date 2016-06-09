@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -87,5 +86,15 @@ public class AccidentServiceImpl implements AccidentService {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public Accidents createAccident(Accidents accidents) {
+        Integer id;
+        id = accidents.getWeatherConditions().getCode();
+        accidents.setWeatherConditions(weatherConditionRepository.findOne(id));
+        id = accidents.getRoadSurfaceConditions().getCode();
+        accidents.setRoadSurfaceConditions(roadConditionRepository.findOne(id));
+        return repository.save(accidents);
     }
 }

@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 //@WebIntegrationTest
 //@IntegrationTest("server.port:8090")
-@DatabaseSetup("/restSampleData.xml")
+@DatabaseSetup("/sampleData.xml")
 //@WebMvcTest(WeatherController.class)
 public class WeatherUnitTest {
 //    @Autowired

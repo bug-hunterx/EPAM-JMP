@@ -24,6 +24,11 @@ public class RoadConditions  implements Serializable {
 
     protected RoadConditions() {}
 
+    public RoadConditions(Integer code) {
+        this.code = code;
+        this.label = "Invalid";
+    }
+
     public RoadConditions(Integer code, String label) {
         this.code = code;
         this.label = label;
