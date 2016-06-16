@@ -12,16 +12,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class PoliceForceService{
+public class PoliceForceExternalDataService {
 
     private static final String POLICE_FORCE_CSV = "src/main/resources/police_force.csv";
     private final String PHONE_PREFIX = "13163862";
     private Map<String,Integer> forceMap = new HashMap<>();
     private AtomicInteger executionCount = new AtomicInteger(0);
     private final int HALT_AT_EXECUTION = 10;
-    private final long HALT_FOR = 1000 * 2;
+    private final long HALT_FOR_TO_TEST_THREAD_HANDLING = 1000 * 2;
 
-    public PoliceForceService(){
+    public PoliceForceExternalDataService(){
         init();
     }
 
@@ -43,7 +43,7 @@ public class PoliceForceService{
     public String getContactNo(String policeForceName){
         if(executionCount.get() == HALT_AT_EXECUTION){
             try {
-                Thread.sleep(HALT_FOR);
+                Thread.sleep(HALT_FOR_TO_TEST_THREAD_HANDLING);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -54,9 +54,9 @@ public class PoliceForceService{
     }
 
     public static void main(String[] args) {
-        PoliceForceService ps = new PoliceForceService();
+        PoliceForceExternalDataService ps = new PoliceForceExternalDataService();
         for (String forceName: ps.forceMap.keySet() ) {
-            System.out.println("fetching contact no for " + ps.forceMap.get(forceName));
+            System.out.println("fetching contact no for " + ps.getContactNo(forceName));
             ps.getContactNo(forceName);
         }
     }

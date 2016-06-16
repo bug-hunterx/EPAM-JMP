@@ -1,13 +1,15 @@
-package com.epam.data;
+package com.epam.concurrency.task;
 
-import java.time.DayOfWeek;
+import com.epam.data.RoadAccident;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * Contains information about one road accident
+ * Created by Tanmoy on 6/17/2016.
  */
-public class RoadAccident {
+public class RoadAccidentDetails {
+
     private String accidentId;
     private float longitude;
     private float latitude;
@@ -22,24 +24,23 @@ public class RoadAccident {
     private String weatherConditions;
     private String roadSurfaceConditions;
 
+    private String policeForceContact;
 
-
-    RoadAccident(RoadAccidentBuilder builder){
-        this.accidentId = builder.accidentId;
-        this.longitude = builder.longitude;
-        this.latitude = builder.latitude;
-        this.policeForce = builder.policeForce;
-        this.accidentSeverity = builder.accidentSeverity;
-        this.numberOfVehicles = builder.numberOfVehicles;
-        this.numberOfCasualties = builder.numberOfCasualties;
-        this.date = builder.date;
-        this.time = builder.time;
-        this.districtAuthority = builder.districtAuthority;
-        this.lightConditions = builder.lightConditions;
-        this.weatherConditions = builder.weatherConditions;
-        this.roadSurfaceConditions = builder.roadSurfaceConditions;
+    public RoadAccidentDetails(RoadAccident roadAccident){
+        accidentId = roadAccident.getAccidentId();
+        longitude = roadAccident.getLongitude();
+        latitude = roadAccident.getLatitude();
+        policeForce = roadAccident.getPoliceForce();
+        accidentSeverity = roadAccident.getAccidentSeverity();
+        numberOfVehicles = roadAccident.getNumberOfVehicles();
+        numberOfCasualties = roadAccident.getNumberOfCasualties();
+        date = roadAccident.getDate();
+        time = roadAccident.getTime();
+        districtAuthority = roadAccident.getDistrictAuthority();
+        lightConditions = roadAccident.getLightConditions();
+        weatherConditions = roadAccident.getWeatherConditions();
+        roadSurfaceConditions = roadAccident.getRoadSurfaceConditions();
     }
-
 
     public String getAccidentId() {
         return accidentId;
@@ -105,10 +106,6 @@ public class RoadAccident {
         this.date = date;
     }
 
-    public DayOfWeek getDayOfWeek() {
-        return date.getDayOfWeek();
-    }
-
     public LocalTime getTime() {
         return time;
     }
@@ -122,7 +119,7 @@ public class RoadAccident {
     }
 
     public void setDistrictAuthority(String districtAuthority) {
-        this.districtAuthority= districtAuthority;
+        this.districtAuthority = districtAuthority;
     }
 
     public String getLightConditions() {
@@ -148,16 +145,12 @@ public class RoadAccident {
     public void setRoadSurfaceConditions(String roadSurfaceConditions) {
         this.roadSurfaceConditions = roadSurfaceConditions;
     }
-    
-    public String toString() {
-    	return "RoadAccident:" +
-    			"\nid:" + this.accidentId +
-    			"\ndistrictAuthority:" + this.districtAuthority+
-    			"\npoliceForce:" + this.policeForce +
-    			"\nroadSurfaceConditions:" + this.roadSurfaceConditions +
-    			"\nweatherConditions:" + this.weatherConditions;
-    			
-    			
-    			
-    } 
+
+    public String getPoliceForceContact() {
+        return policeForceContact;
+    }
+
+    public void setPoliceForceContact(String policeForceContact) {
+        this.policeForceContact = policeForceContact;
+    }
 }
