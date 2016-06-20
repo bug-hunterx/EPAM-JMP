@@ -55,7 +55,7 @@ public class AccidentDataReader {
         List<RoadAccident> roadAccidentBatch = new ArrayList<RoadAccident>();
         int recordCountInCurrBatch = 0;
         RoadAccident roadAccidentItem = null;
-        while(recordCountInCurrBatch <= batchSize && recordIterator.hasNext() ){
+        while(recordCountInCurrBatch < batchSize && recordIterator.hasNext() ){
             roadAccidentItem = roadAccidentParser.parseRecord(recordIterator.next());
             if(roadAccidentItem != null){
                 roadAccidentBatch.add(roadAccidentItem);

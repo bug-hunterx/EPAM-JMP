@@ -16,9 +16,9 @@ public class AccidentDataProcessor {
     private static final String FILE_PATH_3 = "src/main/resources/DfTRoadSafety_Accidents_2012.csv";
     private static final String FILE_PATH_4 = "src/main/resources/DfTRoadSafety_Accidents_2013.csv";
 
-    private static final String OUTPUT_FILE_PATH = "target/output/DfTRoadSafety_Accidents_consolidated.csv";
+    private static final String OUTPUT_FILE_PATH = "target/DfTRoadSafety_Accidents_consolidated.csv";
 
-    private static final int DATA_PROCESSING_BATCH_SIZE = 1000;
+    private static final int DATA_PROCESSING_BATCH_SIZE = 10000;
 
     private AccidentDataReader accidentDataReader = new AccidentDataReader();
     private AccidentDataEnricher accidentDataEnricher = new AccidentDataEnricher();
@@ -29,9 +29,9 @@ public class AccidentDataProcessor {
 
     public void init(){
         fileQueue.add(FILE_PATH_1);
-        //fileQueue.add(FILE_PATH_2);
-        //fileQueue.add(FILE_PATH_3);
-        //fileQueue.add(FILE_PATH_4);
+        fileQueue.add(FILE_PATH_2);
+        fileQueue.add(FILE_PATH_3);
+        fileQueue.add(FILE_PATH_4);
 
         accidentDataWriter.init(OUTPUT_FILE_PATH);
     }
@@ -57,8 +57,11 @@ public class AccidentDataProcessor {
 
     public static void main(String[] args) {
         AccidentDataProcessor dataProcessor = new AccidentDataProcessor();
+        long start = System.currentTimeMillis();
         dataProcessor.init();
         dataProcessor.process();
+        long end = System.currentTimeMillis();
+        System.out.println("Process finished in s : " + (end-start)/1000);
     }
 
 }

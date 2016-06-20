@@ -6,9 +6,10 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,9 @@ public class AccidentDataWriter {
     public void init(String dataFileName){
         this.dataFileName = dataFileName;
         try {
+            File dataFile = new File(dataFileName);
+            Files.deleteIfExists(dataFile.toPath());
+            Files.createFile(dataFile.toPath());
             isHeaderWritten = false;
             FileWriter fileWriter = new FileWriter(dataFileName);
             csvFilePrinter = new CSVPrinter(fileWriter, outputDataFormat);
@@ -35,6 +39,7 @@ public class AccidentDataWriter {
             throw new RuntimeException("Failed to create file writer for file " + dataFileName, e);
         }
     }
+
     public void writeAccidentData(List<RoadAccidentDetails> accidentDetailsList){
         try {
             if (!isHeaderWritten){

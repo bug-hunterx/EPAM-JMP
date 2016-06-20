@@ -6,7 +6,7 @@ package com.epam.concurrency.task;
 public class Util {
 
     public static void sleep(){
-        sleep(1000 * 2);
+        sleep(1000 * 1);
     }
     public static void sleep(long timeInMs){
         try{
