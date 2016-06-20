@@ -28,6 +28,16 @@ In pull request mark your mentor (@mentorName) so it can review it.
 To complite task one you need to fix DataProcessorTest unit tests. 
 All methods in DataProcessor with "7" in a name should be implemented using Java 7, when other should be done with Java 8 streaming api. 
 
+## Hometask 3
+The AccidentDataProcessor sequentially reads, enriches and writes accident data to a file. Serial processing takes much time. Use multithreading
+to run these tasks in parallel and communicate to each other to reduce time.
+
+Below task is optional if somebody is interested to play with more.
+For more complicated scenario change the PoliceForceExternalDataService.HALT_FOR_TO_TEST_THREAD_HANDLING to 20 min for example to
+simulate the scenario that enrichment from 3rd party service may get stuck.
+Currently this service method is being used synchronously. Try to make this call asynchronous.
+
+
 ## Hometask 4
 In the code what you did on Hometask 3 please create tests to achieve at least 50% test coverage in your new classes. Use IDE plugin to measure.  At least 1 integration test is required. Try to use BDD approach.  
 
