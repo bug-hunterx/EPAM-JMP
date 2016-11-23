@@ -1,0 +1,16 @@
+Java HotSpot(TM) 64-Bit Server VM (25.20-b23) for windows-amd64 JRE (1.8.0_20-b26), built on Jul 30 2014 13:51:23 by "java_re" with MS VC++ 10.0 (VS2010)
+Memory: 4k page, physical 8271460k(3665084k free), swap 10237540k(4273076k free)
+CommandLine flags: -XX:InitialHeapSize=132343360 -XX:MaxHeapSize=2117493760 -XX:+PrintGC -XX:+PrintGCTimeStamps -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:-UseLargePagesIndividualAllocation -XX:+UseParallelGC 
+3.961: [GC (Allocation Failure)  23808K->21424K(125952K), 0.0080784 secs]
+4.551: [GC (Allocation Failure)  53438K->52064K(125952K), 0.0110631 secs]
+5.875: [GC (Allocation Failure)  83678K->82752K(125952K), 0.0129618 secs]
+5.888: [Full GC (Ergonomics)  82752K->82716K(201216K), 0.0267797 secs]
+6.612: [GC (Allocation Failure)  114034K->123740K(221184K), 0.0133295 secs]
+6.625: [Full GC (Ergonomics)  123740K->113436K(273920K), 0.0038620 secs]
+8.864: [GC (Allocation Failure)  165577K->205660K(282624K), 0.0266288 secs]
+8.890: [Full GC (Ergonomics)  205660K->164636K(384512K), 0.0206266 secs]
+10.402: [GC (Allocation Failure)  216917K->215868K(418304K), 0.0119434 secs]
+14.423: [GC (Allocation Failure)  309699K->308060K(418304K), 0.0319572 secs]
+14.455: [Full GC (Ergonomics)  308060K->307997K(593920K), 0.0288107 secs]
+16.737: [GC (Allocation Failure)  401938K->410461K(655872K), 0.0324336 secs]
+16.770: [Full GC (Ergonomics)  410461K->400157K(776192K), 0.0112225 secs]
