@@ -1,19 +1,22 @@
 package com.epam.processor;
 
-import com.epam.data.AccidentsDataLoader;
-import com.epam.data.RoadAccident;
-import com.google.common.collect.Multimap;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.epam.data.AccidentsDataLoader;
+import com.epam.data.RoadAccident;
+import com.google.common.collect.Multimap;
 
 /**
  * Created by Tkachi on 2016/4/4.
@@ -57,13 +60,13 @@ public class DataProcessorTest {
     @Test
     public void should_count_by_road_conditions7(){
         Map<String, Long> countByRoadConditions = dataProcessor.getCountByRoadSurfaceCondition7();
-        assertThat(countByRoadConditions.get("Dry"), is(110277));
+        assertThat(countByRoadConditions.get("Dry"), is(110277L));
     }
 
     @Test
     public void should_count_by_road_conditions(){
         Map<String, Long> countByRoadConditions = dataProcessor.getCountByRoadSurfaceCondition();
-        assertThat(countByRoadConditions.get("Dry"), is(110277));
+        assertThat(countByRoadConditions.get("Dry"), is(110277L));
     }
 
     @Test
